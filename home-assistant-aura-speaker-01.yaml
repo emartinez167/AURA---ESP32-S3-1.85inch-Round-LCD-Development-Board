@@ -5572,7 +5572,10 @@ switch:
     id: ${va_continuous_mode_switch_id}
     name: "Assistant - Continuous Listening"
     icon: mdi:headset
-    restore_mode: RESTORE_DEFAULT_ON
+    # Defaults to off: this device has no echo cancellation, so leaving
+    # continuous listening on causes it to hear its own TTS output and
+    # respond to itself in a feedback loop (see HomeLab doc 9.16).
+    restore_mode: RESTORE_DEFAULT_OFF
     lambda: |-
       return id(${va_modalita_continua_id});
     turn_on_action:
