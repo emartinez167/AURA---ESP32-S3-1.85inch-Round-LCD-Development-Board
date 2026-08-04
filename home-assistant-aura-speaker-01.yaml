@@ -19,27 +19,21 @@ substitutions:
  # ssid: AuraHotSpot
  # hidden_ssid:  "false"
   # -------- Music Assistant --------
-  # Player entity created by Music Assistant for Aura.
-  # NOTE (Ernesto): this entity does NOT exist yet. It will only be created
-  # after flashing the device, connecting it to Home Assistant, and then
-  # adding it as a player inside Music Assistant. The value below is a
-  # prediction based on the current device_name/friendly
-  # (media_player.aura_speaker_01_media_player, with the _2 suffix added
-  # by Music Assistant). After the first boot, check in
-  # Settings > Devices & Services > Entities for the real entity_id and
-  # update it here if different.
-  ma_player_entity: "media_player.aura_speaker_01_media_player_2"
-  # Radio stations present in the Music Assistant library.
-  # NOTE (Ernesto): your Music Assistant library doesn't have any saved
-  # radio stations yet: these library://radio/X are placeholders from the
-  # original template and will NOT work until you add your own radio
-  # stations to Music Assistant and update these IDs.
-  ma_radio_number_one_uri: "library://radio/12"
-  ma_radio_deejay_uri:     "library://radio/6"
-  ma_radio_italia_uri:     "library://radio/11"
-  ma_radio_kiss_kiss_uri:  "library://radio/7"
-  ma_radio_r101_uri:       "library://radio/1"
-  ma_radio_ambient_uri:    "library://radio/10"
+  # Player entity created by Music Assistant for Aura, added as a player
+  # via Settings -> Player Providers -> Home Assistant Media Players,
+  # exposing media_player.casa_aura_speaker_01_media_player. Confirmed
+  # via ha_get_state (app_id: music_assistant, active_queue pointing back
+  # to the ESPHome device) - no _2 suffix, unlike the original guess.
+  ma_player_entity: "media_player.aura_speaker_01_media_player"
+  # Radio stations, served via the Radio Browser provider added to Music
+  # Assistant (radio-browser.info community directory). Three Perth, WA
+  # stations and three Mexico stations.
+  ma_radio_abc_classic_uri:   "radiobrowser://radio/fa13eb03-d75d-4e81-a9c6-893f22ab4d2b"
+  ma_radio_abc_perth_uri:     "radiobrowser://radio/16601cd7-cd8d-4f9d-810c-61a5b887ccfb"
+  ma_radio_nova_perth_uri:    "radiobrowser://radio/245e08d7-eba1-45da-a787-1cc65419ff0b"
+  ma_radio_kiss_fm_merida_uri: "radiobrowser://radio/b4ec3ccf-003d-4112-8488-d662d72012fc"
+  ma_radio_formula_cdmx_uri:  "radiobrowser://radio/e941a76e-e2bb-439a-aabf-55c923cad691"
+  ma_radio_reactor_cdmx_uri:  "radiobrowser://radio/a07a79bb-605a-4cdd-8ba8-0f75621b0222"
   # -------- Voice Assistant Phases --------
   voice_assist_idle_phase_id:                   '1' # ready to be triggered by a wake word
   voice_assist_waiting_for_command_phase_id:    '2' # waiting for a voice command after wake word
@@ -2268,16 +2262,11 @@ interval:
             - lvgl.widget.refresh: aura_music_note_4
             - lvgl.widget.refresh: aura_music_note_5
             - lvgl.widget.refresh: aura_music_note_6
-            # Small continuous movement of the whole image:
-            # left/right and up/down, more noticeable on peaks.
-            - lvgl.widget.update:
-                id: aura_main_image
-                x: !lambda |-
-                  const float amp = 2.0f + id(aura_music_level) * 5.0f;
-                  return 60 + (int)(sinf(millis() / 360.0f) * amp);
-                y: !lambda |-
-                  const float amp = 1.5f + id(aura_music_level) * 3.5f;
-                  return 59 + (int)(sinf(millis() / 245.0f + 1.1f) * amp);
+            # Whole-image bob/sway removed (August 2026): repositioning the
+            # full 204x204 avatar every 80ms forced a large-area SPI redraw
+            # on top of audio decoding, causing choppy playback while music
+            # was showing on the main screen. VU arc and note icons stay,
+            # since those are small-area redraws and much cheaper.
             - if:
                 condition:
                   lambda: |-
@@ -5014,7 +5003,7 @@ lvgl:
             x: 70
             y: 344
             width: 220
-            text: "radio  →   ·   ↑  controls"
+            text: "radio ->   |   ^  controls"
             text_font: montserrat_12
             text_color: 0x4B6474
             text_align: CENTER
@@ -5061,7 +5050,7 @@ lvgl:
             x: 70
             y: 22
             width: 220
-            text: "MUSIC ASSISTANT · RADIO"
+            text: "MUSIC ASSISTANT - RADIO"
             text_font: montserrat_18
             text_color: 0xFFFFFF
             text_align: CENTER
@@ -5080,7 +5069,7 @@ lvgl:
             bg_opa: TRANSP
             clickable: false
         - button:
-            id: aura_radio_number_one_button
+            id: aura_radio_abc_classic_button
             x: 32
             y: 78
             width: 140
@@ -5095,18 +5084,18 @@ lvgl:
             on_click:
               - script.execute:
                   id: aura_play_radio
-                  radio_uri: ${ma_radio_number_one_uri}
-                  radio_name: "Radio Number One"
+                  radio_uri: ${ma_radio_abc_classic_uri}
+                  radio_name: "ABC Classic"
             widgets:
               - label:
                   align: CENTER
                   width: 124
-                  text: "NUMBER ONE"
+                  text: "ABC CLASSIC"
                   text_font: montserrat_14
                   text_color: 0xFFFFFF
                   text_align: CENTER
         - button:
-            id: aura_radio_deejay_button
+            id: aura_radio_abc_perth_button
             x: 188
             y: 78
             width: 140
@@ -5121,18 +5110,18 @@ lvgl:
             on_click:
               - script.execute:
                   id: aura_play_radio
-                  radio_uri: ${ma_radio_deejay_uri}
-                  radio_name: "Radio Deejay"
+                  radio_uri: ${ma_radio_abc_perth_uri}
+                  radio_name: "ABC Radio Perth"
             widgets:
               - label:
                   align: CENTER
                   width: 124
-                  text: "RADIO DEEJAY"
+                  text: "ABC PERTH"
                   text_font: montserrat_14
                   text_color: 0xFFFFFF
                   text_align: CENTER
         - button:
-            id: aura_radio_italia_button
+            id: aura_radio_nova_perth_button
             x: 32
             y: 146
             width: 140
@@ -5147,18 +5136,18 @@ lvgl:
             on_click:
               - script.execute:
                   id: aura_play_radio
-                  radio_uri: ${ma_radio_italia_uri}
-                  radio_name: "Radio Italia"
+                  radio_uri: ${ma_radio_nova_perth_uri}
+                  radio_name: "Nova 93.7 Perth"
             widgets:
               - label:
                   align: CENTER
                   width: 124
-                  text: "RADIO ITALIA"
+                  text: "NOVA 93.7"
                   text_font: montserrat_14
                   text_color: 0xFFFFFF
                   text_align: CENTER
         - button:
-            id: aura_radio_kiss_kiss_button
+            id: aura_radio_kiss_fm_button
             x: 188
             y: 146
             width: 140
@@ -5173,18 +5162,18 @@ lvgl:
             on_click:
               - script.execute:
                   id: aura_play_radio
-                  radio_uri: ${ma_radio_kiss_kiss_uri}
-                  radio_name: "Radio Kiss Kiss"
+                  radio_uri: ${ma_radio_kiss_fm_merida_uri}
+                  radio_name: "Kiss FM Mérida"
             widgets:
               - label:
                   align: CENTER
                   width: 124
-                  text: "KISS KISS"
+                  text: "KISS FM"
                   text_font: montserrat_14
                   text_color: 0xFFFFFF
                   text_align: CENTER
         - button:
-            id: aura_radio_r101_button
+            id: aura_radio_formula_button
             x: 32
             y: 214
             width: 140
@@ -5199,18 +5188,18 @@ lvgl:
             on_click:
               - script.execute:
                   id: aura_play_radio
-                  radio_uri: ${ma_radio_r101_uri}
-                  radio_name: "R101"
+                  radio_uri: ${ma_radio_formula_cdmx_uri}
+                  radio_name: "Radio Fórmula CDMX"
             widgets:
               - label:
                   align: CENTER
                   width: 124
-                  text: "R101"
+                  text: "FORMULA 103.3"
                   text_font: montserrat_14
                   text_color: 0xFFFFFF
                   text_align: CENTER
         - button:
-            id: aura_radio_ambient_button
+            id: aura_radio_reactor_button
             x: 188
             y: 214
             width: 140
@@ -5225,13 +5214,13 @@ lvgl:
             on_click:
               - script.execute:
                   id: aura_play_radio
-                  radio_uri: ${ma_radio_ambient_uri}
-                  radio_name: "Ambient Sleeping Pill"
+                  radio_uri: ${ma_radio_reactor_cdmx_uri}
+                  radio_name: "Reactor 105.7 CDMX"
             widgets:
               - label:
                   align: CENTER
                   width: 124
-                  text: "AMBIENT SLEEP"
+                  text: "REACTOR 105.7"
                   text_font: montserrat_14
                   text_color: 0xFFFFFF
                   text_align: CENTER
