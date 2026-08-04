@@ -4905,30 +4905,32 @@ lvgl:
             bg_opa: COVER
             border_width: 0
             clickable: false
-        # Time overlay - original Aura LVGL plate.
+        # Time overlay - shrunk and moved below the face so it no longer
+        # covers it (was 264x88 at y:220, overlapping the 240x240 face
+        # image at y:60-300).
         - obj:
             id: aura_time_plate
-            x: 48
-            y: 220
-            width: 264
-            height: 88
-            radius: 28
+            x: 90
+            y: 302
+            width: 180
+            height: 38
+            radius: 16
             bg_color: 0x000000
             bg_opa: 40%
             border_width: 1
             border_color: 0x0B2A45
-            shadow_width: 14
+            shadow_width: 10
             shadow_color: 0x00E5FF
             shadow_opa: 20%
             clickable: false
         - label:
             id: aura_time_label
-            x: 72
-            y: 250
-            width: 216
-            height: 64
+            x: 90
+            y: 306
+            width: 180
+            height: 30
             text: "--:--"
-            text_font: montserrat_48
+            text_font: montserrat_28
             text_color: 0xFFFFFF
             text_align: CENTER
             bg_opa: TRANSP
