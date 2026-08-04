@@ -3503,7 +3503,7 @@ online_image:
     id: aura_idle_standby_img
     format: PNG
     type: RGB565
-    resize: 240x240
+    resize: 204x204
     update_interval: never
     buffer_size: 49152
     on_download_finished:
@@ -3544,7 +3544,7 @@ online_image:
     id: aura_blink_half_closed_img
     format: PNG
     type: RGB565
-    resize: 240x240
+    resize: 204x204
     update_interval: never
     buffer_size: 49152
     on_download_finished:
@@ -3585,7 +3585,7 @@ online_image:
     id: aura_blink_closed_img
     format: PNG
     type: RGB565
-    resize: 240x240
+    resize: 204x204
     update_interval: never
     buffer_size: 49152
     on_download_finished:
@@ -3626,7 +3626,7 @@ online_image:
     id: aura_left_eyes_img
     format: PNG
     type: RGB565
-    resize: 240x240
+    resize: 204x204
     update_interval: never
     buffer_size: 49152
     on_download_finished:
@@ -3667,7 +3667,7 @@ online_image:
     id: aura_right_eyes_img
     format: PNG
     type: RGB565
-    resize: 240x240
+    resize: 204x204
     update_interval: never
     buffer_size: 49152
     on_download_finished:
@@ -3708,7 +3708,7 @@ online_image:
     id: aura_up_eyes_img
     format: PNG
     type: RGB565
-    resize: 240x240
+    resize: 204x204
     update_interval: never
     buffer_size: 49152
     on_download_finished:
@@ -3749,7 +3749,7 @@ online_image:
     id: aura_face_up_img
     format: PNG
     type: RGB565
-    resize: 240x240
+    resize: 204x204
     update_interval: never
     buffer_size: 49152
     on_download_finished:
@@ -3790,7 +3790,7 @@ online_image:
     id: aura_face_down_img
     format: PNG
     type: RGB565
-    resize: 240x240
+    resize: 204x204
     update_interval: never
     buffer_size: 49152
     on_download_finished:
@@ -3831,7 +3831,7 @@ online_image:
     id: aura_half_smile_img
     format: PNG
     type: RGB565
-    resize: 240x240
+    resize: 204x204
     update_interval: never
     buffer_size: 49152
     on_download_finished:
@@ -3872,7 +3872,7 @@ online_image:
     id: aura_full_smile_img
     format: PNG
     type: RGB565
-    resize: 240x240
+    resize: 204x204
     update_interval: never
     buffer_size: 49152
     on_download_finished:
@@ -3913,7 +3913,7 @@ online_image:
     id: aura_small_open_mouth_img
     format: PNG
     type: RGB565
-    resize: 240x240
+    resize: 204x204
     update_interval: never
     buffer_size: 49152
     on_download_finished:
@@ -3954,7 +3954,7 @@ online_image:
     id: aura_open_mouth_img
     format: PNG
     type: RGB565
-    resize: 240x240
+    resize: 204x204
     update_interval: never
     buffer_size: 49152
     on_download_finished:
@@ -3995,7 +3995,7 @@ online_image:
     id: aura_more_open_mouth_img
     format: PNG
     type: RGB565
-    resize: 240x240
+    resize: 204x204
     update_interval: never
     buffer_size: 49152
     on_download_finished:
@@ -4036,7 +4036,7 @@ online_image:
     id: aura_dance_01_img
     format: PNG
     type: RGB565
-    resize: 240x240
+    resize: 204x204
     update_interval: never
     buffer_size: 49152
     on_download_finished:
@@ -4077,7 +4077,7 @@ online_image:
     id: aura_dance_02_img
     format: PNG
     type: RGB565
-    resize: 240x240
+    resize: 204x204
     update_interval: never
     buffer_size: 49152
     on_download_finished:
@@ -4119,7 +4119,7 @@ online_image:
     id: aura_dance_03_img
     format: PNG
     type: RGB565
-    resize: 240x240
+    resize: 204x204
     update_interval: never
     buffer_size: 49152
 
@@ -4378,16 +4378,19 @@ lvgl:
       on_swipe_right:
         - script.execute: aura_show_radio_page
       widgets:
-        # Scaled to 85% (was full 240x240) so the battery/status area above
-        # it and the clock/timer area below it both get more breathing
-        # room. LVGL scales around the image's center, which sits at the
-        # screen's exact center (180,180), so this stays visually centered
-        # without needing x/y changes - the face just shrinks symmetrically.
+        # All 16 avatar images are decoded at 204x204 instead of 240x240
+        # (see the online_image resize: settings below) so the battery/
+        # status area above and the clock/timer area below both get real
+        # breathing room. Repositioned to x:78,y:78 to keep the smaller
+        # image centered on the 360x360 screen ((360-204)/2 = 78). This
+        # resizes the actual decoded pixels rather than using LVGL's
+        # runtime image scale, which this board's LVGL build can't do
+        # (missing software-transform color format support - corrupted
+        # the display when tried).
         - image:
             id: aura_main_image
-            x: 60
-            y: 60
-            scale: 0.85
+            x: 78
+            y: 78
             src: aura_idle_standby_img
             clickable: false
         # Dark veil during sleep: Aura stays visible but the scene calms down.
@@ -4930,9 +4933,9 @@ lvgl:
             bg_opa: TRANSP
             clickable: false
         # Time overlay - shrunk and moved below the face so it no longer
-        # covers it (was 264x88 at y:220, overlapping the 240x240 face
-        # image). Nudged down 8px / trimmed slightly again since the face
-        # moved to y:68-308 to make room for the battery readout above it.
+        # covers it (originally 264x88 at y:220, overlapping the old
+        # 240x240 face image). Face is now 204x204 at y:78-282, so there's
+        # a comfortable gap above this plate rather than being flush.
         - obj:
             id: aura_time_plate
             x: 90
