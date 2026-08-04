@@ -3,37 +3,43 @@
 # ESPHome V5 + LVGL Aura
 # HackMyHome
 # ======================================================
-
 substitutions:
   device_name: home-assistant-aura-speaker-01
   friendly:   "Aura-Speaker-01"
   fw_version: "6.0-lvgl-voice-music-assistant"
-
   # -------- SECURITY --------
   password:   "WiFi Password"
-  api_key:    "CiNgQqOfbti7EO2MJWx+lGptEgBe9O2YHfdgdts26U4="
-  ota_key:    "777947954e176a894bb4402f586e789c"
-
+  api_key:    "Eho/YFQ2z3SJr122BZKDFwK1oAB6iG8NooAUtWRg9hA="
+  ota_key:    "2067b963d0c46a756a663276a9f2bcae"
   # -------- WiFi --------
-  ip:         "192.168.xxx.xxx"
-  gateway:    "192.168.xxx.xxx"
-  subnet:     "255.255.255.0"
-  dns:        "192.168.xxx.xxx"
-  ssid:       "WiFi SSID"  
-  hidden_ssid:  "false"
-
+ # ip: 192.168.1.25
+ # gateway: 192.168.1.254
+ # subnet: 255.255.255.0
+ # dns: 192.168.1.26
+ # ssid: AuraHotSpot
+ # hidden_ssid:  "false"
   # -------- Music Assistant --------
-  # Entita player creata da Music Assistant per Aura.
-  ma_player_entity: "media_player.home_assistant_voice_speaker_02_media_player_2"
-
-  # Radio presenti nella libreria Music Assistant.
+  # Player entity created by Music Assistant for Aura.
+  # NOTE (Ernesto): this entity does NOT exist yet. It will only be created
+  # after flashing the device, connecting it to Home Assistant, and then
+  # adding it as a player inside Music Assistant. The value below is a
+  # prediction based on the current device_name/friendly
+  # (media_player.aura_speaker_01_media_player, with the _2 suffix added
+  # by Music Assistant). After the first boot, check in
+  # Settings > Devices & Services > Entities for the real entity_id and
+  # update it here if different.
+  ma_player_entity: "media_player.aura_speaker_01_media_player_2"
+  # Radio stations present in the Music Assistant library.
+  # NOTE (Ernesto): your Music Assistant library doesn't have any saved
+  # radio stations yet: these library://radio/X are placeholders from the
+  # original template and will NOT work until you add your own radio
+  # stations to Music Assistant and update these IDs.
   ma_radio_number_one_uri: "library://radio/12"
   ma_radio_deejay_uri:     "library://radio/6"
   ma_radio_italia_uri:     "library://radio/11"
   ma_radio_kiss_kiss_uri:  "library://radio/7"
   ma_radio_r101_uri:       "library://radio/1"
   ma_radio_ambient_uri:    "library://radio/10"
-
   # -------- Voice Assistant Phases --------
   voice_assist_idle_phase_id:                   '1' # ready to be triggered by a wake word
   voice_assist_waiting_for_command_phase_id:    '2' # waiting for a voice command after wake word
@@ -42,7 +48,6 @@ substitutions:
   voice_assist_replying_phase_id:               '5' # replying to the command
   voice_assist_not_ready_phase_id:             '10' # not ready
   voice_assist_error_phase_id:                 '11' # encountered an error
-
   # -------- Display Waveshare ESP32-S3 Touch LCD 1.85C - ST77916 QSPI --------
   display_clk_pin: GPIO40
   display_qspi_d0: GPIO46
@@ -52,12 +57,10 @@ substitutions:
   display_cs_pin:  GPIO21
   display_bl_pin:  GPIO5
   display_reset_expander_pin: "1"
-
   # -------- Touch CST816T --------
   touch_interrupt_pin: GPIO4
   touch_address: "0x15"
   touch_reset_expander_pin: "0"
-
   # -------- Audio / I2S pins - Waveshare ESP32-S3 Touch LCD 1.85C --------
   i2c_scl:          GPIO10
   i2c_sda:          GPIO11
@@ -66,19 +69,15 @@ substitutions:
   i2s_lrclk:        GPIO38
   i2s_dout:         GPIO47
   i2s_din:          GPIO39
-
   # -------- Codec --------
   es8311_address:   "0x18"
   es7210_address:   "0x40"
-
   # -------- Amplifier --------
   amp_ctrl:         GPIO15
-
   # -------- Microphone channel lookup --------
   mic_channel_0: 'left'
   mic_channel_1: 'right'
   mic_channel_2: 'stereo'
-
   # -------- Audio tuning --------
   which_mic:            0          # 0=left, 1=right, 2=stereo
   i2s_sample_rate:      16000
@@ -89,7 +88,6 @@ substitutions:
   i2s_bps_spk:          16bit
   i2s_bps_mic:          16bit
   i2s_mclk_multiple:  256
-
   # ======================================================
   # ENTITY / COMPONENT IDS
   # ======================================================
@@ -98,36 +96,30 @@ substitutions:
   api_component_id:   api_id
   ota_component_id:   ota_esphome
   rtc_id: rtc
-
   # -------- I2C / Expander --------
   i2c_bus_id:     internal_i2c
   io_expander_id: ioexp
-
   # -------- Display / Touch --------
   display_id:                   oled
   display_backlight_output_id:  display_backlight_output
   display_backlight_id:         display_backlight
   touch_panel_id:               touch_panel
-
   # -------- Audio / Voice Assistant --------
   media_player_id:    external_media_player
   voice_assistant_id: va
   micro_wake_word_id: mww
   audio_adc_id:       adc_mic
   va_microphone_id:   va_mic
-
   # -------- Speaker / Mixer / Resampler IDs --------
   hw_speaker_id: hw_speaker
   media_mixer_input_id: media_mixer_input
   announcement_mixer_input_id: announcement_mixer_input
-
   # -------- Switch IDs --------
   mic_mute_switch_id:       mic_mute_switch
   wake_sound_switch_id:     wake_sound
   timer_ringing_switch_id:  timer_ringing
   antifurto_switch_id:      sw_antifurto
   alarm_on_switch_id:       alarm_on
-
   # -------- Number / Select / Text IDs --------
   mic_gain_number_id:             mic_gain_db
   va_gain_factor_number_id:       va_gain_factor
@@ -135,63 +127,48 @@ substitutions:
   alarm_time_text_id:             alarm_time
   current_time_text_id:           current_time
   alarm_action_select_id:         alarm_action
-
   # -------- Sensor / Text Sensor IDs --------
   next_timer_sensor_id:       next_timer
   next_timer_name_sensor_id:  next_timer_name
-
   # -------- Audio File IDs --------
   mute_switch_on_sound_id:        mute_switch_on_sound
   mute_switch_off_sound_id:       mute_switch_off_sound
   timer_finished_sound_id:        timer_finished_sound
   wake_word_triggered_sound_id:   wake_word_triggered_sound
-
   # -------- Global IDs --------
   touch_x_id: touch_x
   touch_y_id: touch_y
   touch_counter_id: touch_counter
   local_cmd_code_id: local_cmd_code
-
   display_startled_until_id: display_startled_until
   display_awake_until_id: display_awake_until
   display_emotion_mode_id: display_emotion_mode
   volume_bar_until_id: volume_bar_until
-
   antifurto_alarm_in_corso_id: antifurto_alarm_in_corso
   wake_word_flow_active_id: wake_word_flow_active
-
   va_timer_total_seconds_id: va_timer_total_seconds
   va_timer_seconds_left_id: va_timer_seconds_left
   va_timer_last_tick_ms_id: va_timer_last_tick_ms
   va_timer_active_display_id: va_timer_active_display
   va_timer_name_display_id: va_timer_name_display
-
   mic_gain_saved_id: mic_gain_saved
-
   led_ring_color_r_id: led_ring_color_r
   led_ring_color_g_id: led_ring_color_g
   led_ring_color_b_id: led_ring_color_b
-
   init_in_progress_id: init_in_progress
   improv_ble_in_progress_id: improv_ble_in_progress
-
   voice_assistant_phase_global_id: voice_assistant_phase
   voice_assistant_phase_prev_id: voice_assistant_phase_prev
-
   saved_alarm_time_id: saved_alarm_time
   saved_time_zone_id: saved_time_zone
   saved_alarm_action_id: saved_alarm_action
-
   first_active_timer_id: first_active_timer
   is_timer_active_id: is_timer_active
-
   fw_update_check_enabled_id: fw_update_check_enabled
   fw_update_available_id: fw_update_available
   fw_latest_version_id: fw_latest_version
-
   va_modalita_continua_id: va_modalita_continua
   va_ultimo_input_ms_id: va_ultimo_input_ms
-
   # -------- Script IDs --------
   script_va_local_volume_up_id: va_local_volume_up
   script_va_local_volume_down_id: va_local_volume_down
@@ -218,7 +195,6 @@ substitutions:
   script_check_firmware_version_id: check_firmware_version
   script_flash_ring_id: flash_ring
   script_antifurto_trigger_id: antifurto_trigger
-
   # -------- Additional Component / Entity IDs --------
   display_qspi_id: display_qspi
   i2s_output_id: i2s_output
@@ -246,32 +222,25 @@ substitutions:
   font_header_id: font_header
   font_timer_big_id: font_timer_big
   font_timer_small_id: font_timer_small
-  wake_word_okay_nabu_model_id: okay_nabu
-  wake_word_kenobi_model_id: kenobi
-  wake_word_hey_jarvis_model_id: hey_jarvis
+  wake_word_hey_holly_model_id: hey_holly
   wake_word_stop_model_id: stop
-
  # -------- Local Intent --------
-  up:               "alza"
-  increase:         "aumenta"
-  down:             "abbassa"
-  reduce:           "riduci"
+  up:               "up"
+  increase:         "increase"
+  down:             "down"
+  reduce:           "decrease"
   volume:           "volume"
-
-  enable:           "attiva"
-  disable:          "disattiva"
-  put:              "metti"
-  remove:           "togli"
-  allow:            "abilita"
-  deny:             "disabilita"
-
-  silent_mode:      "modalita silenziosa"
-  silent_mode_acc:  "modalità silenziosa"
-
-  arm:              "inserisci"
-  disarm:           "disinserisci"
-  alarm:            "antifurto"
-
+  enable:           "enable"
+  disable:          "disable"
+  put:              "put"
+  remove:           "remove"
+  allow:            "allow"
+  deny:             "deny"
+  silent_mode:      "silent mode"
+  silent_mode_acc:  "silent mode"
+  arm:              "arm"
+  disarm:           "disarm"
+  alarm:            "alarm"
 globals:
   # ======================================================
   # TOUCH CONTROL PAGE
@@ -280,486 +249,394 @@ globals:
     type: std::string
     restore_value: no
     initial_value: '""'
-
-  # Avanzamento boot: Wi-Fi + Home Assistant + 16 immagini = 18 step.
+  # Boot progress: Wi-Fi + Home Assistant + 16 images = 18 steps.
   - id: aura_download_step
     type: int
     restore_value: no
     initial_value: "0"
-
   - id: aura_boot_progress_step
     type: int
     restore_value: no
     initial_value: "0"
-
   - id: aura_boot_progress_error
     type: bool
     restore_value: no
     initial_value: "false"
-    
+
   - id: control_page_active
     type: bool
     restore_value: no
     initial_value: "false"
-
   - id: control_page_until
     type: uint32_t
     restore_value: no
     initial_value: "0"
-
-  # La pagina Radio usa lo stesso blocco/timeout delle pagine di controllo,
-  # ma mantiene un flag dedicato per aggiornare correttamente la UI.
+  # The Radio page uses the same block/timeout as the control pages,
+  # but keeps a dedicated flag to correctly update the UI.
   - id: radio_page_active
     type: bool
     restore_value: no
     initial_value: "false"
-
   - id: radio_current_name
     type: std::string
     restore_value: no
     initial_value: '"Nessuna radio"'
-
   - id: radio_status_text
     type: std::string
     restore_value: no
-    initial_value: '"Scegli una radio"'
-
+    initial_value: '"Choose a radio"'
   - id: control_touch_start_x
     type: int
     restore_value: no
     initial_value: "180"
-
   - id: control_touch_start_y
     type: int
     restore_value: no
     initial_value: "180"
-
   - id: control_touch_start_ms
     type: uint32_t
     restore_value: no
     initial_value: "0"
-
   - id: control_last_touch_ms
     type: uint32_t
     restore_value: no
     initial_value: "0"
-
   - id: control_touch_cooldown_until
     type: uint32_t
     restore_value: no
     initial_value: "0"
-
   - id: control_action_code
     type: int
     restore_value: no
     initial_value: "0"
-
   - id: ui_media_muted
     type: bool
     restore_value: no
     initial_value: "false"
-
   - id: ui_brightness_level
     type: float
     restore_value: yes
     initial_value: "0.80"
-
   - id: touch_ui_freeze_until
     type: uint32_t
     restore_value: no
     initial_value: "0"
-
   - id: touch_volume_drag_active
     type: bool
     restore_value: no
     initial_value: "false"
-
   - id: touch_volume_last_redraw_ms
     type: uint32_t
     restore_value: no
     initial_value: "0"
-
   - id: touch_volume_slider_until
     type: uint32_t
     restore_value: no
     initial_value: "0"
-
   - id: touch_volume_last_set_ms
     type: uint32_t
     restore_value: no
     initial_value: "0"
-
   - id: ${touch_x_id}
     type: int
     restore_value: no
     initial_value: "180"
-
   - id: ${touch_y_id}
     type: int
     restore_value: no
     initial_value: "180"
-
   - id: ${touch_counter_id}
     type: int
     restore_value: no
     initial_value: "0"
-
   - id: ${local_cmd_code_id}
     type: int
     restore_value: no
     initial_value: "0"
-
   - id: ${display_startled_until_id}
     type: uint32_t
     restore_value: no
     initial_value: "0"
-
   - id: ${antifurto_alarm_in_corso_id}
     type: bool
     restore_value: no
     initial_value: "false"
-
   - id: ${wake_word_flow_active_id}
     type: bool
     restore_value: no
     initial_value: "false"
-
   - id: ${volume_bar_until_id}
     type: uint32_t
     restore_value: no
     initial_value: "0"
-
   - id: ${display_emotion_mode_id}
     type: int
     restore_value: yes
     initial_value: "0"
-
   - id: ${display_awake_until_id}
     type: uint32_t
     restore_value: no
     initial_value: "0"
-
   - id: ${va_timer_total_seconds_id}
     type: uint32_t
     restore_value: no
     initial_value: "0"
-
   - id: ${va_timer_seconds_left_id}
     type: uint32_t
     restore_value: no
     initial_value: "0"
-
   - id: ${va_timer_last_tick_ms_id}
     type: uint32_t
     restore_value: no
     initial_value: "0"
-
   - id: ${va_timer_active_display_id}
     type: bool
     restore_value: no
     initial_value: "false"
-
   - id: ${va_timer_name_display_id}
     type: std::string
     restore_value: no
     initial_value: '""'
-
   - id: ${mic_gain_saved_id}
     type: float
     restore_value: yes
     initial_value: '32.0'
-
   - id: ${led_ring_color_r_id}
     type: float
     restore_value: yes
     initial_value: '1.0'
-
   - id: ${led_ring_color_g_id}
     type: float
     restore_value: yes
     initial_value: '0.0'
-
   - id: ${led_ring_color_b_id}
     type: float
     restore_value: yes
     initial_value: '1.0'
-
   - id: ${init_in_progress_id}
     type: bool
     restore_value: no
     initial_value: 'true'
-
   - id: ${improv_ble_in_progress_id}
     type: bool
     restore_value: no
     initial_value: 'false'
-
   - id: ${voice_assistant_phase_global_id}
     type: int
     restore_value: no
     initial_value: ${voice_assist_not_ready_phase_id}
-
   - id: ${voice_assistant_phase_prev_id}
     type: int
     restore_value: no
     initial_value: "1"
-
   - id: ${saved_alarm_time_id}
     type: std::string
     restore_value: yes
     initial_value: '"Unknown"'
-
   - id: ${saved_time_zone_id}
     type: std::string
     restore_value: yes
     initial_value: '"UTC0"'
-
   - id: ${saved_alarm_action_id}
     type: std::string
     restore_value: yes
-    initial_value: '"Riproduci suono"'
-
+    initial_value: '"Play sound"'
   - id: ${first_active_timer_id}
     type: voice_assistant::Timer
     restore_value: no
-
   - id: ${is_timer_active_id}
     type: bool
     restore_value: no
-
   - id: ${fw_update_check_enabled_id}
     type: bool
-    restore_value: yes
-    initial_value: "true"
-
+    restore_value: no
+    initial_value: "false"
   - id: ${fw_update_available_id}
     type: bool
     restore_value: no
     initial_value: "false"
-
   - id: ${fw_latest_version_id}
     type: std::string
     restore_value: no
     initial_value: '"unknown"'
-
   - id: ${va_modalita_continua_id}
     type: bool
     restore_value: yes
     initial_value: "true"
-
   - id: ${va_ultimo_input_ms_id}
     type: uint32_t
     restore_value: no
     initial_value: "0"
-
-
   # ======================================================
-  # AURA / LVGL - STATO ANIMAZIONI
+  # AURA / LVGL - ANIMATION STATE
   # ======================================================
   - id: aura_assets_ready
     type: bool
     restore_value: no
     initial_value: "false"
-
   - id: aura_assets_download_started
     type: bool
     restore_value: no
     initial_value: "false"
-
   - id: aura_animation_running
     type: bool
     restore_value: no
     initial_value: "false"
-
   - id: aura_blink_running
     type: bool
     restore_value: no
     initial_value: "false"
-
   - id: aura_speaking
     type: bool
     restore_value: no
     initial_value: "false"
-
   - id: aura_random_action
     type: int
     restore_value: no
     initial_value: "0"
-
   - id: aura_next_blink_ms
     type: uint32_t
     restore_value: no
     initial_value: "0"
-
   - id: aura_next_expression_ms
     type: uint32_t
     restore_value: no
     initial_value: "0"
-
   - id: aura_speaking_frame
     type: int
     restore_value: no
     initial_value: "0"
-
   - id: aura_last_speaking_frame
     type: int
     restore_value: no
     initial_value: "-1"
-
-  # Livello smussato della bocca, derivato da playback_peak.
-  # Attacco rapido e rilascio più lento come nella lambda originale.
+  # Smoothed mouth level, derived from playback_peak.
+  # Fast attack and slower release, as in the original lambda.
   - id: aura_mouth_smooth
     type: float
     restore_value: no
     initial_value: "0.0"
-
   - id: aura_outer_ring_rotation
     type: int
     restore_value: no
     initial_value: "0"
-
   - id: aura_last_phase
     type: int
     restore_value: no
     initial_value: "-999"
-
   - id: aura_last_timer_ringing
     type: bool
     restore_value: no
     initial_value: "false"
-
   - id: aura_ui_ready
     type: bool
     restore_value: no
     initial_value: "false"
-
   # ======================================================
-  # AURA / LVGL - MODALITA MUSICA
+  # AURA / LVGL - MUSIC MODE
   # ======================================================
   - id: aura_music_mode
     type: bool
     restore_value: no
     initial_value: "false"
-
   - id: aura_music_level
     type: float
     restore_value: no
     initial_value: "0.0"
-
-  # Frame online usato durante la musica:
+  # Online frame used during music:
   # 0=idle, 1..3=Dance_01..Dance_03, 4=blink.
   - id: aura_music_pose
     type: int
     restore_value: no
     initial_value: "0"
-
   - id: aura_music_last_pose
     type: int
     restore_value: no
     initial_value: "-1"
-
   - id: aura_music_next_pose_ms
     type: uint32_t
     restore_value: no
     initial_value: "0"
-
   - id: aura_music_blinking
     type: bool
     restore_value: no
     initial_value: "false"
-
   # ======================================================
-  # AURA / LVGL - SONNO DOPO SILENZIO
+  # AURA / LVGL - SLEEP AFTER SILENCE
   # ======================================================
   - id: aura_sleeping
     type: bool
     restore_value: no
     initial_value: "false"
-
   - id: aura_last_activity_ms
     type: uint32_t
     restore_value: no
     initial_value: "0"
-
-  # Come nel codice grafico originale: 6 secondi di quiete.
+  # As in the original graphics code: 6 seconds of quiet.
   - id: aura_sleep_timeout_ms
     type: uint32_t
     restore_value: no
     initial_value: "6000"
-
   # ======================================================
-  # BOOT LVGL - tre satelliti HackMyHome
+  # BOOT LVGL - three HackMyHome satellites
   # ======================================================
   - id: aura_boot_finished
     type: bool
     restore_value: no
     initial_value: "false"
-
   - id: aura_boot_started_ms
     type: uint32_t
     restore_value: no
     initial_value: "0"
-
-  # Coordinate dei tre satelliti del boot LVGL.
-  # Stesso schema del codice ESPHome sorgente: global + widget.refresh.
+  # Coordinates of the three boot LVGL satellites.
+  # Same scheme as the original ESPHome source code: global + widget.refresh.
   - id: aura_boot_dot_outer_x
     type: int
     restore_value: no
     initial_value: "180"
-
   - id: aura_boot_dot_outer_y
     type: int
     restore_value: no
     initial_value: "30"
-
   - id: aura_boot_dot_mid_x
     type: int
     restore_value: no
     initial_value: "180"
-
   - id: aura_boot_dot_mid_y
     type: int
     restore_value: no
     initial_value: "64"
-
   - id: aura_boot_dot_inner_x
     type: int
     restore_value: no
     initial_value: "180"
-
   - id: aura_boot_dot_inner_y
     type: int
     restore_value: no
     initial_value: "99"
-
 # ======================================================
 # SCRIPT
 # ======================================================
 script:
-
   # ======================================================
-  # AURA - BARRA DI AVANZAMENTO BOOT
-  # 18 step: Wi-Fi, Home Assistant e 16 immagini Aura.
-  # Il riempimento avanza a scatti e passa da rosso a verde.
+  # AURA - BOOT PROGRESS BAR
+  # 18 steps: Wi-Fi, Home Assistant, and 16 Aura images.
+  # The fill advances in steps and shifts from red to green.
   # ======================================================
   - id: aura_refresh_boot_progress
     mode: restart
     then:
       - lambda: |-
           int step = 0;
-
           if (id(${wifi_component_id}).is_connected()) {
             step = 1;
           }
-
           if (id(${api_component_id}).is_connected()) {
             step = 2 + id(aura_download_step);
           }
-
           if (step < 0) step = 0;
           if (step > 18) step = 18;
           id(aura_boot_progress_step) = step;
-
       - lvgl.bar.update:
           id: aura_boot_progress_bar
           value: !lambda return id(aura_boot_progress_step);
@@ -768,31 +645,25 @@ script:
               if (id(aura_boot_progress_error)) {
                 return lv_color_hex(0xFF3030);
               }
-
               const float t = id(aura_boot_progress_step) / 18.0f;
               int r = 255;
               int g = 0;
               const int b = 32;
-
               if (t <= 0.5f) {
                 g = (int)(t * 2.0f * 220.0f);
               } else {
                 r = (int)((1.0f - t) * 2.0f * 255.0f);
                 g = 220;
               }
-
               if (r < 0) r = 0;
               if (r > 255) r = 255;
               if (g < 0) g = 0;
               if (g > 255) g = 255;
-
               const uint32_t rgb =
                 ((uint32_t) r << 16) |
                 ((uint32_t) g << 8)  |
                 (uint32_t) b;
-
               return lv_color_hex(rgb);
-
       - lvgl.label.update:
           id: aura_boot_progress_label
           text: !lambda |-
@@ -809,41 +680,37 @@ script:
               return lv_color_hex(0x86EFAC);
             }
             return lv_color_hex(0xCBD5E1);
-
   # ======================================================
-  # AURA - CONCLUDE IL BOOT SOLO QUANDO TUTTO E PRONTO
+  # AURA - ONLY FINISHES BOOT WHEN EVERYTHING IS READY
   # ======================================================
   - id: aura_try_finish_boot
     mode: restart
     then:
       - script.execute: aura_refresh_boot_progress
-
-      # Testo dinamico durante le varie fasi di inizializzazione.
+      # Dynamic text during the various initialization phases.
       - lvgl.label.update:
           id: aura_boot_status
           text: !lambda |-
             if (!id(${wifi_component_id}).is_connected()) {
-              return std::string("Connessione Wi-Fi...");
+              return std::string("Connecting to Wi-Fi...");
             }
             if (!id(${api_component_id}).is_connected()) {
-              return std::string("In attesa di Home Assistant...");
+              return std::string("Waiting for Home Assistant...");
             }
             if (!id(aura_assets_ready)) {
               if (!id(aura_download_status).empty()) {
                 return id(aura_download_status);
               }
-              return std::string("Caricamento immagini Aura...");
+              return std::string("Loading Aura images...");
             }
-            return std::string("Aura pronta");
-
+            return std::string("Aura ready");
       - if:
           condition:
             lambda: |-
               if (id(aura_boot_finished)) return false;
               if (!id(${api_component_id}).is_connected()) return false;
               if (!id(aura_assets_ready)) return false;
-
-              // Evita un passaggio troppo brusco nel caso di boot molto rapido.
+              // Avoid too abrupt a transition in case of a very fast boot.
               if (id(aura_boot_started_ms) == 0) return false;
               return (millis() - id(aura_boot_started_ms)) >= 1500UL;
           then:
@@ -853,28 +720,22 @@ script:
                 id(aura_last_phase) = -999;
                 id(aura_last_activity_ms) = millis();
                 id(${display_awake_until_id}) = millis() + 300000UL;
-
             - lvgl.label.update:
                 id: aura_boot_status
                 text: "Aura pronta"
                 text_color: 0x86EFAC
-
             - delay: 250ms
-
             - lvgl.image.update:
                 id: aura_main_image
                 src: aura_idle_standby_img
-
             - lvgl.page.show:
                 id: aura_page
                 animation: FADE_IN
                 time: 500ms
-
             - script.execute: aura_apply_phase
             - script.execute: aura_refresh_runtime_ui
-
   # ======================================================
-  # AURA - PAGINA PRINCIPALE
+  # AURA - MAIN PAGE
   # ======================================================
   - id: aura_show_main_page
     mode: restart
@@ -896,9 +757,8 @@ script:
           else:
             - script.execute: aura_apply_phase
       - script.execute: aura_refresh_runtime_ui
-
   # ======================================================
-  # MUSIC ASSISTANT - PAGINA RADIO
+  # MUSIC ASSISTANT - RADIO PAGE
   # ======================================================
   - id: aura_show_radio_page
     mode: restart
@@ -919,8 +779,7 @@ script:
           id: aura_radio_page
           animation: MOVE_RIGHT
           time: 220ms
-
-  # Riproduce una radio Music Assistant e torna ad Aura.
+  # Plays a Music Assistant radio station and returns to Aura.
   - id: aura_play_radio
     mode: restart
     parameters:
@@ -929,7 +788,7 @@ script:
     then:
       - lambda: |-
           id(radio_current_name) = radio_name;
-          id(radio_status_text) = std::string("Avvio ") + radio_name + "...";
+          id(radio_status_text) = std::string("Starting ") + radio_name + "...";
           id(control_page_until) = millis() + 30000UL;
       - lvgl.label.update:
           id: aura_radio_status_label
@@ -947,20 +806,20 @@ script:
             radio_uri: !lambda return radio_uri;
           on_success:
             - lambda: |-
-                id(radio_status_text) = std::string("In riproduzione: ") + id(radio_current_name);
+                id(radio_status_text) = std::string("Now playing: ") + id(radio_current_name);
             - lvgl.label.update:
                 id: aura_radio_status_label
                 text: !lambda return id(radio_status_text);
                 text_color: 0x86EFAC
             - logger.log:
                 level: INFO
-                format: "==== MUSIC ASSISTANT: avviata radio '%s'"
+                format: "==== MUSIC ASSISTANT: started radio '%s'"
                 args: [ 'id(radio_current_name).c_str()' ]
             - delay: 350ms
             - script.execute: aura_show_main_page
           on_error:
             - lambda: |-
-                id(radio_status_text) = std::string("Errore avvio: ") + id(radio_current_name);
+                id(radio_status_text) = std::string("Start error: ") + id(radio_current_name);
                 id(control_page_until) = millis() + 30000UL;
             - lvgl.label.update:
                 id: aura_radio_status_label
@@ -968,15 +827,14 @@ script:
                 text_color: 0xFCA5A5
             - logger.log:
                 level: ERROR
-                format: "==== MUSIC ASSISTANT: errore avvio radio '%s'"
+                format: "==== MUSIC ASSISTANT: radio start error '%s'"
                 args: [ 'id(radio_current_name).c_str()' ]
-
-  # Ferma il player Music Assistant associato ad Aura.
+  # Stops the Music Assistant player associated with Aura.
   - id: aura_stop_radio
     mode: restart
     then:
       - lambda: |-
-          id(radio_status_text) = "Arresto riproduzione...";
+          id(radio_status_text) = "Stopping playback...";
           id(control_page_until) = millis() + 30000UL;
       - lvgl.label.update:
           id: aura_radio_status_label
@@ -987,20 +845,19 @@ script:
           data:
             entity_id: ${ma_player_entity}
           on_success:
-            - lambda: id(radio_status_text) = "Riproduzione fermata";
+            - lambda: id(radio_status_text) = "Playback stopped";
             - lvgl.label.update:
                 id: aura_radio_status_label
                 text: !lambda return id(radio_status_text);
                 text_color: 0xCBD5E1
           on_error:
-            - lambda: id(radio_status_text) = "Errore durante lo stop";
+            - lambda: id(radio_status_text) = "Error during stop";
             - lvgl.label.update:
                 id: aura_radio_status_label
                 text: !lambda return id(radio_status_text);
                 text_color: 0xFCA5A5
-
   # ======================================================
-  # AURA - PAGINA CONTROLLI
+  # AURA - CONTROLS PAGE
   # ======================================================
   - id: aura_show_control_page
     mode: restart
@@ -1018,7 +875,6 @@ script:
           animation: MOVE_TOP
           time: 220ms
       - script.execute: aura_refresh_controls
-
   # ======================================================
   # AURA - BLINK NATURALE
   # ======================================================
@@ -1041,26 +897,21 @@ script:
             - lambda: |-
                 id(aura_animation_running) = true;
                 id(aura_blink_running) = true;
-
             - lvgl.image.update:
                 id: aura_main_image
                 src: aura_blink_half_closed_img
             - delay: 70ms
-
             - lvgl.image.update:
                 id: aura_main_image
                 src: aura_blink_closed_img
             - delay: 90ms
-
             - lvgl.image.update:
                 id: aura_main_image
                 src: aura_blink_half_closed_img
             - delay: 70ms
-
             - lvgl.image.update:
                 id: aura_main_image
                 src: aura_idle_standby_img
-
             - if:
                 condition:
                   lambda: return (esp_random() % 100) < 20;
@@ -1081,13 +932,11 @@ script:
                   - lvgl.image.update:
                       id: aura_main_image
                       src: aura_idle_standby_img
-
             - lambda: |-
                 id(aura_blink_running) = false;
                 id(aura_animation_running) = false;
                 id(aura_next_blink_ms) =
                   millis() + 6000UL + (esp_random() % 14001UL);
-
   # ======================================================
   # AURA - ESPRESSIONI IDLE CASUALI
   # ======================================================
@@ -1110,7 +959,6 @@ script:
             - lambda: |-
                 id(aura_animation_running) = true;
                 id(aura_random_action) = esp_random() % 100;
-
             - if:
                 condition:
                   lambda: return id(aura_random_action) < 18;
@@ -1119,7 +967,6 @@ script:
                       id: aura_main_image
                       src: aura_left_eyes_img
                   - delay: 900ms
-
             - if:
                 condition:
                   lambda: return id(aura_random_action) >= 18 && id(aura_random_action) < 36;
@@ -1128,7 +975,6 @@ script:
                       id: aura_main_image
                       src: aura_right_eyes_img
                   - delay: 900ms
-
             - if:
                 condition:
                   lambda: return id(aura_random_action) >= 36 && id(aura_random_action) < 48;
@@ -1137,7 +983,6 @@ script:
                       id: aura_main_image
                       src: aura_up_eyes_img
                   - delay: 850ms
-
             - if:
                 condition:
                   lambda: return id(aura_random_action) >= 48 && id(aura_random_action) < 60;
@@ -1146,7 +991,6 @@ script:
                       id: aura_main_image
                       src: aura_left_eyes_img
                   - delay: 1300ms
-
             - if:
                 condition:
                   lambda: return id(aura_random_action) >= 60 && id(aura_random_action) < 72;
@@ -1155,7 +999,6 @@ script:
                       id: aura_main_image
                       src: aura_right_eyes_img
                   - delay: 1300ms
-
             - if:
                 condition:
                   lambda: return id(aura_random_action) >= 72 && id(aura_random_action) < 80;
@@ -1164,7 +1007,6 @@ script:
                       id: aura_main_image
                       src: aura_face_up_img
                   - delay: 1100ms
-
             - if:
                 condition:
                   lambda: return id(aura_random_action) >= 80 && id(aura_random_action) < 88;
@@ -1173,7 +1015,6 @@ script:
                       id: aura_main_image
                       src: aura_face_down_img
                   - delay: 1100ms
-
             - if:
                 condition:
                   lambda: return id(aura_random_action) >= 88;
@@ -1182,18 +1023,15 @@ script:
                       id: aura_main_image
                       src: aura_half_smile_img
                   - delay: 320ms
-
             - lvgl.image.update:
                 id: aura_main_image
                 src: aura_idle_standby_img
-
             - lambda: |-
                 id(aura_animation_running) = false;
                 id(aura_next_expression_ms) =
                   millis() + 18000UL + (esp_random() % 27001UL);
-
   # ======================================================
-  # AURA - AVVIO / FINE PARLATO
+  # AURA - START / END SPEAKING
   # ======================================================
   - id: aura_start_speaking
     mode: restart
@@ -1219,11 +1057,10 @@ script:
                 id: aura_page
                 animation: FADE_IN
                 time: 120ms
-            # La bocca resta chiusa finché playback_peak non rileva la voce.
+            # The mouth stays closed until playback_peak detects voice.
             - lvgl.image.update:
                 id: aura_main_image
                 src: aura_idle_standby_img
-
   - id: aura_stop_speaking
     mode: restart
     then:
@@ -1242,10 +1079,9 @@ script:
                   millis() + 2500UL + (esp_random() % 3501UL);
                 id(aura_next_expression_ms) =
                   millis() + 12000UL + (esp_random() % 12001UL);
-
   # ======================================================
-  # AURA - BLINK DURANTE LA MUSICA
-  # Usa gli stessi frame online del blink naturale.
+  # AURA - BLINK DURING MUSIC
+  # Uses the same online frames as the natural blink.
   # ======================================================
   - id: aura_music_blink
     mode: single
@@ -1255,12 +1091,10 @@ script:
             lambda: return id(aura_music_mode) && id(aura_assets_ready);
           then:
             - lambda: id(aura_music_blinking) = true;
-
             - lvgl.image.update:
                 id: aura_main_image
                 src: aura_blink_half_closed_img
             - delay: 55ms
-
             - if:
                 condition:
                   lambda: return id(aura_music_mode);
@@ -1269,7 +1103,6 @@ script:
                       id: aura_main_image
                       src: aura_blink_closed_img
             - delay: 75ms
-
             - if:
                 condition:
                   lambda: return id(aura_music_mode);
@@ -1278,15 +1111,13 @@ script:
                       id: aura_main_image
                       src: aura_blink_half_closed_img
             - delay: 55ms
-
             - lambda: |-
                 id(aura_music_blinking) = false;
                 id(aura_music_next_pose_ms) = millis();
-
   # ======================================================
-  # AURA - SCEGLIE UNA POSA MUSICALE CASUALE
-  # 82% Dance, 10% idle, 8% blink naturale.
-  # 2 immagini Dance disponibili.
+  # AURA - PICKS A RANDOM MUSIC POSE
+  # 82% Dance, 10% idle, 8% natural blink.
+  # 2 Dance images available.
   # ======================================================
   - id: aura_music_next_pose
     mode: restart
@@ -1302,49 +1133,49 @@ script:
                 const uint32_t now = millis();
                 const uint32_t choice = esp_random() % 100U;
                 int pose = 0;
-  
+
                 if (choice < 82U) {
-                  // Pose Dance disponibili: 1, 2 e 3.
+                  // Available Dance poses: 1, 2 and 3.
                   do {
                     pose = 1 + (esp_random() % 3U);
-                  } while (pose == id(aura_music_last_pose));  
+                  } while (pose == id(aura_music_last_pose));
                 } else if (choice < 92U) {
-                  pose = 0;  // breve ritorno all'idle
-  
+                  pose = 0;  // brief return to idle
+
                 } else {
                   pose = 4;  // blink
                 }
-  
+
                 id(aura_music_pose) = pose;
-  
-                // Memorizza esclusivamente l'ultima posa Dance.
+
+                // Only store the last Dance pose.
                 if (pose == 1 || pose == 2 || pose == 3) {
                   id(aura_music_last_pose) = pose;
                 }
-  
+
                 if (pose != 4) {
-                  // Più il brano è energico, più rapidamente cambia posa.
+                  // The more energetic the track, the faster the pose changes.
                   uint32_t base = 390U;
                   uint32_t reduction =
                       (uint32_t)(id(aura_music_level) * 130.0f);
-  
+
                   uint32_t jitter = esp_random() % 210U;
                   uint32_t duration = base - reduction + jitter;
-  
+
                   if (pose == 0) {
                     duration += 220U;
                   }
-  
+
                   if (duration < 220U) {
                     duration = 220U;
                   }
-  
+
                   id(aura_music_next_pose_ms) = now + duration;
-  
+
                 } else {
                   id(aura_music_next_pose_ms) = now + 450U;
                 }
-  
+
             - if:
                 condition:
                   lambda: return id(aura_music_pose) == 0;
@@ -1352,7 +1183,7 @@ script:
                   - lvgl.image.update:
                       id: aura_main_image
                       src: aura_idle_standby_img
-  
+
             - if:
                 condition:
                   lambda: return id(aura_music_pose) == 1;
@@ -1360,7 +1191,7 @@ script:
                   - lvgl.image.update:
                       id: aura_main_image
                       src: aura_dance_01_img
-  
+
             - if:
                 condition:
                   lambda: return id(aura_music_pose) == 2;
@@ -1368,7 +1199,6 @@ script:
                   - lvgl.image.update:
                       id: aura_main_image
                       src: aura_dance_02_img
-
             - if:
                 condition:
                   lambda: return id(aura_music_pose) == 3;
@@ -1376,17 +1206,15 @@ script:
                   - lvgl.image.update:
                       id: aura_main_image
                       src: aura_dance_03_img
-
             - if:
                 condition:
                   lambda: return id(aura_music_pose) == 4;
                 then:
                   - script.execute: aura_music_blink
-
   # ======================================================
-  # AURA - MODALITA MUSICA
-  # Aura resta visibile; orario e timer vengono sostituiti
-  # da note danzanti, pose online e VU meter circolare.
+  # AURA - MUSIC MODE
+  # Aura stays visible; the clock and timer are replaced
+  # by dancing notes, online poses, and a circular VU meter.
   # ======================================================
   - id: aura_start_music
     mode: restart
@@ -1397,7 +1225,6 @@ script:
             lambda: |-
               const auto state = id(${media_player_id}).state;
               const int phase = id(${voice_assistant_phase_global_id});
-
               return id(aura_assets_ready) &&
                      state == media_player::MediaPlayerState::MEDIA_PLAYER_STATE_PLAYING &&
                      !id(${timer_ringing_switch_id}).state &&
@@ -1423,28 +1250,23 @@ script:
                 id(radio_page_active) = false;
                 id(control_page_until) = 0;
                 id(${display_awake_until_id}) = millis() + 300000UL;
-
             - lvgl.page.show:
                 id: aura_page
                 animation: FADE_IN
                 time: 140ms
-
             - lvgl.image.update:
                 id: aura_main_image
                 src: aura_dance_01_img
-
             - lvgl.label.update:
                 id: aura_status_label
                 text: "MUSICA"
                 text_color: 0xBFFFEA
-
             - lvgl.widget.hide: aura_time_plate
             - lvgl.widget.hide: aura_time_label
             - lvgl.widget.hide: aura_timer_plate
             - lvgl.widget.hide: aura_timer_label
             - lvgl.widget.hide: aura_timer_bar
             - lvgl.widget.hide: aura_swipe_hint
-
             - lvgl.widget.show: aura_music_vu_arc
             - lvgl.widget.show: aura_music_note_1
             - lvgl.widget.show: aura_music_note_2
@@ -1453,7 +1275,6 @@ script:
             - lvgl.widget.show: aura_music_note_5
             - lvgl.widget.show: aura_music_note_6
             - script.execute: aura_music_next_pose
-
   - id: aura_stop_music
     mode: restart
     then:
@@ -1474,13 +1295,11 @@ script:
                   millis() + 2500UL + (esp_random() % 3501UL);
                 id(aura_next_expression_ms) =
                   millis() + 12000UL + (esp_random() % 12001UL);
-
             - lvgl.arc.update:
                 id: aura_music_vu_arc
                 value: 0
                 indicator:
                   arc_color: 0x00DC78
-
             - lvgl.widget.hide: aura_music_vu_arc
             - lvgl.widget.hide: aura_music_note_1
             - lvgl.widget.hide: aura_music_note_2
@@ -1490,15 +1309,13 @@ script:
             - lvgl.widget.hide: aura_music_note_6
             - lvgl.widget.update:
                 id: aura_main_image
-                x: 0
-                y: 0
+                x: 60
+                y: 60
             - lvgl.widget.show: aura_swipe_hint
-
             - script.execute: aura_apply_phase
             - script.execute: aura_refresh_runtime_ui
-
   # ======================================================
-  # AURA - REGISTRA ATTIVITA E RISVEGLIA
+  # AURA - LOG ACTIVITY AND WAKE UP
   # ======================================================
   - id: aura_register_activity
     mode: restart
@@ -1506,7 +1323,6 @@ script:
       - lambda: |-
           id(aura_last_activity_ms) = millis();
       - script.execute: aura_wake_up
-
   # ======================================================
   # AURA - ENTRA NEL SONNO
   # ======================================================
@@ -1537,29 +1353,24 @@ script:
                 id(aura_sleeping) = true;
                 id(aura_animation_running) = false;
                 id(aura_blink_running) = false;
-
             - lvgl.image.update:
                 id: aura_main_image
                 src: aura_blink_closed_img
-
             - lvgl.label.update:
                 id: aura_status_label
                 text: "Zzz..."
                 text_color: 0xB9C7FF
-
             - lvgl.widget.show: aura_sleep_dim
             - lvgl.widget.show: aura_sleep_z_1
             - lvgl.widget.show: aura_sleep_z_2
             - lvgl.widget.show: aura_sleep_z_3
             - lvgl.widget.show: aura_sleep_z_4
-
             - lvgl.widget.hide: aura_time_plate
             - lvgl.widget.hide: aura_time_label
             - lvgl.widget.hide: aura_timer_plate
             - lvgl.widget.hide: aura_timer_label
             - lvgl.widget.hide: aura_timer_bar
             - lvgl.widget.hide: aura_swipe_hint
-
             - lvgl.arc.update:
                 id: aura_outer_arc_1
                 arc_color: 0x334155
@@ -1572,7 +1383,6 @@ script:
             - lvgl.arc.update:
                 id: aura_outer_arc_4
                 arc_color: 0x334155
-
   # ======================================================
   # AURA - RISVEGLIO
   # ======================================================
@@ -1590,19 +1400,16 @@ script:
                   millis() + 2500UL + (esp_random() % 3501UL);
                 id(aura_next_expression_ms) =
                   millis() + 12000UL + (esp_random() % 12001UL);
-
             - lvgl.widget.hide: aura_sleep_dim
             - lvgl.widget.hide: aura_sleep_z_1
             - lvgl.widget.hide: aura_sleep_z_2
             - lvgl.widget.hide: aura_sleep_z_3
             - lvgl.widget.hide: aura_sleep_z_4
             - lvgl.widget.show: aura_swipe_hint
-
             - script.execute: aura_apply_phase
             - script.execute: aura_refresh_runtime_ui
-
   # ======================================================
-  # AURA - APPLICA FASE VOICE ASSISTANT / EMOZIONE
+  # AURA - APPLY VOICE ASSISTANT PHASE / EMOTION
   # ======================================================
   - id: aura_apply_phase
     mode: restart
@@ -1617,7 +1424,6 @@ script:
           else:
             - lambda: |-
                 id(aura_last_phase) = id(${voice_assistant_phase_global_id});
-
             - if:
                 condition:
                   lambda: return id(${timer_ringing_switch_id}).state;
@@ -1667,7 +1473,6 @@ script:
                         - script.execute: aura_stop_speaking
                         - script.stop: aura_blink
                         - script.stop: aura_random_idle_animation
-
                         - if:
                             condition:
                               lambda: return id(${voice_assistant_phase_global_id}) == ${voice_assist_waiting_for_command_phase_id};
@@ -1691,7 +1496,6 @@ script:
                               - lvgl.arc.update:
                                   id: aura_outer_arc_4
                                   arc_color: 0x00E5FF
-
                         - if:
                             condition:
                               lambda: return id(${voice_assistant_phase_global_id}) == ${voice_assist_listening_for_command_phase_id};
@@ -1715,7 +1519,6 @@ script:
                               - lvgl.arc.update:
                                   id: aura_outer_arc_4
                                   arc_color: 0x22C55E
-
                         - if:
                             condition:
                               lambda: return id(${voice_assistant_phase_global_id}) == ${voice_assist_thinking_phase_id};
@@ -1725,7 +1528,7 @@ script:
                                   src: aura_up_eyes_img
                               - lvgl.label.update:
                                   id: aura_status_label
-                                  text: "STO PENSANDO"
+                                  text: "THINKING"
                                   text_color: 0xE9D5FF
                               - lvgl.arc.update:
                                   id: aura_outer_arc_1
@@ -1739,7 +1542,6 @@ script:
                               - lvgl.arc.update:
                                   id: aura_outer_arc_4
                                   arc_color: 0xA855F7
-
                         - if:
                             condition:
                               lambda: return id(${voice_assistant_phase_global_id}) == ${voice_assist_error_phase_id};
@@ -1749,7 +1551,7 @@ script:
                                   src: aura_face_down_img
                               - lvgl.label.update:
                                   id: aura_status_label
-                                  text: "ERRORE"
+                                  text: "ERROR"
                                   text_color: 0xFFD1D1
                               - lvgl.arc.update:
                                   id: aura_outer_arc_1
@@ -1763,7 +1565,6 @@ script:
                               - lvgl.arc.update:
                                   id: aura_outer_arc_4
                                   arc_color: 0xEF4444
-
                         - if:
                             condition:
                               lambda: return id(${voice_assistant_phase_global_id}) == ${voice_assist_not_ready_phase_id};
@@ -1773,7 +1574,7 @@ script:
                                   src: aura_idle_standby_img
                               - lvgl.label.update:
                                   id: aura_status_label
-                                  text: "NON CONNESSA"
+                                  text: "NOT CONNECTED"
                                   text_color: 0xCBD5E1
                               - lvgl.arc.update:
                                   id: aura_outer_arc_1
@@ -1787,7 +1588,6 @@ script:
                               - lvgl.arc.update:
                                   id: aura_outer_arc_4
                                   arc_color: 0x64748B
-
                         - if:
                             condition:
                               lambda: return id(${voice_assistant_phase_global_id}) == ${voice_assist_idle_phase_id};
@@ -1808,7 +1608,6 @@ script:
                               - lvgl.arc.update:
                                   id: aura_outer_arc_4
                                   arc_color: 0x00E5FF
-
                               - if:
                                   condition:
                                     lambda: return id(${display_emotion_mode_id}) == 0;
@@ -1845,9 +1644,8 @@ script:
                                           - lvgl.image.update:
                                               id: aura_main_image
                                               src: aura_idle_standby_img
-
   # ======================================================
-  # AURA - TIMER, CONNESSIONI E CONTROLLI
+  # AURA - TIMER, CONNECTIONS AND CONTROLS
   # ======================================================
   - id: aura_refresh_runtime_ui
     mode: restart
@@ -1862,7 +1660,6 @@ script:
             char buf[8];
             snprintf(buf, sizeof(buf), "%02d:%02d", now.hour, now.minute);
             return std::string(buf);
-
       - if:
           condition:
             lambda: return id(aura_sleeping);
@@ -1928,21 +1725,18 @@ script:
                         - lvgl.widget.hide: aura_timer_plate
                         - lvgl.widget.hide: aura_timer_label
                         - lvgl.widget.hide: aura_timer_bar
-
       - lvgl.widget.update:
           id: aura_wifi_dot
           bg_color: !lambda |-
             return id(${wifi_component_id}).is_connected()
               ? lv_color_hex(0x22C55E)
               : lv_color_hex(0xEF4444);
-
       - lvgl.widget.update:
           id: aura_api_dot
           bg_color: !lambda |-
             return id(${api_component_id}).is_connected()
               ? lv_color_hex(0x22C55E)
               : lv_color_hex(0xF59E0B);
-
   - id: aura_refresh_controls
     mode: restart
     then:
@@ -1954,7 +1748,6 @@ script:
             if (v < 0.0f) v = 0.0f;
             if (v > 1.0f) v = 1.0f;
             return (int)(v * 100.0f + 0.5f);
-
       - lvgl.label.update:
           id: aura_volume_value_label
           text: !lambda |-
@@ -1964,69 +1757,58 @@ script:
             char buf[12];
             snprintf(buf, sizeof(buf), "%d%%", pct);
             return std::string(buf);
-
       - lvgl.label.update:
           id: aura_mute_label
           text: !lambda |-
             return id(ui_media_muted)
               ? std::string("AUDIO OFF")
               : std::string("AUDIO ON");
-
       - lvgl.widget.update:
           id: aura_mute_button
           bg_color: !lambda |-
             return id(ui_media_muted)
               ? lv_color_hex(0x7F1D1D)
               : lv_color_hex(0x0F3A4A);
-
       - lvgl.label.update:
           id: aura_va_label
           text: !lambda |-
             return id(${voice_assistant_id}).is_running()
               ? std::string("STOP VA")
-              : std::string("AVVIA VA");
-
+              : std::string("START VA");
       - lvgl.label.update:
           id: aura_alarm_label
           text: !lambda |-
             return id(${antifurto_switch_id}).state
-              ? std::string("ALLARME ON")
-              : std::string("ALLARME OFF");
-
+              ? std::string("ALARM ON")
+              : std::string("ALARM OFF");
       - lvgl.widget.update:
           id: aura_alarm_button
           bg_color: !lambda |-
             return id(${antifurto_switch_id}).state
               ? lv_color_hex(0x7F1D1D)
               : lv_color_hex(0x0F3A4A);
-
   - id: ${script_va_local_volume_up_id}
     mode: restart
     then:
       - media_player.volume_up: ${media_player_id}
       - script.execute: aura_refresh_controls
-
   - id: ${script_va_local_volume_down_id}
     mode: restart
     then:
       - media_player.volume_down: ${media_player_id}
       - script.execute: aura_refresh_controls
-
   - id: ${script_va_local_mute_on_id}
     mode: restart
     then:
       - media_player.mute: ${media_player_id}
-
   - id: ${script_va_local_mute_off_id}
     mode: restart
     then:
       - media_player.unmute: ${media_player_id}
-
   - id: ${script_va_local_silent_on_id}
     mode: restart
     then:
       - switch.turn_on: ${mic_mute_switch_id}
-
   - id: ${script_va_stop_id}
     mode: restart
     then:
@@ -2034,17 +1816,14 @@ script:
       - lambda: |-
           id(${voice_assistant_phase_global_id}) = ${voice_assist_idle_phase_id};
       - script.execute: ${script_ensure_wake_word_running_id}
-
   - id: ${script_va_local_alarm_on_id}
     mode: restart
     then:
       - switch.turn_on: ${antifurto_switch_id}
-
   - id: ${script_va_local_alarm_off_id}
     mode: restart
     then:
-      - switch.turn_off: ${antifurto_switch_id}  
-
+      - switch.turn_off: ${antifurto_switch_id}
   - id: ${script_start_va_from_wake_word_id}
     mode: restart
     parameters:
@@ -2055,7 +1834,6 @@ script:
           id(${display_awake_until_id}) = millis() + 300000UL;
           id(${voice_assistant_phase_global_id}) = ${voice_assist_waiting_for_command_phase_id};
           id(${va_ultimo_input_ms_id}) = millis();
-
       - if:
           condition:
             switch.is_on: ${wake_sound_switch_id}
@@ -2064,11 +1842,9 @@ script:
                 id: ${script_play_sound_id}
                 priority: false
                 sound_file: !lambda return id(${wake_word_triggered_sound_id});
-
-            # Piccola attesa per lasciare partire e finire il ding.
-            # Se il file è più lungo, aumenta a 500/600ms.
+            # Short wait to let the ding start and finish.
+            # If the file is longer, increase to 500/600ms.
             - delay: 400ms
-
       - if:
           condition:
             lambda: return id(${va_modalita_continua_id});
@@ -2077,16 +1853,13 @@ script:
           else:
             - voice_assistant.start:
                 wake_word: !lambda return detected_wake_word;
-
       - delay: 200ms
       - lambda: |-
           id(${wake_word_flow_active_id}) = false;
-
   - id: ${script_ensure_wake_word_running_id}
     mode: restart
     then:
       - delay: 800ms
-
       - if:
           condition:
             and:
@@ -2109,17 +1882,16 @@ script:
                 then:
                   - logger.log:
                       level: INFO
-                      format: "==== MWW: gia attivo"
+                      format: "==== MWW: already active"
                 else:
                   - logger.log:
                       level: INFO
-                      format: "==== MWW: START sicuro"
+                      format: "==== MWW: safe START"
                   - micro_wake_word.start:
           else:
             - logger.log:
                 level: INFO
-                format: "==== MWW: start saltato, condizioni non pronte"
-
+                format: "==== MWW: start skipped, conditions not ready"
   - id: ${script_ring_timer_id}
     then:
       - script.execute: ${script_enable_repeat_one_id}
@@ -2127,7 +1899,6 @@ script:
           id: ${script_play_sound_id}
           priority: true
           sound_file: !lambda return id(${timer_finished_sound_id});
-
   - id: ${script_enable_repeat_one_id}
     then:
       - lambda: |-
@@ -2137,7 +1908,6 @@ script:
             .set_announcement(true)
             .perform();
           id(${media_player_id})->set_playlist_delay_ms(speaker::AudioPipelineType::ANNOUNCEMENT, 500);
-
   - id: ${script_disable_repeat_id}
     then:
       - lambda: |-
@@ -2147,7 +1917,6 @@ script:
             .set_announcement(true)
             .perform();
           id(${media_player_id})->set_playlist_delay_ms(speaker::AudioPipelineType::ANNOUNCEMENT, 0);
-
   - id: ${script_play_sound_id}
     parameters:
       priority: bool
@@ -2164,7 +1933,6 @@ script:
           if ((id(${media_player_id}).state != media_player::MediaPlayerState::MEDIA_PLAYER_STATE_ANNOUNCING) || priority) {
             id(${media_player_id})->play_file(sound_file, true, false);
           }
-
   - id: ${script_fetch_first_active_timer_id}
     mode: single
     then:
@@ -2173,10 +1941,8 @@ script:
           uint32_t now = millis();
           if (now - last_fetch_time < 500) return;
           last_fetch_time = now;
-
           const auto &timers = id(${voice_assistant_id}).get_timers();
           if (timers.empty()) return;
-
           auto output_timer = *timers.begin();
           for (const auto &timer : timers) {
             if (timer.is_active && timer.seconds_left <= output_timer.seconds_left) {
@@ -2184,7 +1950,6 @@ script:
             }
           }
           id(${first_active_timer_id}) = output_timer;
-
   - id: ${script_check_if_timers_active_id}
     then:
       - lambda: |-
@@ -2199,7 +1964,6 @@ script:
             }
           }
           id(${is_timer_active_id}) = output;
-
   - id: ${script_activate_stop_word_once_id}
     then:
       - delay: 1s
@@ -2216,7 +1980,6 @@ script:
                   switch.is_off: ${timer_ringing_switch_id}
                 then:
                   - micro_wake_word.disable_model: ${wake_word_stop_model_id}
-
   - id: ${script_check_alarm_id}
     then:
       - lambda: |-
@@ -2228,15 +1991,14 @@ script:
                 isdigit(set_alarm_time[3]) && isdigit(set_alarm_time[4])) {
               auto alarm_hour = std::stoi(set_alarm_time.substr(0, 2));
               auto alarm_minute = std::stoi(set_alarm_time.substr(3, 2));
-
               auto time_now = id(${rtc_id}).now();
               if (time_now.hour == alarm_hour && time_now.minute == alarm_minute) {
-                auto action = id(${alarm_action_select_id}).state;
-                if (action == "Riproduci suono") {
+                std::string action = id(${alarm_action_select_id}).current_option();
+                if (action == "Play sound") {
                   id(${timer_ringing_switch_id}).turn_on();
-                } else if (action == "Invia evento") {
+                } else if (action == "Send event") {
                   id(${script_send_alarm_event_id}).execute();
-                } else if (action == "Suono ed evento") {
+                } else if (action == "Sound and event") {
                   id(${timer_ringing_switch_id}).turn_on();
                   id(${script_send_alarm_event_id}).execute();
                 }
@@ -2245,12 +2007,10 @@ script:
               ESP_LOGW("alarm", "Incorrect alarm time setting");
             }
           }
-
   - id: ${script_send_alarm_event_id}
     then:
       - homeassistant.event:
           event: esphome.alarm_ringing
-
   - id: ${script_send_tts_uri_event_id}
     parameters:
       tts_uri: string
@@ -2259,7 +2019,6 @@ script:
           event: esphome.tts_uri
           data:
             uri: !lambda return tts_uri;
-
   - id: ${script_send_stt_text_event_id}
     parameters:
       stt_text: string
@@ -2268,7 +2027,6 @@ script:
           event: esphome.stt_text
           data:
             text: !lambda return stt_text;
-
   - id: ${script_publish_current_time_id}
     mode: single
     then:
@@ -2280,7 +2038,6 @@ script:
             id(${current_time_text_id}).publish_state(current_time_string);
             last_time_string = current_time_string;
           }
-
   - id: ${script_check_firmware_version_id}
     mode: restart
     then:
@@ -2302,12 +2059,9 @@ script:
                           ESP_LOGW("fw_check", "HTTP status invalid: %d", response->status_code);
                           return;
                         }
-
                         std::string s = body;
-
                         while (!s.empty() && (s.back() == '\n' || s.back() == '\r' || s.back() == ' ' || s.back() == '\t')) s.pop_back();
                         while (!s.empty() && (s.front() == '\n' || s.front() == '\r' || s.front() == ' ' || s.front() == '\t')) s.erase(0, 1);
-
                         std::string latest = "";
                         const std::string key = "version:";
                         auto pos = s.find(key);
@@ -2316,21 +2070,17 @@ script:
                           while (!latest.empty() && (latest.front() == ' ' || latest.front() == '\t')) latest.erase(0, 1);
                           while (!latest.empty() && (latest.back() == '\n' || latest.back() == '\r' || latest.back() == ' ' || latest.back() == '\t')) latest.pop_back();
                         }
-
                         if (latest.empty()) {
                           ESP_LOGW("fw_check", "Remote version not found");
                           return;
                         }
-
                         id(${fw_latest_version_id}) = latest;
                         id(${fw_update_available_id}) = (latest != std::string("${fw_version}"));
-
                         ESP_LOGI("fw_check",
                                  "Local=%s Remote=%s Update=%d",
                                  "${fw_version}",
                                  id(${fw_latest_version_id}).c_str(),
                                  (int) id(${fw_update_available_id}));
-
                         if (id(${fw_update_available_id})) {
                           id(${display_awake_until_id}) = millis() + 300000UL;
                         }
@@ -2339,7 +2089,6 @@ script:
                     - logger.log:
                         level: WARN
                         format: "==== Firmware check: HTTP error"
-
   - id: ${script_flash_ring_id}
     mode: restart
     then:
@@ -2350,7 +2099,6 @@ script:
       - light.turn_on:
           id: ${display_backlight_id}
           brightness: 80%
-
   - id: ${script_antifurto_trigger_id}
     mode: restart
     then:
@@ -2360,12 +2108,10 @@ script:
           id(${display_startled_until_id}) = millis() + 2200UL;
       - logger.log:
           level: WARN
-          format: "==== ANTIFURTO: rumore rilevato"
-
+          format: "==== SECURITY: noise detected"
 psram:
   mode: octal
   speed: 80MHz
-
 time:
   - platform: homeassistant
     id: ${rtc_id}
@@ -2376,12 +2122,10 @@ time:
           - script.execute: ${script_check_alarm_id}
     on_time_sync:
       - script.execute: ${script_publish_current_time_id}
-
 interval:
-
   # ----------------------------------------------------
-  # BOOT ANIMATION LVGL - schema identico alla fonte
-  # Tre oggetti aggiornati tramite global e widget.refresh.
+  # BOOT ANIMATION LVGL - schema identical to the source
+  # Three objects updated via global and widget.refresh.
   # ----------------------------------------------------
   - interval: 80ms
     then:
@@ -2396,31 +2140,23 @@ interval:
                 const int cx = 180;
                 const int cy = 180;
                 const float PI2 = 6.2831853f;
-
                 const float a_outer =
                   ((now % 4200UL) / 4200.0f) * PI2 - 1.5707963f;
-
                 const float a_mid =
                   ((now % 2800UL) / 2800.0f) * PI2 + 0.45f;
-
                 const float a_inner =
                   ((now % 1800UL) / 1800.0f) * PI2 + 2.10f;
-
                 id(aura_boot_dot_outer_x) = cx + (int)(cosf(a_outer) * 150.0f);
                 id(aura_boot_dot_outer_y) = cy + (int)(sinf(a_outer) * 150.0f);
-
                 id(aura_boot_dot_mid_x) = cx + (int)(cosf(a_mid) * 116.0f);
                 id(aura_boot_dot_mid_y) = cy + (int)(sinf(a_mid) * 116.0f);
-
                 id(aura_boot_dot_inner_x) = cx + (int)(cosf(a_inner) * 81.0f);
                 id(aura_boot_dot_inner_y) = cy + (int)(sinf(a_inner) * 81.0f);
-
             - lvgl.widget.refresh: aura_boot_dot_outer
             - lvgl.widget.refresh: aura_boot_dot_mid
             - lvgl.widget.refresh: aura_boot_dot_inner
-
   # ----------------------------------------------------
-  # BOOT MANAGER - aggiorna stato e apre Aura quando pronta
+  # BOOT MANAGER - updates status and opens Aura when ready
   # ----------------------------------------------------
   - interval: 1s
     then:
@@ -2429,12 +2165,11 @@ interval:
             lambda: return !id(aura_boot_finished);
           then:
             - script.execute: aura_try_finish_boot
-
   # ----------------------------------------------------
-  # AURA - MOTORE MUSICA / NOTE / VU METER
-  # Il livello reale arriva da playback_peak. Se il valore
-  # e assente o quasi fermo viene mantenuto un lieve ritmo
-  # sintetico per non congelare l'animazione.
+  # AURA - MUSIC ENGINE / NOTES / VU METER
+  # The real level comes from playback_peak. If the value
+  # is absent or nearly still, a light synthetic rhythm is
+  # kept so the animation doesn't freeze.
   # ----------------------------------------------------
   - interval: 80ms
     then:
@@ -2443,7 +2178,6 @@ interval:
             lambda: |-
               const auto state = id(${media_player_id}).state;
               const int phase = id(${voice_assistant_phase_global_id});
-
               const bool should_music =
                 id(aura_assets_ready) &&
                 state == media_player::MediaPlayerState::MEDIA_PLAYER_STATE_PLAYING &&
@@ -2454,19 +2188,15 @@ interval:
                 phase != ${voice_assist_listening_for_command_phase_id} &&
                 phase != ${voice_assist_thinking_phase_id} &&
                 phase != ${voice_assist_replying_phase_id};
-
               return should_music && !id(aura_music_mode);
           then:
             - script.execute: aura_start_music
-
       - if:
           condition:
             lambda: |-
               if (!id(aura_music_mode)) return false;
-
               const auto state = id(${media_player_id}).state;
               const int phase = id(${voice_assistant_phase_global_id});
-
               return state != media_player::MediaPlayerState::MEDIA_PLAYER_STATE_PLAYING ||
                      id(${timer_ringing_switch_id}).state ||
                      id(${va_timer_active_display_id}) ||
@@ -2477,41 +2207,34 @@ interval:
                      phase == ${voice_assist_replying_phase_id};
           then:
             - script.execute: aura_stop_music
-
       - if:
           condition:
             lambda: return id(aura_music_mode) && id(aura_assets_ready);
           then:
             - lambda: |-
                 const uint32_t now = millis();
-
-                // VU musicale basato sul livello medio RMS, non sul picco.
-                // Scala utile: -58 dB RMS = 0%, -1 dB RMS = 100%.
-                // La curva 1.55 amplia la zona bassa e impedisce che il VU
-                // resti costantemente a fondo scala con la musica normale.
+                // Music VU based on the average RMS level, not the peak.
+                // Useful scale: -58 dB RMS = 0%, -1 dB RMS = 100%.
+                // The 1.55 curve widens the low range and keeps the VU
+                // from sitting constantly at full scale with normal music.
                 float real_level = 0.0f;
                 const float rms_db = id(${playback_rms_sensor_id}).state;
                 if (!std::isnan(rms_db) && !std::isinf(rms_db)) {
                   float normalized = (rms_db + 58.0f) / 57.0f;
                   if (normalized < 0.0f) normalized = 0.0f;
                   if (normalized > 1.0f) normalized = 1.0f;
-
                   real_level = powf(normalized, 1.55f);
-
                   if (rms_db <= -58.0f) {
                     real_level = 0.0f;
                   }
                 }
-
                 const float slow = (sinf(now / 310.0f) + 1.0f) * 0.5f;
                 const float fast = (sinf(now / 105.0f) + 1.0f) * 0.5f;
                 float pulse = sinf(now / 72.0f);
                 if (pulse < 0.0f) pulse = 0.0f;
                 pulse = pulse * pulse * pulse * pulse;
-
                 const float synthetic =
                   0.10f + slow * 0.16f + fast * 0.18f + pulse * 0.38f;
-
                 float target = real_level;
                 if (target < 0.04f) {
                   target = synthetic * 0.72f;
@@ -2519,18 +2242,13 @@ interval:
                   const float floor = synthetic * 0.20f;
                   if (target < floor) target = floor;
                 }
-
                 if (target > 1.0f) target = 1.0f;
-
                 const float alpha =
                   target > id(aura_music_level) ? 0.58f : 0.14f;
-
                 id(aura_music_level) +=
                   (target - id(aura_music_level)) * alpha;
-
                 if (id(aura_music_level) < 0.0f) id(aura_music_level) = 0.0f;
                 if (id(aura_music_level) > 1.0f) id(aura_music_level) = 1.0f;
-
             - lvgl.arc.update:
                 id: aura_music_vu_arc
                 value: !lambda |-
@@ -2541,25 +2259,22 @@ interval:
                     if (level >= 0.90f) return lv_color_hex(0xFF4614);
                     if (level >= 0.70f) return lv_color_hex(0xFFB900);
                     return lv_color_hex(0x00DC78);
-
             - lvgl.widget.refresh: aura_music_note_1
             - lvgl.widget.refresh: aura_music_note_2
             - lvgl.widget.refresh: aura_music_note_3
             - lvgl.widget.refresh: aura_music_note_4
             - lvgl.widget.refresh: aura_music_note_5
             - lvgl.widget.refresh: aura_music_note_6
-
-            # Piccolo movimento continuo dell'intera immagine:
-            # destra/sinistra e alto/basso, più evidente sui picchi.
+            # Small continuous movement of the whole image:
+            # left/right and up/down, more noticeable on peaks.
             - lvgl.widget.update:
                 id: aura_main_image
                 x: !lambda |-
                   const float amp = 2.0f + id(aura_music_level) * 5.0f;
-                  return (int)(sinf(millis() / 360.0f) * amp);
+                  return 60 + (int)(sinf(millis() / 360.0f) * amp);
                 y: !lambda |-
                   const float amp = 1.5f + id(aura_music_level) * 3.5f;
-                  return -1 + (int)(sinf(millis() / 245.0f + 1.1f) * amp);
-
+                  return 59 + (int)(sinf(millis() / 245.0f + 1.1f) * amp);
             - if:
                 condition:
                   lambda: |-
@@ -2567,10 +2282,9 @@ interval:
                            millis() >= id(aura_music_next_pose_ms);
                 then:
                   - script.execute: aura_music_next_pose
-
   # ----------------------------------------------------
-  # AURA - SONNO / RISVEGLIO DOPO QUIETE
-  # Rumore, touch, media, timer e VA mantengono Aura sveglia.
+  # AURA - SLEEP / WAKE AFTER QUIET
+  # Noise, touch, media, timer, and VA keep Aura awake.
   # ----------------------------------------------------
   - interval: 250ms
     then:
@@ -2578,11 +2292,9 @@ interval:
           const uint32_t now = millis();
           const auto state = id(${media_player_id}).state;
           const int phase = id(${voice_assistant_phase_global_id});
-
           if (id(aura_last_activity_ms) == 0) {
             id(aura_last_activity_ms) = now;
           }
-
           const bool active =
             !id(aura_boot_finished) ||
             id(control_page_active) ||
@@ -2595,11 +2307,9 @@ interval:
             phase != ${voice_assist_idle_phase_id} ||
             state == media_player::MediaPlayerState::MEDIA_PLAYER_STATE_PLAYING ||
             state == media_player::MediaPlayerState::MEDIA_PLAYER_STATE_ANNOUNCING;
-
           if (active) {
             id(aura_last_activity_ms) = now;
           }
-
       - if:
           condition:
             lambda: |-
@@ -2619,7 +2329,6 @@ interval:
               return id(aura_sleeping) && active;
           then:
             - script.execute: aura_wake_up
-
       - if:
           condition:
             lambda: |-
@@ -2627,7 +2336,6 @@ interval:
               if (id(aura_sleeping)) return false;
               if (id(aura_last_activity_ms) == 0) return false;
               if ((uint32_t)(millis() - id(aura_last_activity_ms)) < id(aura_sleep_timeout_ms)) return false;
-
               const auto state = id(${media_player_id}).state;
               return !id(control_page_active) &&
                      !id(aura_music_mode) &&
@@ -2641,7 +2349,6 @@ interval:
                      state != media_player::MediaPlayerState::MEDIA_PLAYER_STATE_ANNOUNCING;
           then:
             - script.execute: aura_go_to_sleep
-
       - if:
           condition:
             lambda: return id(aura_sleeping);
@@ -2650,18 +2357,16 @@ interval:
             - lvgl.widget.refresh: aura_sleep_z_2
             - lvgl.widget.refresh: aura_sleep_z_3
             - lvgl.widget.refresh: aura_sleep_z_4
-
   # ----------------------------------------------------
-  # AURA - CAMBIO FASE / STATO TIMER
+  # AURA - PHASE CHANGE / TIMER STATE
   # ----------------------------------------------------
   - interval: 100ms
     then:
       - if:
           condition:
             lambda: |-
-              // Durante il boot il testo e la pagina sono gestiti dal boot manager.
+              // During boot the text and page are managed by the boot manager.
               if (!id(aura_assets_ready)) return false;
-
               bool timer_now = id(${timer_ringing_switch_id}).state;
               bool changed =
                 id(aura_last_phase) != id(${voice_assistant_phase_global_id}) ||
@@ -2672,9 +2377,8 @@ interval:
               return changed;
           then:
             - script.execute: aura_apply_phase
-
   # ----------------------------------------------------
-  # AURA - ROTAZIONE ANELLO ESTERNO
+  # AURA - OUTER RING ROTATION
   # ----------------------------------------------------
   - interval: 250ms
     then:
@@ -2701,9 +2405,8 @@ interval:
             - lvgl.arc.update:
                 id: aura_outer_arc_4
                 rotation: !lambda return id(aura_outer_ring_rotation);
-
   # ----------------------------------------------------
-  # AURA - CONTROLLO BLINK
+  # AURA - BLINK CONTROL
   # ----------------------------------------------------
   - interval: 500ms
     then:
@@ -2725,14 +2428,12 @@ interval:
               return (int32_t)(millis() - id(aura_next_blink_ms)) >= 0;
           then:
             - script.execute: aura_blink
-
   # ----------------------------------------------------
-  # AURA - ESPRESSIONI CASUALI / UI RUNTIME / TIMEOUT
+  # AURA - RANDOM EXPRESSIONS / RUNTIME UI / TIMEOUT
   # ----------------------------------------------------
   - interval: 1s
     then:
       - script.execute: aura_refresh_runtime_ui
-
       - if:
           condition:
             lambda: |-
@@ -2751,7 +2452,6 @@ interval:
               return (int32_t)(millis() - id(aura_next_expression_ms)) >= 0;
           then:
             - script.execute: aura_random_idle_animation
-
       - if:
           condition:
             lambda: |-
@@ -2760,11 +2460,10 @@ interval:
                      (int32_t)(millis() - id(control_page_until)) >= 0;
           then:
             - script.execute: aura_show_main_page
-
   # ----------------------------------------------------
-  # AURA - BOCCA AUDIO-REATTIVA DURANTE IL PARLATO
-  # Riproduce la logica della lambda originale:
-  # playback_peak -> smoothing -> sillaba/frase/chiusure -> frame LVGL.
+  # AURA - AUDIO-REACTIVE MOUTH WHILE SPEAKING
+  # Reproduces the logic of the original lambda:
+  # playback_peak -> smoothing -> syllable/phrase/closures -> LVGL frame.
   # ----------------------------------------------------
   - interval: 70ms
     then:
@@ -2778,66 +2477,52 @@ interval:
               if (id(aura_sleeping)) return false;
               if (id(${timer_ringing_switch_id}).state) return false;
               if (id(${voice_assistant_phase_global_id}) != ${voice_assist_replying_phase_id}) return false;
-
               const auto mp_state = id(${media_player_id}).state;
               return mp_state == media_player::MediaPlayerState::MEDIA_PLAYER_STATE_ANNOUNCING;
           then:
             - lambda: |-
                 const uint32_t now = millis();
-
                 auto clampf = [](float v, float lo, float hi) -> float {
                   if (v < lo) return lo;
                   if (v > hi) return hi;
                   return v;
                 };
-
-                // 1) Livello reale dell'audio, stessa conversione della lambda originale.
+                // 1) Real audio level, same conversion as the original lambda.
                 float mouth_level = 0.0f;
                 const float db = id(${playback_peak_sensor_id}).state;
-
                 if (!std::isnan(db)) {
                   mouth_level = clampf((db + 68.0f) / 45.0f, 0.0f, 1.0f);
                   if (db < -62.0f) {
                     mouth_level = 0.0f;
                   }
                 }
-
-                // 2) Attacco rapido, rilascio più morbido.
+                // 2) Fast attack, softer release.
                 id(aura_mouth_smooth) +=
                   (mouth_level > id(aura_mouth_smooth) ? 0.55f : 0.18f) *
                   (mouth_level - id(aura_mouth_smooth));
-
                 float mouth_anim = id(aura_mouth_smooth);
-
-                // 3) Modulazione sillabica, andamento frase e micro-chiusure labiali.
+                // 3) Syllabic modulation, phrase pacing, and micro lip closures.
                 if (mouth_anim > 0.05f) {
                   const float syllable =
                     0.50f + 0.50f * ((sinf(now / 72.0f) + 1.0f) * 0.5f);
-
                   const float phrase =
                     0.72f + 0.28f * ((sinf(now / 210.0f + 1.4f) + 1.0f) * 0.5f);
-
                   const uint32_t cc = now % 640UL;
-
                   float closure =
                     (cc < 70UL)  ? 0.10f :
                     (cc < 115UL) ? 0.35f :
                                    1.00f;
-
                   if ((now % 2300UL) > 2100UL) {
                     closure *= 0.25f;
                   }
-
                   mouth_anim = clampf(
                     mouth_anim * syllable * phrase * closure,
                     0.0f,
                     1.0f
                   );
                 }
-
-                // 4) Conversione del livello continuo nei cinque frame disponibili.
+                // 4) Convert the continuous level into the five available frames.
                 int next_frame = 0;
-
                 if (id(aura_mouth_smooth) > 0.05f) {
                   if (mouth_anim < 0.25) {
                     next_frame = 0;
@@ -2849,17 +2534,14 @@ interval:
                     next_frame = 3;
                   }
                 }
-
                 id(aura_speaking_frame) = next_frame;
-
-            # Aggiorna l'immagine soltanto quando cambia il frame.
+            # Only update the image when the frame changes.
             - if:
                 condition:
                   lambda: return id(aura_speaking_frame) != id(aura_last_speaking_frame);
                 then:
                   - lambda: |-
                       id(aura_last_speaking_frame) = id(aura_speaking_frame);
-
                   - if:
                       condition:
                         lambda: return id(aura_speaking_frame) == 0;
@@ -2867,7 +2549,6 @@ interval:
                         - lvgl.image.update:
                             id: aura_main_image
                             src: aura_idle_standby_img
-
                   - if:
                       condition:
                         lambda: return id(aura_speaking_frame) == 1;
@@ -2875,7 +2556,6 @@ interval:
                         - lvgl.image.update:
                             id: aura_main_image
                             src: aura_small_open_mouth_img
-
                   - if:
                       condition:
                         lambda: return id(aura_speaking_frame) == 2;
@@ -2883,7 +2563,6 @@ interval:
                         - lvgl.image.update:
                             id: aura_main_image
                             src: aura_open_mouth_img
-
                   - if:
                       condition:
                         lambda: return id(aura_speaking_frame) == 3;
@@ -2891,9 +2570,8 @@ interval:
                         - lvgl.image.update:
                             id: aura_main_image
                             src: aura_more_open_mouth_img
-
-      # Se il parlato è terminato o l'annuncio non è più attivo,
-      # scarica rapidamente il livello residuo e richiude la bocca.
+      # If speech has ended or the announcement is no longer active,
+      # quickly decay the remaining level and close the mouth again.
       - if:
           condition:
             lambda: |-
@@ -2914,8 +2592,6 @@ interval:
                   - lvgl.image.update:
                       id: aura_main_image
                       src: aura_idle_standby_img
-
-
   # ----------------------------------------------------
   # AURA - RETRY DOWNLOAD ASSET
   # ----------------------------------------------------
@@ -2930,7 +2606,6 @@ interval:
           then:
             - lambda: id(aura_assets_download_started) = true;
             - component.update: aura_idle_standby_img
-
   - interval: 24h
     then:
       - if:
@@ -2941,8 +2616,7 @@ interval:
                 condition:
                   lambda: return id(${fw_update_check_enabled_id});
                 then:
-                  - script.execute: ${script_check_firmware_version_id} 
-
+                  - script.execute: ${script_check_firmware_version_id}
   - interval: 5s
     then:
       - if:
@@ -2958,9 +2632,8 @@ interval:
           then:
             - logger.log:
                 level: INFO
-                format: "==== Modalita continua: stop per inattivita"
+                format: "==== Continuous mode: stopping due to inactivity"
             - voice_assistant.stop:
-
 esphome:
   name: ${device_name}
   friendly_name: ${friendly}
@@ -2973,7 +2646,6 @@ esphome:
   project:
     name: Waveshare HackMyHome.DisplayTest
     version: ${fw_version}
-
   on_boot:
     - priority: 600
       then:
@@ -2985,7 +2657,6 @@ esphome:
             id(aura_boot_progress_step) = 0;
             id(aura_boot_progress_error) = false;
             id(aura_download_status).clear();
-
     - priority: 375
       then:
         - sensor.template.publish:
@@ -2997,7 +2668,6 @@ esphome:
               lambda: return id(${init_in_progress_id});
             then:
               - lambda: id(${init_in_progress_id}) = false;
-
     - priority: -50
       then:
         # Re-apply restored numeric settings to the live audio components.
@@ -3014,7 +2684,6 @@ esphome:
             if (!std::isnan(id(${va_noise_suppression_number_id}).state)) {
               id(${voice_assistant_id}).set_noise_suppression_level(id(${va_noise_suppression_number_id}).state);
             }
-
     - priority: -100
       then:
         - lambda: |-
@@ -3026,13 +2695,12 @@ esphome:
         - lambda: |-
             setenv("TZ", id(${saved_time_zone_id}).c_str(), 1);
             tzset();
-
         - delay: 500ms
         - lambda: |-
             id(${display_id}).set_invert_colors(true);
             ESP_LOGI(
               "display_fix",
-              "Forzato INVERT_ON dopo il setup mipi_spi"
+              "Forced INVERT_ON after mipi_spi setup"
             );
         - delay: 1500ms
         - light.turn_on:
@@ -3062,20 +2730,20 @@ esp32:
       CONFIG_SPIRAM_MODE_OCT=: "y"
       CONFIG_SPIRAM_SPEED_120M=: "y"
       CONFIG_COMPILER_OPTIMIZATION_PERF=: "y"
+      CONFIG_ESP_TASK_WDT_TIMEOUT_S: "15"
     advanced:
       enable_idf_experimental_features: true
-
 wifi:
   id: ${wifi_component_id}
-  ssid: ${ssid}
-  password: ${password}
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
   reboot_timeout: 10min
-  manual_ip:
-    static_ip: ${ip}
-    gateway:   ${gateway}
-    subnet:    ${subnet}
-    dns1:      ${dns}
-    dns2:      8.8.8.8
+#  manual_ip:
+#    static_ip: 192.168.1.25
+#    gateway: 192.168.1.249
+#    subnet: 255.255.255.0
+#    dns1: 192.168.1.26
+#    dns2: 8.8.8.8
   on_connect:
     - lambda: id(${improv_ble_in_progress_id}) = false;
     - lambda: id(aura_boot_progress_error) = false;
@@ -3098,32 +2766,25 @@ wifi:
         then:
           - lambda: id(aura_assets_download_started) = true;
           - component.update: aura_idle_standby_img
-
   on_disconnect:
     - if:
         condition:
           lambda: return !id(aura_boot_finished);
         then:
           - script.execute: aura_refresh_boot_progress
-
   ap:
     ssid: ${device_name}
-    password: ${password}
-
+    password: !secret m5dialfallbackpassword
 captive_portal:
-
 http_request:
   verify_ssl: true
   timeout: 10s
-
 logger:
-  level: ERROR
-
+  level: DEBUG
 api:
   id: ${api_component_id}
   encryption:
     key: ${api_key}
-
   actions:
     - action: set_led_color
       variables:
@@ -3135,7 +2796,6 @@ api:
             id(${led_ring_color_r_id}) = std::min(1.0f, std::max(0.0f, red));
             id(${led_ring_color_g_id}) = std::min(1.0f, std::max(0.0f, green));
             id(${led_ring_color_b_id}) = std::min(1.0f, std::max(0.0f, blue));
-
     - action: start_va
       then:
         - if:
@@ -3145,21 +2805,18 @@ api:
               - voice_assistant.start_continuous:
               - logger.log:
                   level: INFO
-                  format: "==== API: VoiceAssistant in modalita continua"
+                  format: "==== API: VoiceAssistant in continuous mode"
             else:
               - voice_assistant.start:
               - logger.log:
                   level: INFO
-                  format: "==== API: VoiceAssistant in modalita singola"
-
+                  format: "==== API: VoiceAssistant in single mode"
     - action: stop_va
       then:
         - voice_assistant.stop:
         - logger.log:
             level: INFO
             format: "==== API: VoiceAssistant STOP"
-
-
     - action: set_alarm_time
       variables:
         alarm_time_hh_mm: string
@@ -3174,7 +2831,6 @@ api:
               id(${alarm_time_text_id}).publish_state(alarm_time_hh_mm);
               id(${saved_alarm_time_id}) = alarm_time_hh_mm;
             }
-
     - action: set_time_zone
       variables:
         posix_time_zone: string
@@ -3187,7 +2843,6 @@ api:
             tzset();
             id(${saved_time_zone_id}) = posix_time_zone;
             id(${script_publish_current_time_id}).execute();
-
   on_client_connected:
     - logger.log:
         level: INFO
@@ -3204,7 +2859,6 @@ api:
         id(${voice_assistant_phase_global_id}) = ${voice_assist_idle_phase_id};
     - script.execute: aura_try_finish_boot
     - delay: 100ms
-
   on_client_disconnected:
     - logger.log:
         level: INFO
@@ -3216,14 +2870,12 @@ api:
         then:
           - lvgl.label.update:
               id: aura_boot_status
-              text: "In attesa di Home Assistant..."
+              text: "Waiting for Home Assistant..."
               text_color: 0x8FD7FF
-
 ota:
   - platform: esphome
     id: ${ota_component_id}
     password: ${ota_key}
-
 external_components:
   - source:
       type: git
@@ -3231,9 +2883,8 @@ external_components:
       ref: main
     components: [ es8311 ]
     refresh: 0s
-
 # ======================================================
-# I2C e PCA9554
+# I2C and PCA9554
 # ======================================================
 i2c:
   - id: ${i2c_bus_id}
@@ -3245,7 +2896,6 @@ pca9554:
   - id: ${io_expander_id}
     i2c_id: ${i2c_bus_id}
     address: 0x20
-
 # ======================================================
 # BACKLIGHT
 # ======================================================
@@ -3261,9 +2911,8 @@ light:
     output: ${display_backlight_output_id}
     restore_mode: ALWAYS_OFF
     default_transition_length: 250ms
-
 # ======================================================
-# I2S AUDIO - OUT + IN con clock condivisi
+# I2S AUDIO - OUT + IN with shared clocks
 # ======================================================
 i2s_audio:
   - id: ${i2s_output_id}
@@ -3276,7 +2925,6 @@ i2s_audio:
     i2s_lrclk_pin:
       number: ${i2s_lrclk}
       allow_other_uses: true
-
   - id: ${i2s_input_id}
     i2s_mclk_pin:
       number: ${i2s_mclk}
@@ -3287,9 +2935,8 @@ i2s_audio:
     i2s_lrclk_pin:
       number: ${i2s_lrclk}
       allow_other_uses: true
-
 # ======================================================
-# AUDIO ADC - ES7210 / MICROFONO
+# AUDIO ADC - ES7210 / MICROPHONE
 # ======================================================
 audio_adc:
   - platform: es7210
@@ -3297,7 +2944,6 @@ audio_adc:
     i2c_id: ${i2c_bus_id}
     sample_rate: ${i2s_sample_rate}
     bits_per_sample: ${i2s_bps_mic}
-
 # ======================================================
 # AUDIO DAC - ES8311
 # ======================================================
@@ -3308,9 +2954,8 @@ audio_dac:
     address: 0x18
     bits_per_sample: 16bit
     sample_rate: 48000
-
 # ======================================================
-# MICROFONO I2S - ES7210
+# I2S MICROPHONE - ES7210
 # ======================================================
 microphone:
   - platform: i2s_audio
@@ -3323,15 +2968,14 @@ microphone:
     bits_per_sample: ${i2s_bps_mic}
     use_apll: ${i2s_use_apll}
     mclk_multiple: ${i2s_mclk_multiple}
-    # Il microfono riusa i clock generati dal bus speaker.
+    # The microphone reuses the clocks generated by the speaker bus.
     i2s_mode: ${i2s_mode_mic}
     channel: left
-
 # ======================================================
 # SPEAKER PIPELINE
 # ======================================================
 speaker:
-  # Uscita fisica verso ES8311
+  # Physical output to ES8311
   - platform: i2s_audio
     id: ${hw_speaker_id}
     i2s_audio_id: ${i2s_output_id}
@@ -3345,8 +2989,7 @@ speaker:
     i2s_mode: ${i2s_mode_speaker}
     buffer_duration: 500ms
     timeout: never
-
-  # Mixer: media + annunci sullo stesso speaker fisico
+  # Mixer: media + announcements on the same physical speaker
   - platform: mixer
     id: ${audio_mixer_speaker_id}
     output_speaker: ${hw_speaker_id}
@@ -3355,21 +2998,18 @@ speaker:
         timeout: never
       - id: ${media_mixer_input_id}
         timeout: never
-
-  # Resampler media
+  # Media resampler
   - platform: resampler
     id: ${media_resampler_id}
     output_speaker: ${media_mixer_input_id}
     sample_rate: ${i2s_sample_rate}
     bits_per_sample: 16
-
-  # Resampler annunci / TTS
+  # Announcement / TTS resampler
   - platform: resampler
     id: ${announcement_resampler_id}
     output_speaker: ${announcement_mixer_input_id}
     sample_rate: ${i2s_sample_rate}
     bits_per_sample: 16
-
 # ======================================================
 # MEDIA PLAYER
 # ======================================================
@@ -3377,58 +3017,50 @@ media_player:
   - platform: speaker
     id: ${media_player_id}
     name: "Media Player"
-
     media_pipeline:
       speaker: ${media_resampler_id}
       format: FLAC
       sample_rate: 48000
       num_channels: 1
-
     announcement_pipeline:
       speaker: ${announcement_resampler_id}
       format: FLAC
       sample_rate: 48000
       num_channels: 1
-
     volume_increment: 0.05
     volume_initial: 0.5
     volume_min: 0.05
     volume_max: 1.0
-
     buffer_size: 500000
     task_stack_in_psram: true
-
     on_announcement:
       - logger.log:
           level: INFO
-          format: "==== MEDIAPLAYER: ANNUNCIO"
+          format: "==== MEDIAPLAYER: ANNOUNCEMENT"
       - script.execute: aura_stop_music
       - lambda: |-
           id(${display_awake_until_id}) = millis() + 300000UL;
-          // Se parte un annuncio e non è il timer, mostriamo la faccina parlante.
+          // If an announcement starts and it's not the timer, show the talking face.
           if (!id(${timer_ringing_switch_id}).state) {
             if (id(${voice_assistant_phase_global_id}) != ${voice_assist_waiting_for_command_phase_id}) {
               id(${voice_assistant_phase_global_id}) = ${voice_assist_replying_phase_id};
-            }          
-          }          
+            }
+          }
       - mixer_speaker.apply_ducking:
           id: ${media_mixer_input_id}
           decibel_reduction: 0
           duration: 1s
-
     on_play:
       - logger.log:
           level: INFO
           format: "==== MEDIAPLAYER: PLAY"
       - lambda: |-
           id(${display_awake_until_id}) = millis() + 300000UL;
-
     on_pause:
       - logger.log:
           level: INFO
           format: "==== MEDIAPLAYER: PAUSE"
       - script.execute: aura_stop_music
-
     on_idle:
       - logger.log:
           level: INFO
@@ -3448,7 +3080,6 @@ media_player:
                 id: ${media_mixer_input_id}
                 decibel_reduction: 0
                 duration: 1.0s
-
             - logger.log:
                 level: INFO
                 format: "==== MEDIAPLAYER: IDLE"
@@ -3458,7 +3089,6 @@ media_player:
                   id(${voice_assistant_phase_global_id}) = ${voice_assist_idle_phase_id};
                 }
             - script.execute: aura_stop_speaking
-
     files:
       - id: ${mute_switch_on_sound_id}
         file: https://github.com/esphome/home-assistant-voice-pe/raw/dev/sounds/mute_switch_on.flac
@@ -3468,7 +3098,6 @@ media_player:
         file: https://github.com/esphome/home-assistant-voice-pe/raw/dev/sounds/timer_finished.flac
       - id: ${wake_word_triggered_sound_id}
         file: https://github.com/esphome/home-assistant-voice-pe/raw/dev/sounds/wake_word_triggered.flac
-
 # ======================================================
 # VOICE ASSISTANT
 # ======================================================
@@ -3484,7 +3113,6 @@ voice_assistant:
   noise_suppression_level: 0
   auto_gain: 0 dbfs
   volume_multiplier: 1
-
   on_client_connected:
     - logger.log:
         level: INFO
@@ -3501,14 +3129,12 @@ voice_assistant:
     - lambda: id(${voice_assistant_phase_global_id}) = ${voice_assist_idle_phase_id};
     - delay: 800ms
     - script.execute: ${script_ensure_wake_word_running_id}
-
   on_client_disconnected:
     - logger.log:
         level: INFO
         format: "==== VOICEASSISTANT: DISCONNECTED"
     - voice_assistant.stop:
     - lambda: id(${voice_assistant_phase_global_id}) = ${voice_assist_not_ready_phase_id};
-
   on_error:
     - logger.log:
         level: INFO
@@ -3521,7 +3147,6 @@ voice_assistant:
             - lambda: return code != "stt-no-text-recognized";
         then:
           - lambda: id(${voice_assistant_phase_global_id}) = ${voice_assist_error_phase_id};
-
   on_start:
     - logger.log:
         level: INFO
@@ -3532,7 +3157,6 @@ voice_assistant:
         id: ${media_mixer_input_id}
         decibel_reduction: 30
         duration: 0.0s
-
   on_listening:
     - logger.log:
         level: INFO
@@ -3540,7 +3164,6 @@ voice_assistant:
     - lambda: |-
         id(${voice_assistant_phase_global_id}) = ${voice_assist_waiting_for_command_phase_id};
         id(${va_ultimo_input_ms_id}) = millis();
-
   on_stt_vad_start:
     - logger.log:
         level: INFO
@@ -3548,7 +3171,6 @@ voice_assistant:
     - lambda: |-
         id(${voice_assistant_phase_global_id}) = ${voice_assist_listening_for_command_phase_id};
         id(${va_ultimo_input_ms_id}) = millis();
-
   on_stt_vad_end:
     - logger.log:
         level: INFO
@@ -3556,7 +3178,6 @@ voice_assistant:
     - lambda: |-
         id(${voice_assistant_phase_global_id}) = ${voice_assist_thinking_phase_id};
         id(${va_ultimo_input_ms_id}) = millis();
-
   on_intent_progress:
     - logger.log:
         level: INFO
@@ -3566,7 +3187,6 @@ voice_assistant:
           lambda: 'return !x.empty();'
         then:
           - script.execute: ${script_activate_stop_word_once_id}
-
   on_tts_start:
     - logger.log:
         level: INFO
@@ -3578,7 +3198,6 @@ voice_assistant:
           lambda: 'return id(${voice_assistant_phase_global_id}) != ${voice_assist_replying_phase_id};'
         then:
           - script.execute: ${script_activate_stop_word_once_id}
-
   on_tts_end:
     - logger.log:
         level: INFO
@@ -3586,7 +3205,6 @@ voice_assistant:
     - script.execute:
         id: ${script_send_tts_uri_event_id}
         tts_uri: !lambda 'return x;'
-
   on_stt_end:
     - logger.log:
         level: INFO
@@ -3597,27 +3215,23 @@ voice_assistant:
     - script.execute:
         id: ${script_send_stt_text_event_id}
         stt_text: !lambda 'return x;'
-
     - lambda: |-
         id(${local_cmd_code_id}) = 0;
         std::string t = x;
         std::transform(t.begin(), t.end(), t.begin(),
           [](unsigned char c) { return std::tolower(c); });
-
         auto has = [&](const char *term) -> bool {
           return t.find(term) != std::string::npos;
         };
-
-        // ===== modalità silenziosa =====
+        // ===== silent mode =====
         if (has("$silent_mode") || has("$silent_mode_acc")) {
           id(${local_cmd_code_id}) = 1;
-        // ===== volume locale =====
+        // ===== local volume =====
         } else if ((has("$up") || has("$increase")) && has("$volume")) {
           id(${local_cmd_code_id}) = 2;
         } else if ((has("$down") || has("$reduce")) && has("$volume")) {
           id(${local_cmd_code_id}) = 3;
-
-        // ===== antifurto locale =====
+        // ===== local security alarm =====
         } else if ((has("$enable") || has("$allow") || has("$arm")) &&
                  has("$alarm")) {
           id(${local_cmd_code_id}) = 4;
@@ -3625,7 +3239,6 @@ voice_assistant:
                    has("$alarm")) {
           id(${local_cmd_code_id}) = 5;
         }
-
     - if:
         condition:
           lambda: 'return id(${local_cmd_code_id}) == 1;'
@@ -3636,25 +3249,21 @@ voice_assistant:
           lambda: 'return id(${local_cmd_code_id}) == 2;'
         then:
           - script.execute: ${script_va_local_volume_up_id}
-
     - if:
         condition:
           lambda: 'return id(${local_cmd_code_id}) == 3;'
         then:
           - script.execute: ${script_va_local_volume_down_id}
-
     - if:
         condition:
           lambda: 'return id(${local_cmd_code_id}) == 4;'
         then:
           - script.execute: ${script_va_local_alarm_on_id}
-
     - if:
         condition:
           lambda: 'return id(${local_cmd_code_id}) == 5;'
         then:
           - script.execute: ${script_va_local_alarm_off_id}
-
     - if:
         condition:
           lambda: 'return id(${local_cmd_code_id}) != 0;'
@@ -3666,7 +3275,6 @@ voice_assistant:
           - script.execute: ${script_ensure_wake_word_running_id}
           - lambda: |-
               id(${voice_assistant_phase_global_id}) = ${voice_assist_idle_phase_id};
-
   on_end:
     - logger.log:
         level: INFO
@@ -3685,7 +3293,6 @@ voice_assistant:
           - delay: 1s
     - lambda: id(${voice_assistant_phase_global_id}) = ${voice_assist_idle_phase_id};
     - script.execute: ${script_ensure_wake_word_running_id}
-
   on_timer_finished:
     - switch.turn_on: ${timer_ringing_switch_id}
     - lambda: |-
@@ -3698,7 +3305,6 @@ voice_assistant:
     - script.execute: ${script_ensure_wake_word_running_id}
     - lambda: |-
         id(${voice_assistant_phase_global_id}) = ${voice_assist_idle_phase_id};
-
   on_timer_started:
     - lambda: |-
         id(${script_check_if_timers_active_id}).execute();
@@ -3712,14 +3318,13 @@ voice_assistant:
           id(${va_timer_active_display_id}) = true;
           id(${va_timer_name_display_id}) = id(${first_active_timer_id}).name;
         }
-    - voice_assistant.stop: 
+    - voice_assistant.stop:
     - lambda: |-
         id(${voice_assistant_phase_global_id}) = ${voice_assist_idle_phase_id};
     - voice_assistant.stop:
     - script.execute: ${script_ensure_wake_word_running_id}
     - lambda: |-
         id(${voice_assistant_phase_global_id}) = ${voice_assist_idle_phase_id};
-
   on_timer_cancelled:
     - lambda: |-
         id(${script_check_if_timers_active_id}).execute();
@@ -3744,7 +3349,6 @@ voice_assistant:
     - script.execute: ${script_ensure_wake_word_running_id}
     - lambda: |-
         id(${voice_assistant_phase_global_id}) = ${voice_assist_idle_phase_id};
-
   on_timer_updated:
     - lambda: |-
         id(${script_check_if_timers_active_id}).execute();
@@ -3758,7 +3362,6 @@ voice_assistant:
           id(${va_timer_active_display_id}) = id(${first_active_timer_id}).is_active;
           id(${va_timer_name_display_id}) = id(${first_active_timer_id}).name;
         }
-
   on_timer_tick:
     - lambda: |-
         id(${script_fetch_first_active_timer_id}).execute();
@@ -3768,7 +3371,6 @@ voice_assistant:
         }
         id(${va_timer_seconds_left_id})  = id(${first_active_timer_id}).seconds_left;
         id(${va_timer_last_tick_ms_id})  = millis();
-
 # ======================================================
 # IMICRO WAKE WORD
 # ======================================================
@@ -3777,21 +3379,15 @@ micro_wake_word:
   microphone: ${microphone_id}
   stop_after_detection: false
   models:
-    - model: https://github.com/kahrendt/microWakeWord/releases/download/okay_nabu_20241226.3/okay_nabu.json
-      id: ${wake_word_okay_nabu_model_id}
-    - model: https://raw.githubusercontent.com/formatBCE/Respeaker-Lite-ESPHome-integration/refs/heads/main/microwakeword/models/v2/kenobi.json
-      id: ${wake_word_kenobi_model_id}
-    - model: ${wake_word_hey_jarvis_model_id}
-      id: ${wake_word_hey_jarvis_model_id}
+    - model: hey_holly.json
+      id: ${wake_word_hey_holly_model_id}
     - model: https://github.com/kahrendt/microWakeWord/releases/download/stop/stop.json
       id: ${wake_word_stop_model_id}
       internal: true
-
   on_wake_word_detected:
     - logger.log:
         level: INFO
         format: "==== MWW: WORD DETECTED"
-
     - if:
         condition:
           switch.is_off: ${mic_mute_switch_id}
@@ -3801,14 +3397,12 @@ micro_wake_word:
                 switch.is_on: ${timer_ringing_switch_id}
               then:
                 - switch.turn_off: ${timer_ringing_switch_id}
-
               else:
                 - if:
                     condition:
                       voice_assistant.is_running:
                     then:
                       - voice_assistant.stop:
-
                     else:
                       - if:
                           condition:
@@ -3816,11 +3410,9 @@ micro_wake_word:
                           then:
                             - media_player.stop:
                                 announcement: true
-
                       - script.execute:
                           id: ${script_start_va_from_wake_word_id}
                           detected_wake_word: !lambda return wake_word;
-
 # ======================================================
 # FONT
 # ======================================================
@@ -3834,7 +3426,6 @@ font:
   - file: "gfonts://Roboto"
     id: ${font_timer_small_id}
     size: 14
-
 # ======================================================
 # SPI
 # ======================================================
@@ -3847,9 +3438,8 @@ spi:
     - ${display_qspi_d1}
     - ${display_qspi_d2}
     - ${display_qspi_d3}
-
 # ======================================================
-# TOUCHSCREEN - gestito da LVGL
+# TOUCHSCREEN - managed by LVGL
 # ======================================================
 touchscreen:
   - platform: cst816
@@ -3857,21 +3447,16 @@ touchscreen:
     display: ${display_id}
     i2c_id: ${i2c_bus_id}
     address: ${touch_address}
-
     interrupt_pin:
       number: ${touch_interrupt_pin}
       mode: INPUT_PULLUP
-
     reset_pin:
       pca9554: ${io_expander_id}
       number: ${touch_reset_expander_pin}
-
     skip_probe: true
-
     transform:
       mirror_x: false
       mirror_y: false
-
     on_touch:
       - lambda: |-
           id(${touch_x_id}) = touch.x;
@@ -3884,28 +3469,22 @@ touchscreen:
               (id(radio_page_active) ? 30000UL : 15000UL);
           }
       - script.execute: aura_wake_up
-
 # ======================================================
-
 display:
   - platform: mipi_spi
     id: ${display_id}
     model: JC3636W518V2
     spi_id: ${display_qspi_id}
     bus_mode: quad
-
     cs_pin: ${display_cs_pin}
-
     reset_pin:
       pca9554: ${io_expander_id}
       number: ${display_reset_expander_pin}
-
     dimensions:
       width: 360
       height: 360
       offset_width: 0
       offset_height: 0
-
     color_order: rgb
     invert_colors: false
     data_rate: 80MHz
@@ -3913,23 +3492,21 @@ display:
     auto_clear_enabled: false
     update_interval: never
     color_depth: 16
-
 online_image:
   # ====================================================
   # AURA - IDLE
   # ====================================================
-  - url: "https://raw.githubusercontent.com/MarcoFre/images-aura/main/aura%20idle.png"
+  - url: "http://192.168.1.4:8123/local/aura_holly/aura_idle_standby_img.png"
     id: aura_idle_standby_img
     format: PNG
     type: RGB565
-    resize: 360x360
+    resize: 240x240
     update_interval: never
-    buffer_size: 32768
-
+    buffer_size: 49152
     on_download_finished:
       - logger.log:
           level: INFO
-          format: "==== AURA: IDLE SCARICATA"
+          format: "==== AURA: IDLE DOWNLOADED"
       - lambda: |-
           id(aura_download_status) = "Download 01/16 - Idle";
           id(aura_download_step) = 1;
@@ -3947,32 +3524,30 @@ online_image:
     on_error:
       - logger.log:
           level: ERROR
-          format: "==== AURA: ERRORE DOWNLOAD IDLE"
+          format: "==== AURA: DOWNLOAD ERROR IDLE"
       - lambda: |-
-          id(aura_download_status) = "ERRORE 01/16 - Idle";
+          id(aura_download_status) = "ERROR 01/16 - Idle";
           id(aura_boot_progress_error) = true;
       - script.execute: aura_refresh_boot_progress
       - lvgl.label.update:
           id: aura_boot_status
-          text: "ERRORE 01/16 - Idle"
+          text: "ERROR 01/16 - Idle"
           text_color: 0xFCA5A5
       - lambda: id(aura_assets_download_started) = false;
-
   # ====================================================
   # AURA - BLINK HALF
   # ====================================================
-  - url: "https://raw.githubusercontent.com/MarcoFre/images-aura/main/aura_blink_half_closed.png"
+  - url: "http://192.168.1.4:8123/local/aura_holly/aura_blink_half_closed_img.png"
     id: aura_blink_half_closed_img
     format: PNG
     type: RGB565
-    resize: 360x360
+    resize: 240x240
     update_interval: never
-    buffer_size: 32768
-
+    buffer_size: 49152
     on_download_finished:
       - logger.log:
           level: INFO
-          format: "==== AURA: BLINK HALF SCARICATA"
+          format: "==== AURA: BLINK HALF DOWNLOADED"
       - lambda: |-
           id(aura_download_status) = "Download 02/16 - Blink 1/2";
           id(aura_download_step) = 2;
@@ -3990,40 +3565,38 @@ online_image:
     on_error:
       - logger.log:
           level: ERROR
-          format: "==== AURA: ERRORE DOWNLOAD BLINK HALF"
+          format: "==== AURA: DOWNLOAD ERROR BLINK HALF"
       - lambda: |-
-          id(aura_download_status) = "ERRORE 02/16 - Blink 1/2";
+          id(aura_download_status) = "ERROR 02/16 - Blink 1/2";
           id(aura_boot_progress_error) = true;
       - script.execute: aura_refresh_boot_progress
       - lvgl.label.update:
           id: aura_boot_status
-          text: "ERRORE 02/16 - Blink 1/2"
+          text: "ERROR 02/16 - Blink 1/2"
           text_color: 0xFCA5A5
       - lambda: id(aura_assets_download_started) = false;
-
   # ====================================================
   # AURA - BLINK CLOSED
   # ====================================================
-  - url: "https://raw.githubusercontent.com/MarcoFre/images-aura/main/aura_blink_closed.png"
+  - url: "http://192.168.1.4:8123/local/aura_holly/aura_blink_closed_img.png"
     id: aura_blink_closed_img
     format: PNG
     type: RGB565
-    resize: 360x360
+    resize: 240x240
     update_interval: never
-    buffer_size: 32768
-
+    buffer_size: 49152
     on_download_finished:
       - logger.log:
           level: INFO
-          format: "==== AURA: BLINK CLOSED SCARICATA"
+          format: "==== AURA: BLINK CLOSED DOWNLOADED"
       - lambda: |-
-          id(aura_download_status) = "Download 03/16 - Blink chiuso";
+          id(aura_download_status) = "Download 03/16 - Blink closed";
           id(aura_download_step) = 3;
           id(aura_boot_progress_error) = false;
       - script.execute: aura_refresh_boot_progress
       - lvgl.label.update:
           id: aura_boot_status
-          text: "Download 03/16 - Blink chiuso"
+          text: "Download 03/16 - Blink closed"
           text_color: 0x8FD7FF
       - delay: 350ms
       - lvgl.image.update:
@@ -4033,40 +3606,38 @@ online_image:
     on_error:
       - logger.log:
           level: ERROR
-          format: "==== AURA: ERRORE DOWNLOAD BLINK CLOSED"
+          format: "==== AURA: DOWNLOAD ERROR BLINK CLOSED"
       - lambda: |-
-          id(aura_download_status) = "ERRORE 03/16 - Blink chiuso";
+          id(aura_download_status) = "ERROR 03/16 - Blink closed";
           id(aura_boot_progress_error) = true;
       - script.execute: aura_refresh_boot_progress
       - lvgl.label.update:
           id: aura_boot_status
-          text: "ERRORE 03/16 - Blink chiuso"
+          text: "ERROR 03/16 - Blink closed"
           text_color: 0xFCA5A5
       - lambda: id(aura_assets_download_started) = false;
-
   # ====================================================
-  # AURA - OCCHI SINISTRA
+  # AURA - LEFT EYES
   # ====================================================
-  - url: "https://raw.githubusercontent.com/MarcoFre/images-aura/main/aura_left_eyes.png"
+  - url: "http://192.168.1.4:8123/local/aura_holly/aura_left_eyes_img.png"
     id: aura_left_eyes_img
     format: PNG
     type: RGB565
-    resize: 360x360
+    resize: 240x240
     update_interval: never
-    buffer_size: 32768
-
+    buffer_size: 49152
     on_download_finished:
       - logger.log:
           level: INFO
-          format: "==== AURA: OCCHI SINISTRA SCARICATA"
+          format: "==== AURA: LEFT EYES DOWNLOADED"
       - lambda: |-
-          id(aura_download_status) = "Download 04/16 - Occhi sinistra";
+          id(aura_download_status) = "Download 04/16 - Left eyes";
           id(aura_download_step) = 4;
           id(aura_boot_progress_error) = false;
       - script.execute: aura_refresh_boot_progress
       - lvgl.label.update:
           id: aura_boot_status
-          text: "Download 04/16 - Occhi sinistra"
+          text: "Download 04/16 - Left eyes"
           text_color: 0x8FD7FF
       - delay: 350ms
       - lvgl.image.update:
@@ -4076,40 +3647,38 @@ online_image:
     on_error:
       - logger.log:
           level: ERROR
-          format: "==== AURA: ERRORE DOWNLOAD OCCHI SINISTRA"
+          format: "==== AURA: DOWNLOAD ERROR LEFT EYES"
       - lambda: |-
-          id(aura_download_status) = "ERRORE 04/16 - Occhi sinistra";
+          id(aura_download_status) = "ERROR 04/16 - Left eyes";
           id(aura_boot_progress_error) = true;
       - script.execute: aura_refresh_boot_progress
       - lvgl.label.update:
           id: aura_boot_status
-          text: "ERRORE 04/16 - Occhi sinistra"
+          text: "ERROR 04/16 - Left eyes"
           text_color: 0xFCA5A5
       - lambda: id(aura_assets_download_started) = false;
-
   # ====================================================
-  # AURA - OCCHI DESTRA
+  # AURA - RIGHT EYES
   # ====================================================
-  - url: "https://raw.githubusercontent.com/MarcoFre/images-aura/main/aura_right_eyes.png"
+  - url: "http://192.168.1.4:8123/local/aura_holly/aura_right_eyes_img.png"
     id: aura_right_eyes_img
     format: PNG
     type: RGB565
-    resize: 360x360
+    resize: 240x240
     update_interval: never
-    buffer_size: 32768
-
+    buffer_size: 49152
     on_download_finished:
       - logger.log:
           level: INFO
-          format: "==== AURA: OCCHI DESTRA SCARICATA"
+          format: "==== AURA: RIGHT EYES DOWNLOADED"
       - lambda: |-
-          id(aura_download_status) = "Download 05/16 - Occhi destra";
+          id(aura_download_status) = "Download 05/16 - Right eyes";
           id(aura_download_step) = 5;
           id(aura_boot_progress_error) = false;
       - script.execute: aura_refresh_boot_progress
       - lvgl.label.update:
           id: aura_boot_status
-          text: "Download 05/16 - Occhi destra"
+          text: "Download 05/16 - Right eyes"
           text_color: 0x8FD7FF
       - delay: 350ms
       - lvgl.image.update:
@@ -4119,40 +3688,38 @@ online_image:
     on_error:
       - logger.log:
           level: ERROR
-          format: "==== AURA: ERRORE DOWNLOAD OCCHI DESTRA"
+          format: "==== AURA: DOWNLOAD ERROR RIGHT EYES"
       - lambda: |-
-          id(aura_download_status) = "ERRORE 05/16 - Occhi destra";
+          id(aura_download_status) = "ERROR 05/16 - Right eyes";
           id(aura_boot_progress_error) = true;
       - script.execute: aura_refresh_boot_progress
       - lvgl.label.update:
           id: aura_boot_status
-          text: "ERRORE 05/16 - Occhi destra"
+          text: "ERROR 05/16 - Right eyes"
           text_color: 0xFCA5A5
       - lambda: id(aura_assets_download_started) = false;
-
   # ====================================================
-  # AURA - OCCHI ALTO
+  # AURA - EYES UP
   # ====================================================
-  - url: "https://raw.githubusercontent.com/MarcoFre/images-aura/main/aura_up_eyes.png"
+  - url: "http://192.168.1.4:8123/local/aura_holly/aura_up_eyes_img.png"
     id: aura_up_eyes_img
     format: PNG
     type: RGB565
-    resize: 360x360
+    resize: 240x240
     update_interval: never
-    buffer_size: 32768
-
+    buffer_size: 49152
     on_download_finished:
       - logger.log:
           level: INFO
-          format: "==== AURA: OCCHI ALTO SCARICATA"
+          format: "==== AURA: EYES UP DOWNLOADED"
       - lambda: |-
-          id(aura_download_status) = "Download 06/16 - Occhi alto";
+          id(aura_download_status) = "Download 06/16 - Eyes up";
           id(aura_download_step) = 6;
           id(aura_boot_progress_error) = false;
       - script.execute: aura_refresh_boot_progress
       - lvgl.label.update:
           id: aura_boot_status
-          text: "Download 06/16 - Occhi alto"
+          text: "Download 06/16 - Eyes up"
           text_color: 0x8FD7FF
       - delay: 350ms
       - lvgl.image.update:
@@ -4162,40 +3729,38 @@ online_image:
     on_error:
       - logger.log:
           level: ERROR
-          format: "==== AURA: ERRORE DOWNLOAD OCCHI ALTO"
+          format: "==== AURA: DOWNLOAD ERROR EYES UP"
       - lambda: |-
-          id(aura_download_status) = "ERRORE 06/16 - Occhi alto";
+          id(aura_download_status) = "ERROR 06/16 - Eyes up";
           id(aura_boot_progress_error) = true;
       - script.execute: aura_refresh_boot_progress
       - lvgl.label.update:
           id: aura_boot_status
-          text: "ERRORE 06/16 - Occhi alto"
+          text: "ERROR 06/16 - Eyes up"
           text_color: 0xFCA5A5
       - lambda: id(aura_assets_download_started) = false;
-
   # ====================================================
-  # AURA - VISO ALTO
+  # AURA - FACE UP
   # ====================================================
-  - url: "https://raw.githubusercontent.com/MarcoFre/images-aura/main/aura_face_up_small.png"
+  - url: "http://192.168.1.4:8123/local/aura_holly/aura_face_up_img.png"
     id: aura_face_up_img
     format: PNG
     type: RGB565
-    resize: 360x360
+    resize: 240x240
     update_interval: never
-    buffer_size: 32768
-
+    buffer_size: 49152
     on_download_finished:
       - logger.log:
           level: INFO
-          format: "==== AURA: VISO ALTO SCARICATA"
+          format: "==== AURA: FACE UP DOWNLOADED"
       - lambda: |-
-          id(aura_download_status) = "Download 07/16 - Viso alto";
+          id(aura_download_status) = "Download 07/16 - Face up";
           id(aura_download_step) = 7;
           id(aura_boot_progress_error) = false;
       - script.execute: aura_refresh_boot_progress
       - lvgl.label.update:
           id: aura_boot_status
-          text: "Download 07/16 - Viso alto"
+          text: "Download 07/16 - Face up"
           text_color: 0x8FD7FF
       - delay: 350ms
       - lvgl.image.update:
@@ -4205,40 +3770,38 @@ online_image:
     on_error:
       - logger.log:
           level: ERROR
-          format: "==== AURA: ERRORE DOWNLOAD VISO ALTO"
+          format: "==== AURA: DOWNLOAD ERROR FACE UP"
       - lambda: |-
-          id(aura_download_status) = "ERRORE 07/16 - Viso alto";
+          id(aura_download_status) = "ERROR 07/16 - Face up";
           id(aura_boot_progress_error) = true;
       - script.execute: aura_refresh_boot_progress
       - lvgl.label.update:
           id: aura_boot_status
-          text: "ERRORE 07/16 - Viso alto"
+          text: "ERROR 07/16 - Face up"
           text_color: 0xFCA5A5
       - lambda: id(aura_assets_download_started) = false;
-
   # ====================================================
-  # AURA - VISO BASSO
+  # AURA - FACE DOWN
   # ====================================================
-  - url: "https://raw.githubusercontent.com/MarcoFre/images-aura/main/aura_face_down_small.png"
+  - url: "http://192.168.1.4:8123/local/aura_holly/aura_face_down_img.png"
     id: aura_face_down_img
     format: PNG
     type: RGB565
-    resize: 360x360
+    resize: 240x240
     update_interval: never
-    buffer_size: 32768
-
+    buffer_size: 49152
     on_download_finished:
       - logger.log:
           level: INFO
-          format: "==== AURA: VISO BASSO SCARICATA"
+          format: "==== AURA: FACE DOWN DOWNLOADED"
       - lambda: |-
-          id(aura_download_status) = "Download 08/16 - Viso basso";
+          id(aura_download_status) = "Download 08/16 - Face down";
           id(aura_download_step) = 8;
           id(aura_boot_progress_error) = false;
       - script.execute: aura_refresh_boot_progress
       - lvgl.label.update:
           id: aura_boot_status
-          text: "Download 08/16 - Viso basso"
+          text: "Download 08/16 - Face down"
           text_color: 0x8FD7FF
       - delay: 350ms
       - lvgl.image.update:
@@ -4248,40 +3811,38 @@ online_image:
     on_error:
       - logger.log:
           level: ERROR
-          format: "==== AURA: ERRORE DOWNLOAD VISO BASSO"
+          format: "==== AURA: DOWNLOAD ERROR FACE DOWN"
       - lambda: |-
-          id(aura_download_status) = "ERRORE 08/16 - Viso basso";
+          id(aura_download_status) = "ERROR 08/16 - Face down";
           id(aura_boot_progress_error) = true;
       - script.execute: aura_refresh_boot_progress
       - lvgl.label.update:
           id: aura_boot_status
-          text: "ERRORE 08/16 - Viso basso"
+          text: "ERROR 08/16 - Face down"
           text_color: 0xFCA5A5
       - lambda: id(aura_assets_download_started) = false;
-
   # ====================================================
-  # AURA - MEZZO SORRISO
+  # AURA - HALF SMILE
   # ====================================================
-  - url: "https://raw.githubusercontent.com/MarcoFre/images-aura/main/aura_half_smile.png"
+  - url: "http://192.168.1.4:8123/local/aura_holly/aura_half_smile_img.png"
     id: aura_half_smile_img
     format: PNG
     type: RGB565
-    resize: 360x360
+    resize: 240x240
     update_interval: never
-    buffer_size: 32768
-
+    buffer_size: 49152
     on_download_finished:
       - logger.log:
           level: INFO
-          format: "==== AURA: MEZZO SORRISO SCARICATA"
+          format: "==== AURA: HALF SMILE DOWNLOADED"
       - lambda: |-
-          id(aura_download_status) = "Download 09/16 - Mezzo sorriso";
+          id(aura_download_status) = "Download 09/16 - Half smile";
           id(aura_download_step) = 9;
           id(aura_boot_progress_error) = false;
       - script.execute: aura_refresh_boot_progress
       - lvgl.label.update:
           id: aura_boot_status
-          text: "Download 09/16 - Mezzo sorriso"
+          text: "Download 09/16 - Half smile"
           text_color: 0x8FD7FF
       - delay: 350ms
       - lvgl.image.update:
@@ -4291,40 +3852,38 @@ online_image:
     on_error:
       - logger.log:
           level: ERROR
-          format: "==== AURA: ERRORE DOWNLOAD MEZZO SORRISO"
+          format: "==== AURA: DOWNLOAD ERROR HALF SMILE"
       - lambda: |-
-          id(aura_download_status) = "ERRORE 09/16 - Mezzo sorriso";
+          id(aura_download_status) = "ERROR 09/16 - Half smile";
           id(aura_boot_progress_error) = true;
       - script.execute: aura_refresh_boot_progress
       - lvgl.label.update:
           id: aura_boot_status
-          text: "ERRORE 09/16 - Mezzo sorriso"
+          text: "ERROR 09/16 - Half smile"
           text_color: 0xFCA5A5
       - lambda: id(aura_assets_download_started) = false;
-
   # ====================================================
-  # AURA - SORRISO PIENO
+  # AURA - FULL SMILE
   # ====================================================
-  - url: "https://raw.githubusercontent.com/MarcoFre/images-aura/main/aura_full_smile.png"
+  - url: "http://192.168.1.4:8123/local/aura_holly/aura_full_smile_img.png"
     id: aura_full_smile_img
     format: PNG
     type: RGB565
-    resize: 360x360
+    resize: 240x240
     update_interval: never
-    buffer_size: 32768
-
+    buffer_size: 49152
     on_download_finished:
       - logger.log:
           level: INFO
-          format: "==== AURA: SORRISO PIENO SCARICATA"
+          format: "==== AURA: FULL SMILE DOWNLOADED"
       - lambda: |-
-          id(aura_download_status) = "Download 10/16 - Sorriso";
+          id(aura_download_status) = "Download 10/16 - Smile";
           id(aura_download_step) = 10;
           id(aura_boot_progress_error) = false;
       - script.execute: aura_refresh_boot_progress
       - lvgl.label.update:
           id: aura_boot_status
-          text: "Download 10/16 - Sorriso"
+          text: "Download 10/16 - Smile"
           text_color: 0x8FD7FF
       - delay: 350ms
       - lvgl.image.update:
@@ -4334,40 +3893,38 @@ online_image:
     on_error:
       - logger.log:
           level: ERROR
-          format: "==== AURA: ERRORE DOWNLOAD SORRISO PIENO"
+          format: "==== AURA: DOWNLOAD ERROR FULL SMILE"
       - lambda: |-
-          id(aura_download_status) = "ERRORE 10/16 - Sorriso";
+          id(aura_download_status) = "ERROR 10/16 - Smile";
           id(aura_boot_progress_error) = true;
       - script.execute: aura_refresh_boot_progress
       - lvgl.label.update:
           id: aura_boot_status
-          text: "ERRORE 10/16 - Sorriso"
+          text: "ERROR 10/16 - Smile"
           text_color: 0xFCA5A5
       - lambda: id(aura_assets_download_started) = false;
-
   # ====================================================
-  # AURA - BOCCA POCO APERTA
+  # AURA - MOUTH SLIGHTLY OPEN
   # ====================================================
-  - url: "https://raw.githubusercontent.com/MarcoFre/images-aura/main/aura_small_open_mouth.png"
+  - url: "http://192.168.1.4:8123/local/aura_holly/aura_small_open_mouth_img.png"
     id: aura_small_open_mouth_img
     format: PNG
     type: RGB565
-    resize: 360x360
+    resize: 240x240
     update_interval: never
-    buffer_size: 32768
-
+    buffer_size: 49152
     on_download_finished:
       - logger.log:
           level: INFO
-          format: "==== AURA: BOCCA POCO APERTA SCARICATA"
+          format: "==== AURA: MOUTH SLIGHTLY OPEN DOWNLOADED"
       - lambda: |-
-          id(aura_download_status) = "Download 11/16 - Bocca piccola";
+          id(aura_download_status) = "Download 11/16 - Small mouth";
           id(aura_download_step) = 11;
           id(aura_boot_progress_error) = false;
       - script.execute: aura_refresh_boot_progress
       - lvgl.label.update:
           id: aura_boot_status
-          text: "Download 11/16 - Bocca piccola"
+          text: "Download 11/16 - Small mouth"
           text_color: 0x8FD7FF
       - delay: 350ms
       - lvgl.image.update:
@@ -4377,40 +3934,38 @@ online_image:
     on_error:
       - logger.log:
           level: ERROR
-          format: "==== AURA: ERRORE DOWNLOAD BOCCA POCO APERTA"
+          format: "==== AURA: DOWNLOAD ERROR MOUTH SLIGHTLY OPEN"
       - lambda: |-
-          id(aura_download_status) = "ERRORE 11/16 - Bocca piccola";
+          id(aura_download_status) = "ERROR 11/16 - Small mouth";
           id(aura_boot_progress_error) = true;
       - script.execute: aura_refresh_boot_progress
       - lvgl.label.update:
           id: aura_boot_status
-          text: "ERRORE 11/16 - Bocca piccola"
+          text: "ERROR 11/16 - Small mouth"
           text_color: 0xFCA5A5
       - lambda: id(aura_assets_download_started) = false;
-
   # ====================================================
-  # AURA - BOCCA MEDIA
+  # AURA - MOUTH MEDIUM
   # ====================================================
-  - url: "https://raw.githubusercontent.com/MarcoFre/images-aura/main/aura_open_mouth.png"
+  - url: "http://192.168.1.4:8123/local/aura_holly/aura_open_mouth_img.png"
     id: aura_open_mouth_img
     format: PNG
     type: RGB565
-    resize: 360x360
+    resize: 240x240
     update_interval: never
-    buffer_size: 32768
-
+    buffer_size: 49152
     on_download_finished:
       - logger.log:
           level: INFO
-          format: "==== AURA: BOCCA MEDIA SCARICATA"
+          format: "==== AURA: MOUTH MEDIUM DOWNLOADED"
       - lambda: |-
-          id(aura_download_status) = "Download 12/16 - Bocca media";
+          id(aura_download_status) = "Download 12/16 - Medium mouth";
           id(aura_download_step) = 12;
           id(aura_boot_progress_error) = false;
       - script.execute: aura_refresh_boot_progress
       - lvgl.label.update:
           id: aura_boot_status
-          text: "Download 12/16 - Bocca media"
+          text: "Download 12/16 - Medium mouth"
           text_color: 0x8FD7FF
       - delay: 350ms
       - lvgl.image.update:
@@ -4420,40 +3975,38 @@ online_image:
     on_error:
       - logger.log:
           level: ERROR
-          format: "==== AURA: ERRORE DOWNLOAD BOCCA MEDIA"
+          format: "==== AURA: DOWNLOAD ERROR MOUTH MEDIUM"
       - lambda: |-
-          id(aura_download_status) = "ERRORE 12/16 - Bocca media";
+          id(aura_download_status) = "ERROR 12/16 - Medium mouth";
           id(aura_boot_progress_error) = true;
       - script.execute: aura_refresh_boot_progress
       - lvgl.label.update:
           id: aura_boot_status
-          text: "ERRORE 12/16 - Bocca media"
+          text: "ERROR 12/16 - Medium mouth"
           text_color: 0xFCA5A5
       - lambda: id(aura_assets_download_started) = false;
-
   # ====================================================
-  # AURA - BOCCA PIU APERTA
+  # AURA - MOUTH MORE OPEN
   # ====================================================
-  - url: "https://raw.githubusercontent.com/MarcoFre/images-aura/main/aura_more_open_mouth.png"
+  - url: "http://192.168.1.4:8123/local/aura_holly/aura_more_open_mouth_img.png"
     id: aura_more_open_mouth_img
     format: PNG
     type: RGB565
-    resize: 360x360
+    resize: 240x240
     update_interval: never
-    buffer_size: 32768
-
+    buffer_size: 49152
     on_download_finished:
       - logger.log:
           level: INFO
-          format: "==== AURA: BOCCA PIU APERTA SCARICATA"
+          format: "==== AURA: MOUTH MORE OPEN DOWNLOADED"
       - lambda: |-
-          id(aura_download_status) = "Download 13/16 - Bocca grande";
+          id(aura_download_status) = "Download 13/16 - Big mouth";
           id(aura_download_step) = 13;
           id(aura_boot_progress_error) = false;
       - script.execute: aura_refresh_boot_progress
       - lvgl.label.update:
           id: aura_boot_status
-          text: "Download 13/16 - Bocca grande"
+          text: "Download 13/16 - Big mouth"
           text_color: 0x8FD7FF
       - delay: 350ms
       - lvgl.image.update:
@@ -4463,31 +4016,30 @@ online_image:
     on_error:
       - logger.log:
           level: ERROR
-          format: "==== AURA: ERRORE DOWNLOAD BOCCA PIU APERTA"
+          format: "==== AURA: DOWNLOAD ERROR MOUTH MORE OPEN"
       - lambda: |-
-          id(aura_download_status) = "ERRORE 13/16 - Bocca grande";
+          id(aura_download_status) = "ERROR 13/16 - Big mouth";
           id(aura_boot_progress_error) = true;
       - script.execute: aura_refresh_boot_progress
       - lvgl.label.update:
           id: aura_boot_status
-          text: "ERRORE 13/16 - Bocca grande"
+          text: "ERROR 13/16 - Big mouth"
           text_color: 0xFCA5A5
       - lambda: id(aura_assets_download_started) = false;
-
   # ====================================================
   # AURA - DANCE 01
   # ====================================================
-  - url: "https://raw.githubusercontent.com/MarcoFre/images-aura/main/Dance_01.png"
+  - url: "http://192.168.1.4:8123/local/aura_holly/aura_dance_01_img.png"
     id: aura_dance_01_img
     format: PNG
     type: RGB565
-    resize: 360x360
+    resize: 240x240
     update_interval: never
-    buffer_size: 32768
+    buffer_size: 49152
     on_download_finished:
       - logger.log:
           level: INFO
-          format: "==== AURA: DANCE 01 SCARICATA"
+          format: "==== AURA: DANCE 01 DOWNLOADED"
       - lambda: |-
           id(aura_download_status) = "Download 14/16 - Dance 01";
           id(aura_download_step) = 14;
@@ -4505,31 +4057,30 @@ online_image:
     on_error:
       - logger.log:
           level: ERROR
-          format: "==== AURA: ERRORE DOWNLOAD DANCE 01"
+          format: "==== AURA: DOWNLOAD ERROR DANCE 01"
       - lambda: |-
-          id(aura_download_status) = "ERRORE 14/16 - Dance 01";
+          id(aura_download_status) = "ERROR 14/16 - Dance 01";
           id(aura_boot_progress_error) = true;
       - script.execute: aura_refresh_boot_progress
       - lvgl.label.update:
           id: aura_boot_status
-          text: "ERRORE 14/16 - Dance 01"
+          text: "ERROR 14/16 - Dance 01"
           text_color: 0xFCA5A5
       - lambda: id(aura_assets_download_started) = false;
-
   # ====================================================
   # AURA - DANCE 02
   # ====================================================
-  - url: "https://raw.githubusercontent.com/MarcoFre/images-aura/main/Dance_02.png"
+  - url: "http://192.168.1.4:8123/local/aura_holly/aura_dance_02_img.png"
     id: aura_dance_02_img
     format: PNG
     type: RGB565
-    resize: 360x360
+    resize: 240x240
     update_interval: never
-    buffer_size: 32768
+    buffer_size: 49152
     on_download_finished:
       - logger.log:
           level: INFO
-          format: "==== AURA: DANCE 02 SCARICATA"
+          format: "==== AURA: DANCE 02 DOWNLOADED"
       - lambda: |-
           id(aura_download_status) = "Download 15/16 - Dance 02";
           id(aura_download_step) = 15;
@@ -4547,32 +4098,32 @@ online_image:
     on_error:
       - logger.log:
           level: ERROR
-          format: "==== AURA: ERRORE DOWNLOAD DANCE 02"
+          format: "==== AURA: DOWNLOAD ERROR DANCE 02"
       - lambda: |-
-          id(aura_download_status) = "ERRORE 15/16 - Dance 02";
+          id(aura_download_status) = "ERROR 15/16 - Dance 02";
           id(aura_boot_progress_error) = true;
       - script.execute: aura_refresh_boot_progress
       - lvgl.label.update:
           id: aura_boot_status
-          text: "ERRORE 15/16 - Dance 02"
+          text: "ERROR 15/16 - Dance 02"
           text_color: 0xFCA5A5
       - lambda: id(aura_assets_download_started) = false;
-        
+
   # ====================================================
   # AURA - DANCE 03
   # ====================================================
-  - url: "https://raw.githubusercontent.com/MarcoFre/images-aura/main/Dance_03.png"
+  - url: "http://192.168.1.4:8123/local/aura_holly/aura_dance_03_img.png"
     id: aura_dance_03_img
     format: PNG
     type: RGB565
-    resize: 360x360
+    resize: 240x240
     update_interval: never
-    buffer_size: 32768
-    
+    buffer_size: 49152
+
     on_download_finished:
       - logger.log:
           level: INFO
-          format: "==== AURA: DANCE 03 SCARICATA"
+          format: "==== AURA: DANCE 03 DOWNLOADED"
       - lambda: |-
           id(aura_download_status) = "Download 16/16 - Dance 03";
           id(aura_download_step) = 16;
@@ -4582,7 +4133,7 @@ online_image:
           id: aura_boot_status
           text: "Download 16/16 - Dance 03"
           text_color: 0x8FD7FF
-      - lvgl.image.update: 
+      - lvgl.image.update:
           id: aura_main_image
           src: aura_dance_03_img
       - delay: 1000ms
@@ -4592,11 +4143,9 @@ online_image:
             millis() + 5000UL + (esp_random() % 6001UL);
           id(aura_next_expression_ms) =
             millis() + 15000UL + (esp_random() % 15001UL);
-
       - logger.log:
           level: INFO
-          format: "==== AURA: TUTTI GLI ASSET SONO PRONTI"
-
+          format: "==== AURA: ALL ASSETS ARE READY"
       - lvgl.image.update:
           id: aura_main_image
           src: aura_idle_standby_img
@@ -4606,18 +4155,16 @@ online_image:
     on_error:
       - logger.log:
           level: ERROR
-          format: "==== AURA: ERRORE DOWNLOAD DANCE 03"
+          format: "==== AURA: DOWNLOAD ERROR DANCE 03"
       - lambda: |-
-          id(aura_download_status) = "ERRORE 16/16 - Dance 03";
+          id(aura_download_status) = "ERROR 16/16 - Dance 03";
           id(aura_boot_progress_error) = true;
       - script.execute: aura_refresh_boot_progress
       - lvgl.label.update:
           id: aura_boot_status
-          text: "ERRORE 16/16 - Dance 03"
+          text: "ERROR 16/16 - Dance 03"
           text_color: 0xFCA5A5
       - lambda: id(aura_assets_download_started) = false;
-
-
 # ======================================================
 # LVGL UI
 # ======================================================
@@ -4627,15 +4174,13 @@ lvgl:
     - ${display_id}
   touchscreens:
     - touchscreen_id: ${touch_panel_id}
-
   log_level: WARN
   color_depth: 16
   buffer_size: 100%
   rotation: 180
-
   pages:
     # --------------------------------------------------
-    # BOOT PAGE - struttura LVGL della fonte
+    # BOOT PAGE - LVGL structure from the source
     # --------------------------------------------------
     - id: aura_boot_page
       bg_color: 0x05081C
@@ -4667,7 +4212,6 @@ lvgl:
                   border_width: 0
                   clickable: false
                   scrollable: false
-
               - obj:
                   id: aura_boot_glow_inner
                   x: 74
@@ -4680,7 +4224,6 @@ lvgl:
                   border_width: 0
                   clickable: false
                   scrollable: false
-
               - obj:
                   id: aura_boot_ring_outer
                   x: 30
@@ -4693,7 +4236,6 @@ lvgl:
                   border_color: 0x2B7CFF
                   clickable: false
                   scrollable: false
-
               - obj:
                   id: aura_boot_ring_mid
                   x: 64
@@ -4706,7 +4248,6 @@ lvgl:
                   border_color: 0x36B7FF
                   clickable: false
                   scrollable: false
-
               - obj:
                   id: aura_boot_ring_inner
                   x: 99
@@ -4719,7 +4260,6 @@ lvgl:
                   border_color: 0xD8F4FF
                   clickable: false
                   scrollable: false
-
               - obj:
                   id: aura_boot_dot_outer
                   x: !lambda return id(aura_boot_dot_outer_x) - 8;
@@ -4732,7 +4272,6 @@ lvgl:
                   border_width: 0
                   clickable: false
                   scrollable: false
-
               - obj:
                   id: aura_boot_dot_mid
                   x: !lambda return id(aura_boot_dot_mid_x) - 7;
@@ -4745,7 +4284,6 @@ lvgl:
                   border_width: 0
                   clickable: false
                   scrollable: false
-
               - obj:
                   id: aura_boot_dot_inner
                   x: !lambda return id(aura_boot_dot_inner_x) - 6;
@@ -4758,7 +4296,6 @@ lvgl:
                   border_width: 0
                   clickable: false
                   scrollable: false
-
               - label:
                   id: aura_boot_title
                   x: 0
@@ -4770,20 +4307,18 @@ lvgl:
                   text_color: 0xFFFFFF
                   bg_opa: TRANSP
                   clickable: false
-
               - label:
                   x: 0
                   y: 188
                   width: 360
-                  text: "avvio in corso..."
+                  text: "starting up..."
                   text_align: CENTER
                   text_font: montserrat_14
                   text_color: 0xD8F4FF
                   bg_opa: TRANSP
                   clickable: false
-
-              # Barra di avanzamento a circa 3/4 del diametro.
-              # Avanza in 18 step: Wi-Fi, HA e 16 download.
+              # Progress bar at about 3/4 of the diameter.
+              # Advances in 18 steps: Wi-Fi, HA, and 16 downloads.
               - bar:
                   id: aura_boot_progress_bar
                   x: 60
@@ -4802,7 +4337,6 @@ lvgl:
                     bg_color: 0xFF2020
                     bg_opa: COVER
                     radius: 6
-
               - label:
                   id: aura_boot_progress_label
                   x: 0
@@ -4814,7 +4348,6 @@ lvgl:
                   text_color: 0xCBD5E1
                   bg_opa: TRANSP
                   clickable: false
-
               - label:
                   id: aura_boot_status
                   x: 20
@@ -4826,9 +4359,8 @@ lvgl:
                   text_color: 0xFFFFFF
                   bg_opa: TRANSP
                   clickable: false
-
     # --------------------------------------------------
-    # AURA - PAGINA PRINCIPALE
+    # AURA - MAIN PAGE
     # --------------------------------------------------
     - id: aura_page
       bg_color: 0x000000
@@ -4845,12 +4377,11 @@ lvgl:
       widgets:
         - image:
             id: aura_main_image
-            x: 0
-            y: 0
+            x: 60
+            y: 60
             src: aura_idle_standby_img
             clickable: false
-
-        # Velo scuro durante il sonno: Aura resta visibile ma la scena si calma.
+        # Dark veil during sleep: Aura stays visible but the scene calms down.
         - obj:
             id: aura_sleep_dim
             x: 0
@@ -4864,8 +4395,7 @@ lvgl:
             clickable: false
             scrollable: false
             hidden: true
-
-        # Quattro archi rotanti: indicano anche la fase VA.
+        # Four rotating arcs: also indicate the VA phase.
         - arc:
             id: aura_outer_arc_1
             x: 5
@@ -4884,7 +4414,6 @@ lvgl:
             adjustable: false
             knob:
               bg_opa: TRANSP
-
         - arc:
             id: aura_outer_arc_2
             x: 5
@@ -4903,7 +4432,6 @@ lvgl:
             adjustable: false
             knob:
               bg_opa: TRANSP
-
         - arc:
             id: aura_outer_arc_3
             x: 5
@@ -4922,7 +4450,6 @@ lvgl:
             adjustable: false
             knob:
               bg_opa: TRANSP
-
         - arc:
             id: aura_outer_arc_4
             x: 5
@@ -4941,9 +4468,8 @@ lvgl:
             adjustable: false
             knob:
               bg_opa: TRANSP
-
-        # VU meter circolare della modalita musica.
-        # Riprende il vecchio arco laterale 118-242 gradi.
+        # Circular VU meter for music mode.
+        # Reuses the old 118-242 degree side arc.
         - arc:
             id: aura_music_vu_arc
             x: 14
@@ -4969,9 +4495,8 @@ lvgl:
               bg_opa: TRANSP
             clickable: false
             hidden: true
-
-        # Note musicali costruite con oggetti LVGL nativi.
-        # Ogni nota e un contenitore mobile con testa, stelo e bandierina.
+        # Music notes built with native LVGL objects.
+        # Each note is a movable container with a head, stem, and flag.
         - obj:
             id: aura_music_note_1
             x: !lambda |-
@@ -5021,7 +4546,6 @@ lvgl:
                   bg_color: 0x5EFFE0
                   bg_opa: COVER
                   border_width: 0
-
         - obj:
             id: aura_music_note_2
             x: !lambda |-
@@ -5071,7 +4595,6 @@ lvgl:
                   bg_color: 0x7DD3FC
                   bg_opa: COVER
                   border_width: 0
-
         - obj:
             id: aura_music_note_3
             x: !lambda |-
@@ -5121,7 +4644,6 @@ lvgl:
                   bg_color: 0xC084FC
                   bg_opa: COVER
                   border_width: 0
-
         - obj:
             id: aura_music_note_4
             x: !lambda |-
@@ -5171,7 +4693,6 @@ lvgl:
                   bg_color: 0xF472B6
                   bg_opa: COVER
                   border_width: 0
-
         - obj:
             id: aura_music_note_5
             x: !lambda |-
@@ -5221,7 +4742,6 @@ lvgl:
                   bg_color: 0xFDE047
                   bg_opa: COVER
                   border_width: 0
-
         - obj:
             id: aura_music_note_6
             x: !lambda |-
@@ -5271,8 +4791,7 @@ lvgl:
                   bg_color: 0xFB7185
                   bg_opa: COVER
                   border_width: 0
-
-        # Z animate del sonno. Risalgono lentamente sul lato destro.
+        # Animated sleep Z's. They rise slowly on the right side.
         - label:
             id: aura_sleep_z_1
             x: !lambda |-
@@ -5289,7 +4808,6 @@ lvgl:
             bg_opa: TRANSP
             clickable: false
             hidden: true
-
         - label:
             id: aura_sleep_z_2
             x: !lambda |-
@@ -5306,7 +4824,6 @@ lvgl:
             bg_opa: TRANSP
             clickable: false
             hidden: true
-
         - label:
             id: aura_sleep_z_3
             x: !lambda |-
@@ -5323,7 +4840,6 @@ lvgl:
             bg_opa: TRANSP
             clickable: false
             hidden: true
-
         - label:
             id: aura_sleep_z_4
             x: !lambda |-
@@ -5340,7 +4856,6 @@ lvgl:
             bg_opa: TRANSP
             clickable: false
             hidden: true
-
         # Stato Voice Assistant.
         - obj:
             x: 74
@@ -5356,7 +4871,6 @@ lvgl:
             shadow_color: 0x00E5FF
             shadow_opa: 18%
             clickable: false
-
         - label:
             id: aura_status_label
             x: 90
@@ -5368,7 +4882,6 @@ lvgl:
             text_align: CENTER
             bg_opa: TRANSP
             clickable: false
-
         # Stato WiFi / API.
         - obj:
             id: aura_wifi_dot
@@ -5381,7 +4894,6 @@ lvgl:
             bg_opa: COVER
             border_width: 0
             clickable: false
-
         - obj:
             id: aura_api_dot
             x: 300
@@ -5393,8 +4905,7 @@ lvgl:
             bg_opa: COVER
             border_width: 0
             clickable: false
-
-        # Orario sovrapposto - plate originale LVGL Aura.
+        # Time overlay - original Aura LVGL plate.
         - obj:
             id: aura_time_plate
             x: 48
@@ -5410,7 +4921,6 @@ lvgl:
             shadow_color: 0x00E5FF
             shadow_opa: 20%
             clickable: false
-
         - label:
             id: aura_time_label
             x: 72
@@ -5423,8 +4933,7 @@ lvgl:
             text_align: CENTER
             bg_opa: TRANSP
             clickable: false
-
-        # Timer sovrapposto solo quando esiste.
+        # Timer overlay shown only when it exists.
         - obj:
             id: aura_timer_plate
             x: 55
@@ -5441,7 +4950,6 @@ lvgl:
             shadow_opa: 20%
             clickable: false
             hidden: true
-
         - label:
             id: aura_timer_label
             x: 85
@@ -5454,7 +4962,6 @@ lvgl:
             bg_opa: TRANSP
             clickable: false
             hidden: true
-
         - bar:
             id: aura_timer_bar
             x: 88
@@ -5472,21 +4979,19 @@ lvgl:
               bg_opa: COVER
               radius: 3
             hidden: true
-
         - label:
             id: aura_swipe_hint
             x: 70
             y: 344
             width: 220
-            text: "radio  →   ·   ↑  controlli"
+            text: "radio  →   ·   ↑  controls"
             text_font: montserrat_12
             text_color: 0x4B6474
             text_align: CENTER
             bg_opa: TRANSP
             clickable: false
-
     # --------------------------------------------------
-    # MUSIC ASSISTANT - PAGINA RADIO
+    # MUSIC ASSISTANT - RADIO PAGE
     # --------------------------------------------------
     - id: aura_radio_page
       bg_color: 0x020617
@@ -5522,7 +5027,6 @@ lvgl:
             shadow_opa: 18%
             clickable: false
             scrollable: false
-
         - label:
             x: 70
             y: 22
@@ -5533,20 +5037,18 @@ lvgl:
             text_align: CENTER
             bg_opa: TRANSP
             clickable: false
-
         - label:
             id: aura_radio_status_label
             x: 36
             y: 50
             width: 288
-            text: "Scegli una radio"
+            text: "Choose a radio"
             text_font: montserrat_12
             text_color: 0x94A3B8
             text_align: CENTER
             long_mode: DOT
             bg_opa: TRANSP
             clickable: false
-
         - button:
             id: aura_radio_number_one_button
             x: 32
@@ -5573,7 +5075,6 @@ lvgl:
                   text_font: montserrat_14
                   text_color: 0xFFFFFF
                   text_align: CENTER
-
         - button:
             id: aura_radio_deejay_button
             x: 188
@@ -5600,7 +5101,6 @@ lvgl:
                   text_font: montserrat_14
                   text_color: 0xFFFFFF
                   text_align: CENTER
-
         - button:
             id: aura_radio_italia_button
             x: 32
@@ -5627,7 +5127,6 @@ lvgl:
                   text_font: montserrat_14
                   text_color: 0xFFFFFF
                   text_align: CENTER
-
         - button:
             id: aura_radio_kiss_kiss_button
             x: 188
@@ -5654,7 +5153,6 @@ lvgl:
                   text_font: montserrat_14
                   text_color: 0xFFFFFF
                   text_align: CENTER
-
         - button:
             id: aura_radio_r101_button
             x: 32
@@ -5681,7 +5179,6 @@ lvgl:
                   text_font: montserrat_14
                   text_color: 0xFFFFFF
                   text_align: CENTER
-
         - button:
             id: aura_radio_ambient_button
             x: 188
@@ -5708,7 +5205,6 @@ lvgl:
                   text_font: montserrat_14
                   text_color: 0xFFFFFF
                   text_align: CENTER
-
         - button:
             id: aura_radio_stop_button
             x: 60
@@ -5727,7 +5223,6 @@ lvgl:
                   text: "STOP"
                   text_font: montserrat_14
                   text_color: 0xFFE4E6
-
         - button:
             id: aura_radio_back_button
             x: 190
@@ -5746,9 +5241,8 @@ lvgl:
                   text: "AURA"
                   text_font: montserrat_14
                   text_color: 0xCBD5E1
-
     # --------------------------------------------------
-    # PAGINA CONTROLLI LVGL
+    # LVGL CONTROLS PAGE
     # --------------------------------------------------
     - id: aura_control_page
       bg_color: 0x020617
@@ -5780,18 +5274,16 @@ lvgl:
             shadow_color: 0x00E5FF
             shadow_opa: 20%
             clickable: false
-
         - label:
             x: 70
             y: 28
             width: 220
-            text: "CONTROLLI AURA"
+            text: "AURA CONTROLS"
             text_font: montserrat_22
             text_color: 0xFFFFFF
             text_align: CENTER
             bg_opa: TRANSP
             clickable: false
-
         - label:
             x: 54
             y: 78
@@ -5800,7 +5292,6 @@ lvgl:
             text_color: 0x94A3B8
             bg_opa: TRANSP
             clickable: false
-
         - label:
             id: aura_volume_value_label
             x: 268
@@ -5812,7 +5303,6 @@ lvgl:
             text_align: RIGHT
             bg_opa: TRANSP
             clickable: false
-
         - slider:
             id: aura_volume_slider
             x: 54
@@ -5845,7 +5335,6 @@ lvgl:
                   call.perform();
                   id(control_page_until) = millis() + 15000UL;
               - script.execute: aura_refresh_controls
-
         - button:
             id: aura_brightness_button
             x: 54
@@ -5874,10 +5363,9 @@ lvgl:
             widgets:
               - label:
                   align: CENTER
-                  text: "LUMINOSITA'"
+                  text: "BRIGHTNESS"
                   text_font: montserrat_14
                   text_color: 0xFFFFFF
-
         - button:
             id: aura_mute_button
             x: 186
@@ -5910,7 +5398,6 @@ lvgl:
                   text: "AUDIO ON"
                   text_font: montserrat_14
                   text_color: 0xFFFFFF
-
         - button:
             id: aura_va_button
             x: 54
@@ -5950,10 +5437,9 @@ lvgl:
               - label:
                   id: aura_va_label
                   align: CENTER
-                  text: "AVVIA VA"
+                  text: "START VA"
                   text_font: montserrat_14
                   text_color: 0xFFFFFF
-
         - button:
             id: aura_alarm_button
             x: 186
@@ -5981,10 +5467,9 @@ lvgl:
               - label:
                   id: aura_alarm_label
                   align: CENTER
-                  text: "ALLARME OFF"
+                  text: "ALARM OFF"
                   text_font: montserrat_14
                   text_color: 0xFFFFFF
-
         - button:
             id: aura_back_button
             x: 100
@@ -6003,80 +5488,74 @@ lvgl:
                   text: "TORNA AD AURA"
                   text_font: montserrat_14
                   text_color: 0xCBD5E1
-
-
 # ======================================================
 # SENSORI
 # ======================================================
 select:
   - platform: template
-    name: "Display - Emozione"
+    name: "Display - Emotion"
     id: ${emotion_select_id}
     optimistic: true
     restore_value: true
     options:
       - "Auto"
-      - "Felice"
-      - "Assonnato"
-      - "Triste"
-      - "Arrabbiato"
-      - "Sorpreso"
+      - "Happy"
+      - "Sleepy"
+      - "Sad"
+      - "Angry"
+      - "Surprised"
     initial_option: "Auto"
     set_action:
       - lambda: |-
-          if      (x == "Felice")      id(${display_emotion_mode_id}) = 1;
-          else if (x == "Assonnato")   id(${display_emotion_mode_id}) = 2;
-          else if (x == "Triste")      id(${display_emotion_mode_id}) = 3;
-          else if (x == "Arrabbiato")  id(${display_emotion_mode_id}) = 4;
-          else if (x == "Sorpreso")    id(${display_emotion_mode_id}) = 5;
+          if      (x == "Happy")      id(${display_emotion_mode_id}) = 1;
+          else if (x == "Sleepy")     id(${display_emotion_mode_id}) = 2;
+          else if (x == "Sad")        id(${display_emotion_mode_id}) = 3;
+          else if (x == "Angry")      id(${display_emotion_mode_id}) = 4;
+          else if (x == "Surprised")  id(${display_emotion_mode_id}) = 5;
           else                         id(${display_emotion_mode_id}) = 0;
           id(${display_awake_until_id}) = millis() + 300000UL;
       - script.execute: aura_apply_phase
-
   - platform: template
-    name: "WakeWord - Sensibilita"
+    name: "WakeWord - Sensitivity"
     optimistic: true
-    initial_option: "Medio"
+    initial_option: "Medium"
     restore_value: true
     entity_category: config
     options:
-      - "Poco sensibile"
-      - "Medio"
-      - "Molto sensibile"
+      - "Low sensitivity"
+      - "Medium"
+      - "High sensitivity"
     on_value:
       lambda: |-
-        if (x == "Poco sensibile") {
-          id(${wake_word_okay_nabu_model_id}).set_probability_cutoff(217);
-        } else if (x == "Medio") {
-          id(${wake_word_okay_nabu_model_id}).set_probability_cutoff(176);
-        } else if (x == "Molto sensibile") {
-          id(${wake_word_okay_nabu_model_id}).set_probability_cutoff(50);
+        if (x == "Low sensitivity") {
+          id(${wake_word_hey_holly_model_id}).set_probability_cutoff(217);
+        } else if (x == "Medium") {
+          id(${wake_word_hey_holly_model_id}).set_probability_cutoff(176);
+        } else if (x == "High sensitivity") {
+          id(${wake_word_hey_holly_model_id}).set_probability_cutoff(50);
         }
-
   - platform: logger
     id: ${logger_select_id}
-    name: "Livello log"
+    name: "Log Level"
     disabled_by_default: true
-
   - platform: template
     optimistic: true
-    name: "Sveglia - Azione"
+    name: "Alarm - Action"
     id: ${alarm_action_select_id}
     icon: mdi:bell-plus
     options:
-      - "Riproduci suono"
-      - "Invia evento"
-      - "Suono ed evento"
-    initial_option: "Riproduci suono"
+      - "Play sound"
+      - "Send event"
+      - "Sound and event"
+    initial_option: "Play sound"
     on_value:
       then:
         - lambda: |-
             id(${saved_alarm_action_id}) = x;
-
 switch:
   - platform: template
     id: ${antifurto_switch_id}
-    name: "Modalità antifurto"
+    name: "Security Mode"
     icon: mdi:shield-home
     optimistic: true
     restore_mode: RESTORE_DEFAULT_OFF
@@ -6087,10 +5566,9 @@ switch:
     turn_off_action:
       - lambda: |-
           id(${antifurto_alarm_in_corso_id}) = false;
-
   - platform: template
     id: ${va_continuous_mode_switch_id}
-    name: "Assistente - Ascolto continuo"
+    name: "Assistant - Continuous Listening"
     icon: mdi:headset
     restore_mode: RESTORE_DEFAULT_ON
     lambda: |-
@@ -6100,32 +5578,30 @@ switch:
           id(${va_modalita_continua_id}) = true;
       - logger.log:
           level: INFO
-          format: "==== Modalita assistente: CONTINUA"
+          format: "==== Assistant mode: CONTINUOUS"
     turn_off_action:
       - lambda: |-
           id(${va_modalita_continua_id}) = false;
       - logger.log:
           level: INFO
-          format: "==== Modalita assistente: SINGOLA"
+          format: "==== Assistant mode: SINGLE"
       - if:
           condition:
             voice_assistant.is_running:
           then:
             - voice_assistant.stop:
-
   - platform: gpio
     id: ${amp_enable_switch_id}
-    name: "Amplificatore"
+    name: "Amplifier"
     icon: mdi:speaker
     entity_category: config
     pin:
       number: ${amp_ctrl}
       inverted: false
     restore_mode: RESTORE_DEFAULT_ON
-
   - platform: template
     id: ${mic_mute_switch_id}
-    name: "Microfono disattivato"
+    name: "Microphone Muted"
     icon: mdi:microphone-off
     optimistic: true
     restore_mode: RESTORE_DEFAULT_OFF
@@ -6138,33 +5614,28 @@ switch:
       - lambda: |-
           id(${audio_adc_id}).set_mic_gain(id(${mic_gain_saved_id}));
       - script.execute: ${script_ensure_wake_word_running_id}
-
   - platform: template
     id: ${mute_sound_switch_id}
-    name: "Suono Mute-Unmute"
+    name: "Mute/Unmute Sound"
     icon: "mdi:bullhorn"
     entity_category: config
     optimistic: true
     restore_mode: RESTORE_DEFAULT_ON
-
   - platform: template
     id: ${wake_sound_switch_id}
-    name: "Suono Wake Word"
+    name: "Wake Word Sound"
     icon: "mdi:bullhorn"
     entity_category: config
     optimistic: true
     restore_mode: RESTORE_DEFAULT_ON
-
   - platform: template
     id: ${timer_ringing_switch_id}
     optimistic: true
     internal: true
     restore_mode: ALWAYS_OFF
-
     on_turn_off:
       - micro_wake_word.disable_model: ${wake_word_stop_model_id}
       - script.execute: ${script_disable_repeat_id}
-
       - if:
           condition:
             media_player.is_announcing:
@@ -6173,36 +5644,30 @@ switch:
             - media_player.stop:
                 id: ${media_player_id}
                 announcement: true
-
       - mixer_speaker.apply_ducking:
           id: ${media_mixer_input_id}
           decibel_reduction: 0
           duration: 1.0s
-
     on_turn_on:
       - mixer_speaker.apply_ducking:
           id: ${media_mixer_input_id}
           decibel_reduction: 10
           duration: 0s
-
       - micro_wake_word.enable_model: ${wake_word_stop_model_id}
       - script.execute: ${script_ring_timer_id}
-
       - delay: 15min
       - switch.turn_off: ${timer_ringing_switch_id}
-
   - platform: template
     optimistic: true
     restore_mode: RESTORE_DEFAULT_OFF
     id: ${alarm_on_switch_id}
     icon: mdi:bell-badge
-    name: "Sveglia attiva"
-
+    name: "Alarm Active"
   - platform: template
     id: ${fw_update_check_switch_id}
-    name: "Controllo nuovo firmware"
+    name: "Firmware Update Check"
     icon: mdi:update
-    restore_mode: RESTORE_DEFAULT_ON
+    restore_mode: RESTORE_DEFAULT_OFF
     lambda: |-
       return id(${fw_update_check_enabled_id});
     turn_on_action:
@@ -6214,11 +5679,10 @@ switch:
           id(${fw_update_check_enabled_id}) = false;
           id(${fw_update_available_id}) = false;
           id(${fw_latest_version_id}) = "unknown";
-
 number:
   - platform: template
     id: ${noise_threshold_number_id}
-    name: "Soglia Rumore"
+    name: "Noise Threshold"
     icon: mdi:waveform
     entity_category: config
     optimistic: true
@@ -6228,10 +5692,9 @@ number:
     step: 1
     initial_value: -55
     mode: slider
-
   - platform: template
     id: ${mic_gain_number_id}
-    name: "Mic-Guadagno"
+    name: "Mic Gain"
     icon: mdi:microphone
     entity_category: config
     min_value: 0
@@ -6248,10 +5711,9 @@ number:
       - logger.log:
           format: "[MIC] Set ES7210 gain to %.0f dB"
           args: ["x"]
-
   - platform: template
     id: ${va_gain_factor_number_id}
-    name: "VA-Guadagno"
+    name: "VA Gain"
     icon: mdi:microphone
     entity_category: config
     min_value: 1
@@ -6265,10 +5727,9 @@ number:
       - logger.log:
           format: "[MIC] Set gain factor to %.0f"
           args: ["x"]
-
   - platform: template
     id: ${va_noise_suppression_number_id}
-    name: "Sopp. Rumore"
+    name: "Noise Suppression"
     icon: mdi:waveform
     entity_category: config
     min_value: 0
@@ -6282,7 +5743,6 @@ number:
       - logger.log:
           format: "[MIC] Set suppression to %.0f"
           args: ["x"]
-
 sensor:
   - platform: template
     id: ${ambient_noise_sensor_id}
@@ -6294,7 +5754,6 @@ sensor:
     lambda: |-
       if (std::isnan(id(${playback_peak_sensor_id}).state)) return NAN;
       return id(${playback_peak_sensor_id}).state;
-
   - platform: sound_level
     id: ${playback_meter_sensor_id}
     microphone:
@@ -6308,77 +5767,65 @@ sensor:
     peak:
       id: ${playback_peak_sensor_id}
       internal: true
-
   - platform: template
     id: ${next_timer_sensor_id}
-    name: "Prossimo timer"
+    name: "Next Timer"
     update_interval: never
     disabled_by_default: true
     device_class: duration
     unit_of_measurement: s
     icon: "mdi:timer"
     accuracy_decimals: 0
-
 text_sensor:
   - platform: template
     id: ${next_timer_name_sensor_id}
-    name: "Prossimo timer - Nome"
+    name: "Next Timer - Name"
     icon: "mdi:timer"
     disabled_by_default: true
-
   - platform: template
-    name: "Ora sveglia"
+    name: "Alarm Time"
     id: ${alarm_time_text_id}
     icon: mdi:bell-ring
-
   - platform: template
-    name: "Ora dispositivo"
+    name: "Device Time"
     id: ${current_time_text_id}
     icon: mdi:clock
-
 button:
   - platform: template
-    name: "Test antifurto"
+    name: "Test Security Alarm"
     icon: mdi:alarm-light
     on_press:
       - script.execute: ${script_antifurto_trigger_id}
-
   - platform: factory_reset
     id: ${factory_reset_button_id}
-    name: "Ripristino di fabbrica"
+    name: "Factory Reset"
     entity_category: diagnostic
     internal: true
-
   - platform: restart
     id: ${restart_button_id}
-    name: "Riavvia"
+    name: "Restart"
     entity_category: diagnostic
     disabled_by_default: true
     icon: "mdi:restart"
-
   - platform: template
-    name: "Controlla nuovo firmware"
+    name: "Check New Firmware"
     icon: mdi:update
     on_press:
       - script.execute: ${script_check_firmware_version_id}
-
 binary_sensor:
   - platform: template
     id: ${noise_detected_binary_sensor_id}
-    name: "Rilevamento rumore"
+    name: "Noise Detected"
     lambda: |-
       if (std::isnan(id(${playback_peak_sensor_id}).state)) return false;
-
-      // Evita auto-trigger mentre il device sta già suonando/parlando
+      // Avoid auto-trigger while the device is already playing/speaking
       if (id(${antifurto_alarm_in_corso_id})) return false;
-
       const auto s = id(${media_player_id}).state;
       if (s == media_player::MediaPlayerState::MEDIA_PLAYER_STATE_PLAYING ||
           s == media_player::MediaPlayerState::MEDIA_PLAYER_STATE_ANNOUNCING ||
           id(${timer_ringing_switch_id}).state) {
         return false;
       }
-
       return id(${playback_peak_sensor_id}).state > id(${noise_threshold_number_id}).state;
     filters:
       - delayed_on: 150ms
