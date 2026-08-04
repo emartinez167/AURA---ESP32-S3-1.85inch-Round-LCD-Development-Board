@@ -72,6 +72,9 @@ substitutions:
   # -------- Codec --------
   es8311_address:   "0x18"
   es7210_address:   "0x40"
+  # -------- Battery (per Waveshare schematic: BAT_ADC on GPIO8, --------
+  # -------- 200K/100K divider -> multiply ADC reading by 3) --------
+  battery_adc_pin:  GPIO8
   # -------- Amplifier --------
   amp_ctrl:         GPIO15
   # -------- Microphone channel lookup --------
@@ -4375,10 +4378,16 @@ lvgl:
       on_swipe_right:
         - script.execute: aura_show_radio_page
       widgets:
+        # Scaled to 85% (was full 240x240) so the battery/status area above
+        # it and the clock/timer area below it both get more breathing
+        # room. LVGL scales around the image's center, which sits at the
+        # screen's exact center (180,180), so this stays visually centered
+        # without needing x/y changes - the face just shrinks symmetrically.
         - image:
             id: aura_main_image
             x: 60
             y: 60
+            scale: 0.85
             src: aura_idle_standby_img
             clickable: false
         # Dark veil during sleep: Aura stays visible but the scene calms down.
@@ -4856,13 +4865,14 @@ lvgl:
             bg_opa: TRANSP
             clickable: false
             hidden: true
-        # Voice Assistant state.
+        # Voice Assistant state. Shrunk from height:40 to make room for the
+        # battery readout between this pill and the face image below.
         - obj:
             x: 74
             y: 18
             width: 212
-            height: 40
-            radius: 20
+            height: 30
+            radius: 15
             bg_color: 0x000000
             bg_opa: 45%
             border_width: 1
@@ -4874,7 +4884,7 @@ lvgl:
         - label:
             id: aura_status_label
             x: 90
-            y: 29
+            y: 22
             width: 180
             text: "AURA"
             text_font: montserrat_16
@@ -4886,7 +4896,7 @@ lvgl:
         - obj:
             id: aura_wifi_dot
             x: 50
-            y: 33
+            y: 28
             width: 10
             height: 10
             radius: 5
@@ -4897,7 +4907,7 @@ lvgl:
         - obj:
             id: aura_api_dot
             x: 300
-            y: 33
+            y: 28
             width: 10
             height: 10
             radius: 5
@@ -4905,16 +4915,31 @@ lvgl:
             bg_opa: COVER
             border_width: 0
             clickable: false
+        # Battery level - sits between the status pill above and the face
+        # image below. Text is refreshed by aura_battery_level's on_value.
+        - label:
+            id: aura_battery_label
+            x: 90
+            y: 52
+            width: 180
+            height: 20
+            text: "Battery --%"
+            text_font: montserrat_14
+            text_color: 0x94A3B8
+            text_align: CENTER
+            bg_opa: TRANSP
+            clickable: false
         # Time overlay - shrunk and moved below the face so it no longer
         # covers it (was 264x88 at y:220, overlapping the 240x240 face
-        # image at y:60-300).
+        # image). Nudged down 8px / trimmed slightly again since the face
+        # moved to y:68-308 to make room for the battery readout above it.
         - obj:
             id: aura_time_plate
             x: 90
-            y: 302
+            y: 310
             width: 180
-            height: 38
-            radius: 16
+            height: 32
+            radius: 14
             bg_color: 0x000000
             bg_opa: 40%
             border_width: 1
@@ -4926,11 +4951,11 @@ lvgl:
         - label:
             id: aura_time_label
             x: 90
-            y: 306
+            y: 314
             width: 180
-            height: 30
+            height: 24
             text: "--:--"
-            text_font: montserrat_28
+            text_font: montserrat_24
             text_color: 0xFFFFFF
             text_align: CENTER
             bg_opa: TRANSP
@@ -5749,6 +5774,58 @@ number:
           format: "[MIC] Set suppression to %.0f"
           args: ["x"]
 sensor:
+  # Battery voltage, read via the onboard BAT_ADC divider (GPIO8, 200K/100K
+  # -> raw ADC reading needs x3 to recover actual battery voltage).
+  - platform: adc
+    pin: ${battery_adc_pin}
+    id: aura_battery_voltage
+    name: "Battery Voltage"
+    update_interval: 60s
+    attenuation: 12dB
+    accuracy_decimals: 2
+    entity_category: diagnostic
+    filters:
+      - multiply: 3.0
+  # Approximate charge percentage from voltage, via a 1S LiPo discharge
+  # curve (not linear - LiPo voltage sags non-uniformly with charge level).
+  - platform: template
+    id: aura_battery_level
+    name: "Battery Level"
+    unit_of_measurement: "%"
+    device_class: battery
+    state_class: measurement
+    accuracy_decimals: 0
+    update_interval: 60s
+    entity_category: diagnostic
+    lambda: |-
+      float v = id(aura_battery_voltage).state;
+      if (std::isnan(v)) return {};
+      struct Point { float volt; float pct; };
+      static const Point curve[] = {
+        {4.20f, 100.0f}, {4.15f, 95.0f}, {4.11f, 90.0f}, {4.08f, 85.0f},
+        {4.02f, 80.0f}, {3.98f, 75.0f}, {3.95f, 70.0f}, {3.91f, 65.0f},
+        {3.87f, 60.0f}, {3.85f, 55.0f}, {3.84f, 50.0f}, {3.82f, 45.0f},
+        {3.80f, 40.0f}, {3.79f, 35.0f}, {3.77f, 30.0f}, {3.75f, 25.0f},
+        {3.73f, 20.0f}, {3.71f, 15.0f}, {3.69f, 10.0f}, {3.61f,  5.0f},
+        {3.27f,  0.0f},
+      };
+      const int n = sizeof(curve) / sizeof(curve[0]);
+      if (v >= curve[0].volt) return 100.0f;
+      if (v <= curve[n - 1].volt) return 0.0f;
+      for (int i = 0; i < n - 1; i++) {
+        if (v <= curve[i].volt && v >= curve[i + 1].volt) {
+          float ratio = (v - curve[i + 1].volt) / (curve[i].volt - curve[i + 1].volt);
+          return curve[i + 1].pct + ratio * (curve[i].pct - curve[i + 1].pct);
+        }
+      }
+      return 0.0f;
+    on_value:
+      - lvgl.label.update:
+          id: aura_battery_label
+          text: !lambda |-
+            char buf[24];
+            snprintf(buf, sizeof(buf), "Battery %.0f%%", x);
+            return std::string(buf);
   - platform: template
     id: ${ambient_noise_sensor_id}
     icon: mdi:microphone
