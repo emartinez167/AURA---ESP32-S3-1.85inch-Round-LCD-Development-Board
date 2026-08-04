@@ -280,7 +280,7 @@ globals:
   - id: radio_current_name
     type: std::string
     restore_value: no
-    initial_value: '"Nessuna radio"'
+    initial_value: '"No radio"'
   - id: radio_status_text
     type: std::string
     restore_value: no
@@ -722,7 +722,7 @@ script:
                 id(${display_awake_until_id}) = millis() + 300000UL;
             - lvgl.label.update:
                 id: aura_boot_status
-                text: "Aura pronta"
+                text: "Aura ready"
                 text_color: 0x86EFAC
             - delay: 250ms
             - lvgl.image.update:
@@ -876,7 +876,7 @@ script:
           time: 220ms
       - script.execute: aura_refresh_controls
   # ======================================================
-  # AURA - BLINK NATURALE
+  # AURA - NATURAL BLINK
   # ======================================================
   - id: aura_blink
     mode: single
@@ -938,7 +938,7 @@ script:
                 id(aura_next_blink_ms) =
                   millis() + 6000UL + (esp_random() % 14001UL);
   # ======================================================
-  # AURA - ESPRESSIONI IDLE CASUALI
+  # AURA - RANDOM IDLE EXPRESSIONS
   # ======================================================
   - id: aura_random_idle_animation
     mode: single
@@ -1259,7 +1259,7 @@ script:
                 src: aura_dance_01_img
             - lvgl.label.update:
                 id: aura_status_label
-                text: "MUSICA"
+                text: "MUSIC"
                 text_color: 0xBFFFEA
             - lvgl.widget.hide: aura_time_plate
             - lvgl.widget.hide: aura_time_label
@@ -1324,7 +1324,7 @@ script:
           id(aura_last_activity_ms) = millis();
       - script.execute: aura_wake_up
   # ======================================================
-  # AURA - ENTRA NEL SONNO
+  # AURA - GOES TO SLEEP
   # ======================================================
   - id: aura_go_to_sleep
     mode: single
@@ -1384,7 +1384,7 @@ script:
                 id: aura_outer_arc_4
                 arc_color: 0x334155
   # ======================================================
-  # AURA - RISVEGLIO
+  # AURA - WAKE UP
   # ======================================================
   - id: aura_wake_up
     mode: restart
@@ -1433,7 +1433,7 @@ script:
                   - script.execute: aura_stop_speaking
                   - lvgl.label.update:
                       id: aura_status_label
-                      text: "TIMER SCADUTO"
+                      text: "TIMER EXPIRED"
                       text_color: 0xFFFFFF
                   - lvgl.arc.update:
                       id: aura_outer_arc_1
@@ -1454,7 +1454,7 @@ script:
                       then:
                         - lvgl.label.update:
                             id: aura_status_label
-                            text: "TI RISPONDO"
+                            text: "REPLYING"
                             text_color: 0xFFD4FF
                         - lvgl.arc.update:
                             id: aura_outer_arc_1
@@ -1482,7 +1482,7 @@ script:
                                   src: aura_idle_standby_img
                               - lvgl.label.update:
                                   id: aura_status_label
-                                  text: "DIMMI..."
+                                  text: "TELL ME..."
                                   text_color: 0xCFFBFF
                               - lvgl.arc.update:
                                   id: aura_outer_arc_1
@@ -1505,7 +1505,7 @@ script:
                                   src: aura_face_up_img
                               - lvgl.label.update:
                                   id: aura_status_label
-                                  text: "TI ASCOLTO"
+                                  text: "I'M LISTENING"
                                   text_color: 0xC8FFE0
                               - lvgl.arc.update:
                                   id: aura_outer_arc_1
@@ -2750,7 +2750,7 @@ wifi:
     - script.execute: aura_refresh_boot_progress
     - lvgl.label.update:
         id: aura_boot_status
-        text: "Wi-Fi connesso"
+        text: "Wi-Fi connected"
         text_color: 0x8FD7FF
     - script.execute: aura_try_finish_boot
     - delay: 3s
@@ -3372,7 +3372,7 @@ voice_assistant:
         id(${va_timer_seconds_left_id})  = id(${first_active_timer_id}).seconds_left;
         id(${va_timer_last_tick_ms_id})  = millis();
 # ======================================================
-# IMICRO WAKE WORD
+# MICRO WAKE WORD
 # ======================================================
 micro_wake_word:
   id: ${micro_wake_word_id}
@@ -4353,7 +4353,7 @@ lvgl:
                   x: 20
                   y: 306
                   width: 320
-                  text: "Connessione Wi-Fi..."
+                  text: "Connecting to Wi-Fi..."
                   text_align: CENTER
                   text_font: montserrat_14
                   text_color: 0xFFFFFF
@@ -4856,7 +4856,7 @@ lvgl:
             bg_opa: TRANSP
             clickable: false
             hidden: true
-        # Stato Voice Assistant.
+        # Voice Assistant state.
         - obj:
             x: 74
             y: 18
@@ -4882,7 +4882,7 @@ lvgl:
             text_align: CENTER
             bg_opa: TRANSP
             clickable: false
-        # Stato WiFi / API.
+        # WiFi / API state.
         - obj:
             id: aura_wifi_dot
             x: 50
@@ -5485,11 +5485,11 @@ lvgl:
             widgets:
               - label:
                   align: CENTER
-                  text: "TORNA AD AURA"
+                  text: "BACK TO AURA"
                   text_font: montserrat_14
                   text_color: 0xCBD5E1
 # ======================================================
-# SENSORI
+# SENSORS
 # ======================================================
 select:
   - platform: template
