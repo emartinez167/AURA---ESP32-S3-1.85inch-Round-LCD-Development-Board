@@ -2204,76 +2204,15 @@ interval:
                      phase == ${voice_assist_replying_phase_id};
           then:
             - script.execute: aura_stop_music
-      - if:
-          condition:
-            lambda: return id(aura_music_mode) && id(aura_assets_ready);
-          then:
-            - lambda: |-
-                const uint32_t now = millis();
-                // Music VU based on the average RMS level, not the peak.
-                // Useful scale: -58 dB RMS = 0%, -1 dB RMS = 100%.
-                // The 1.55 curve widens the low range and keeps the VU
-                // from sitting constantly at full scale with normal music.
-                float real_level = 0.0f;
-                const float rms_db = id(${playback_rms_sensor_id}).state;
-                if (!std::isnan(rms_db) && !std::isinf(rms_db)) {
-                  float normalized = (rms_db + 58.0f) / 57.0f;
-                  if (normalized < 0.0f) normalized = 0.0f;
-                  if (normalized > 1.0f) normalized = 1.0f;
-                  real_level = powf(normalized, 1.55f);
-                  if (rms_db <= -58.0f) {
-                    real_level = 0.0f;
-                  }
-                }
-                const float slow = (sinf(now / 310.0f) + 1.0f) * 0.5f;
-                const float fast = (sinf(now / 105.0f) + 1.0f) * 0.5f;
-                float pulse = sinf(now / 72.0f);
-                if (pulse < 0.0f) pulse = 0.0f;
-                pulse = pulse * pulse * pulse * pulse;
-                const float synthetic =
-                  0.10f + slow * 0.16f + fast * 0.18f + pulse * 0.38f;
-                float target = real_level;
-                if (target < 0.04f) {
-                  target = synthetic * 0.72f;
-                } else {
-                  const float floor = synthetic * 0.20f;
-                  if (target < floor) target = floor;
-                }
-                if (target > 1.0f) target = 1.0f;
-                const float alpha =
-                  target > id(aura_music_level) ? 0.58f : 0.14f;
-                id(aura_music_level) +=
-                  (target - id(aura_music_level)) * alpha;
-                if (id(aura_music_level) < 0.0f) id(aura_music_level) = 0.0f;
-                if (id(aura_music_level) > 1.0f) id(aura_music_level) = 1.0f;
-            - lvgl.arc.update:
-                id: aura_music_vu_arc
-                value: !lambda |-
-                  return (int)(id(aura_music_level) * 100.0f + 0.5f);
-                indicator:
-                  arc_color: !lambda |-
-                    const float level = id(aura_music_level);
-                    if (level >= 0.90f) return lv_color_hex(0xFF4614);
-                    if (level >= 0.70f) return lv_color_hex(0xFFB900);
-                    return lv_color_hex(0x00DC78);
-            - lvgl.widget.refresh: aura_music_note_1
-            - lvgl.widget.refresh: aura_music_note_2
-            - lvgl.widget.refresh: aura_music_note_3
-            - lvgl.widget.refresh: aura_music_note_4
-            - lvgl.widget.refresh: aura_music_note_5
-            - lvgl.widget.refresh: aura_music_note_6
-            # Whole-image bob/sway removed (August 2026): repositioning the
-            # full 204x204 avatar every 80ms forced a large-area SPI redraw
-            # on top of audio decoding, causing choppy playback while music
-            # was showing on the main screen. VU arc and note icons stay,
-            # since those are small-area redraws and much cheaper.
-            - if:
-                condition:
-                  lambda: |-
-                    return !id(aura_music_blinking) &&
-                           millis() >= id(aura_music_next_pose_ms);
-                then:
-                  - script.execute: aura_music_next_pose
+      # All per-frame music-reactive visuals (VU arc value/color, note-icon
+      # refreshes, and the dance-pose image swap loop) were removed here
+      # (August 2026): even after dropping the whole-image bob/sway, the
+      # VU arc + notes at 80ms plus the pose swap (as fast as every 220ms,
+      # a full 204x204 image redraw) were still enough SPI/CPU contention
+      # to cause audible stutter during Music Assistant playback. The main
+      # screen now stays fully static for the whole duration of playback:
+      # aura_start_music sets one dance pose a single time and nothing
+      # updates it again until aura_stop_music runs.
   # ----------------------------------------------------
   # AURA - SLEEP / WAKE AFTER QUIET
   # Noise, touch, media, timer, and VA keep Aura awake.
@@ -2377,7 +2316,7 @@ interval:
       - if:
           condition:
             and:
-              - lambda: return id(aura_assets_ready) && !id(control_page_active) && !id(aura_sleeping);
+              - lambda: return id(aura_assets_ready) && !id(control_page_active) && !id(aura_sleeping) && !id(aura_music_mode);
               - lvgl.page.is_showing: aura_page
           then:
             - lambda: |-
