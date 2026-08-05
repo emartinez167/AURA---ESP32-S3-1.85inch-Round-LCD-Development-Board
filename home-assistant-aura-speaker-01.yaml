@@ -115,7 +115,7 @@ substitutions:
   mic_mute_switch_id:       mic_mute_switch
   wake_sound_switch_id:     wake_sound
   timer_ringing_switch_id:  timer_ringing
-  antifurto_switch_id:      sw_antifurto
+  security_mode_switch_id:      security_mode
   alarm_on_switch_id:       alarm_on
   # -------- Number / Select / Text IDs --------
   mic_gain_number_id:             mic_gain_db
@@ -141,7 +141,7 @@ substitutions:
   display_awake_until_id: display_awake_until
   display_emotion_mode_id: display_emotion_mode
   volume_bar_until_id: volume_bar_until
-  antifurto_alarm_in_corso_id: antifurto_alarm_in_corso
+  security_alarm_active_id: security_alarm_active
   wake_word_flow_active_id: wake_word_flow_active
   va_timer_total_seconds_id: va_timer_total_seconds
   va_timer_seconds_left_id: va_timer_seconds_left
@@ -164,8 +164,8 @@ substitutions:
   fw_update_check_enabled_id: fw_update_check_enabled
   fw_update_available_id: fw_update_available
   fw_latest_version_id: fw_latest_version
-  va_modalita_continua_id: va_modalita_continua
-  va_ultimo_input_ms_id: va_ultimo_input_ms
+  va_continuous_mode_id: va_continuous_mode
+  va_last_input_ms_id: va_last_input_ms
   # -------- Script IDs --------
   script_va_local_volume_up_id: va_local_volume_up
   script_va_local_volume_down_id: va_local_volume_down
@@ -191,7 +191,7 @@ substitutions:
   script_publish_current_time_id: publish_current_time
   script_check_firmware_version_id: check_firmware_version
   script_flash_ring_id: flash_ring
-  script_antifurto_trigger_id: antifurto_trigger
+  script_security_alarm_trigger_id: security_alarm_trigger
   # -------- Additional Component / Entity IDs --------
   display_qspi_id: display_qspi
   i2s_output_id: i2s_output
@@ -204,7 +204,7 @@ substitutions:
   announcement_resampler_id: announcement_resampler
   amp_enable_switch_id: amp_enable_8
   mute_sound_switch_id: mute_sound
-  va_continuous_mode_switch_id: sw_modalita_va_continua
+  va_continuous_mode_switch_id: va_continuous_mode_switch
   fw_update_check_switch_id: sw_fw_update_check
   noise_threshold_number_id: noise_threshold_db
   ambient_noise_sensor_id: ambient_noise_db
@@ -354,7 +354,7 @@ globals:
     type: uint32_t
     restore_value: no
     initial_value: "0"
-  - id: ${antifurto_alarm_in_corso_id}
+  - id: ${security_alarm_active_id}
     type: bool
     restore_value: no
     initial_value: "false"
@@ -456,11 +456,11 @@ globals:
     type: std::string
     restore_value: no
     initial_value: '"unknown"'
-  - id: ${va_modalita_continua_id}
+  - id: ${va_continuous_mode_id}
     type: bool
     restore_value: yes
     initial_value: "true"
-  - id: ${va_ultimo_input_ms_id}
+  - id: ${va_last_input_ms_id}
     type: uint32_t
     restore_value: no
     initial_value: "0"
@@ -1775,13 +1775,13 @@ script:
       - lvgl.label.update:
           id: aura_alarm_label
           text: !lambda |-
-            return id(${antifurto_switch_id}).state
+            return id(${security_mode_switch_id}).state
               ? std::string("ALARM ON")
               : std::string("ALARM OFF");
       - lvgl.widget.update:
           id: aura_alarm_button
           bg_color: !lambda |-
-            return id(${antifurto_switch_id}).state
+            return id(${security_mode_switch_id}).state
               ? lv_color_hex(0x7F1D1D)
               : lv_color_hex(0x0F3A4A);
   - id: ${script_va_local_volume_up_id}
@@ -1816,11 +1816,11 @@ script:
   - id: ${script_va_local_alarm_on_id}
     mode: restart
     then:
-      - switch.turn_on: ${antifurto_switch_id}
+      - switch.turn_on: ${security_mode_switch_id}
   - id: ${script_va_local_alarm_off_id}
     mode: restart
     then:
-      - switch.turn_off: ${antifurto_switch_id}
+      - switch.turn_off: ${security_mode_switch_id}
   - id: ${script_start_va_from_wake_word_id}
     mode: restart
     parameters:
@@ -1830,7 +1830,7 @@ script:
           id(${wake_word_flow_active_id}) = true;
           id(${display_awake_until_id}) = millis() + 300000UL;
           id(${voice_assistant_phase_global_id}) = ${voice_assist_waiting_for_command_phase_id};
-          id(${va_ultimo_input_ms_id}) = millis();
+          id(${va_last_input_ms_id}) = millis();
       - if:
           condition:
             switch.is_on: ${wake_sound_switch_id}
@@ -1844,7 +1844,7 @@ script:
             - delay: 400ms
       - if:
           condition:
-            lambda: return id(${va_modalita_continua_id});
+            lambda: return id(${va_continuous_mode_id});
           then:
             - voice_assistant.start_continuous:
           else:
@@ -2096,11 +2096,11 @@ script:
       - light.turn_on:
           id: ${display_backlight_id}
           brightness: 80%
-  - id: ${script_antifurto_trigger_id}
+  - id: ${script_security_alarm_trigger_id}
     mode: restart
     then:
       - lambda: |-
-          id(${antifurto_alarm_in_corso_id}) = true;
+          id(${security_alarm_active_id}) = true;
           id(${display_awake_until_id}) = millis() + 300000UL;
           id(${display_startled_until_id}) = millis() + 2200UL;
       - logger.log:
@@ -2553,13 +2553,13 @@ interval:
       - if:
           condition:
             lambda: |-
-              return id(${va_modalita_continua_id}) &&
+              return id(${va_continuous_mode_id}) &&
                      id(${voice_assistant_id}).is_running() &&
                      id(${voice_assistant_phase_global_id}) != ${voice_assist_thinking_phase_id} &&
                      id(${voice_assistant_phase_global_id}) != ${voice_assist_replying_phase_id} &&
                      id(${voice_assistant_phase_global_id}) != ${voice_assist_error_phase_id} &&
-                     id(${va_ultimo_input_ms_id}) > 0 &&
-                     (millis() - id(${va_ultimo_input_ms_id}) > 60000UL);
+                     id(${va_last_input_ms_id}) > 0 &&
+                     (millis() - id(${va_last_input_ms_id}) > 60000UL);
           then:
             - logger.log:
                 level: INFO
@@ -2731,7 +2731,7 @@ api:
       then:
         - if:
             condition:
-              lambda: return id(${va_modalita_continua_id});
+              lambda: return id(${va_continuous_mode_id});
             then:
               - voice_assistant.start_continuous:
               - logger.log:
@@ -3083,7 +3083,7 @@ voice_assistant:
         level: INFO
         format: "==== VOICEASSISTANT: ON_START"
     - lambda: |-
-        id(${va_ultimo_input_ms_id}) = millis();
+        id(${va_last_input_ms_id}) = millis();
     - mixer_speaker.apply_ducking:
         id: ${media_mixer_input_id}
         decibel_reduction: 30
@@ -3094,21 +3094,21 @@ voice_assistant:
         format: "==== VOICEASSISTANT: LISTENING"
     - lambda: |-
         id(${voice_assistant_phase_global_id}) = ${voice_assist_waiting_for_command_phase_id};
-        id(${va_ultimo_input_ms_id}) = millis();
+        id(${va_last_input_ms_id}) = millis();
   on_stt_vad_start:
     - logger.log:
         level: INFO
         format: "==== VOICEASSISTANT: VAD_START"
     - lambda: |-
         id(${voice_assistant_phase_global_id}) = ${voice_assist_listening_for_command_phase_id};
-        id(${va_ultimo_input_ms_id}) = millis();
+        id(${va_last_input_ms_id}) = millis();
   on_stt_vad_end:
     - logger.log:
         level: INFO
         format: "==== VOICEASSISTANT: VAD_END"
     - lambda: |-
         id(${voice_assistant_phase_global_id}) = ${voice_assist_thinking_phase_id};
-        id(${va_ultimo_input_ms_id}) = millis();
+        id(${va_last_input_ms_id}) = millis();
   on_intent_progress:
     - logger.log:
         level: INFO
@@ -3123,7 +3123,7 @@ voice_assistant:
         level: INFO
         format: "==== VOICEASSISTANT: TTS_START"
     - lambda: |-
-        id(${va_ultimo_input_ms_id}) = millis();
+        id(${va_last_input_ms_id}) = millis();
     - if:
         condition:
           lambda: 'return id(${voice_assistant_phase_global_id}) != ${voice_assist_replying_phase_id};'
@@ -3141,7 +3141,7 @@ voice_assistant:
         level: INFO
         format: "==== VOICEASSISTANT: STT_END"
     - lambda: |-
-        id(${va_ultimo_input_ms_id}) = millis();
+        id(${va_last_input_ms_id}) = millis();
         id(${local_cmd_code_id}) = 0;
     - script.execute:
         id: ${script_send_stt_text_event_id}
@@ -5381,10 +5381,10 @@ lvgl:
                     - micro_wake_word.stop:
                     - lambda: |-
                         id(${voice_assistant_phase_global_id}) = ${voice_assist_waiting_for_command_phase_id};
-                        id(${va_ultimo_input_ms_id}) = millis();
+                        id(${va_last_input_ms_id}) = millis();
                     - if:
                         condition:
-                          lambda: return id(${va_modalita_continua_id});
+                          lambda: return id(${va_continuous_mode_id});
                         then:
                           - voice_assistant.start_continuous:
                         else:
@@ -5414,11 +5414,11 @@ lvgl:
             on_click:
               - if:
                   condition:
-                    switch.is_on: ${antifurto_switch_id}
+                    switch.is_on: ${security_mode_switch_id}
                   then:
-                    - switch.turn_off: ${antifurto_switch_id}
+                    - switch.turn_off: ${security_mode_switch_id}
                   else:
-                    - switch.turn_on: ${antifurto_switch_id}
+                    - switch.turn_on: ${security_mode_switch_id}
               - lambda: id(control_page_until) = millis() + 15000UL;
               - script.execute: aura_refresh_controls
             widgets:
@@ -5512,7 +5512,7 @@ select:
             id(${saved_alarm_action_id}) = x;
 switch:
   - platform: template
-    id: ${antifurto_switch_id}
+    id: ${security_mode_switch_id}
     name: "Security Mode"
     icon: mdi:shield-home
     optimistic: true
@@ -5523,7 +5523,7 @@ switch:
           id(${display_startled_until_id}) = 0;
     turn_off_action:
       - lambda: |-
-          id(${antifurto_alarm_in_corso_id}) = false;
+          id(${security_alarm_active_id}) = false;
   - platform: template
     id: ${va_continuous_mode_switch_id}
     name: "Assistant - Continuous Listening"
@@ -5533,16 +5533,16 @@ switch:
     # respond to itself in a feedback loop (see HomeLab doc 9.16).
     restore_mode: RESTORE_DEFAULT_OFF
     lambda: |-
-      return id(${va_modalita_continua_id});
+      return id(${va_continuous_mode_id});
     turn_on_action:
       - lambda: |-
-          id(${va_modalita_continua_id}) = true;
+          id(${va_continuous_mode_id}) = true;
       - logger.log:
           level: INFO
           format: "==== Assistant mode: CONTINUOUS"
     turn_off_action:
       - lambda: |-
-          id(${va_modalita_continua_id}) = false;
+          id(${va_continuous_mode_id}) = false;
       - logger.log:
           level: INFO
           format: "==== Assistant mode: SINGLE"
@@ -5808,7 +5808,7 @@ button:
     name: "Test Security Alarm"
     icon: mdi:alarm-light
     on_press:
-      - script.execute: ${script_antifurto_trigger_id}
+      - script.execute: ${script_security_alarm_trigger_id}
   - platform: factory_reset
     id: ${factory_reset_button_id}
     name: "Factory Reset"
@@ -5832,7 +5832,7 @@ binary_sensor:
     lambda: |-
       if (std::isnan(id(${playback_peak_sensor_id}).state)) return false;
       // Avoid auto-trigger while the device is already playing/speaking
-      if (id(${antifurto_alarm_in_corso_id})) return false;
+      if (id(${security_alarm_active_id})) return false;
       const auto s = id(${media_player_id}).state;
       if (s == media_player::MediaPlayerState::MEDIA_PLAYER_STATE_PLAYING ||
           s == media_player::MediaPlayerState::MEDIA_PLAYER_STATE_ANNOUNCING ||
@@ -5848,6 +5848,6 @@ binary_sensor:
       - script.execute: aura_wake_up
       - if:
           condition:
-            switch.is_on: ${antifurto_switch_id}
+            switch.is_on: ${security_mode_switch_id}
           then:
-            - script.execute: ${script_antifurto_trigger_id}
+            - script.execute: ${script_security_alarm_trigger_id}
