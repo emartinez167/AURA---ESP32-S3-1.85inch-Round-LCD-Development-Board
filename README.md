@@ -1,10 +1,9 @@
 <div align="center">
 
 # HackMyHome Voice Assistant
-
 ### Aura · Waveshare ESP32-S3 Touch LCD 1.85C
 
-Un satellite vocale per **Home Assistant** basato su **ESPHome**, con interfaccia **LVGL**, personaggio animato Aura, microWakeWord locale, media player, timer, sveglia, controlli touch e radio integrate tramite **Music Assistant**.
+A voice satellite for **Home Assistant** based on **ESPHome**, with an **LVGL** interface, the animated Aura character, local microWakeWord, media player, timer, alarm, touch controls, and integrated radio via **Music Assistant**.
 
 [![ESPHome](https://img.shields.io/badge/ESPHome-2026.6.3%2B-03A9F4?style=for-the-badge&logo=esphome&logoColor=white)](#)
 [![Home Assistant](https://img.shields.io/badge/Home%20Assistant-Voice%20Assistant-41BDF5?style=for-the-badge&logo=homeassistant&logoColor=white)](#)
@@ -14,128 +13,128 @@ Un satellite vocale per **Home Assistant** basato su **ESPHome**, con interfacci
 [![Project](https://img.shields.io/badge/HackMyHome-Aura-8B5CF6?style=for-the-badge)](#)
 
 <a href="https://github.com/MarcoFre/images-aura/blob/main/aura_half_smile.png">
-  <img src="https://raw.githubusercontent.com/MarcoFre/images-aura/main/aura_half_smile.png" alt="Aura con mezzo sorriso" width="280">
+  <img src="https://raw.githubusercontent.com/MarcoFre/images-aura/main/aura_half_smile.png" alt="Aura with a half smile" width="280">
 </a>
 
-<em>Aura — frame “half smile”. Clicca sull’immagine per aprire l’asset originale.</em>
+<em>Aura — the "half smile" frame. Click the image to open the original asset.</em>
 
 </div>
 
 ---
 
-## 📦 Oggetto usato
+## 📦 Product Used
 
-| Voce | Dettaglio |
+| Item | Detail |
 |---|---|
-| **Prodotto** | Waveshare ESP32-S3 Touch LCD 1.85C / 1.85C-BOX |
-| **Link Amazon** | [Waveshare ESP32-S3 Touch LCD 1.85C / 1.85C-BOX](https://amzn.to/4dHuK3w) |
-| **Link Waveshare** | [Waveshare ESP32-S3 Touch LCD 1.85C / 1.85C-BOX](https://www.waveshare.com/esp32-s3-touch-lcd-1.85c.htm?sku=30684&aff_id=HackMyHome) |
-| **Documentazione ufficiale** | [Waveshare Wiki](https://docs.waveshare.com/ESP32-S3-Touch-LCD-1.85C) |
-| **Firmware base** | ESPHome |
-| **Interfaccia grafica** | LVGL |
-| **Integrazione domotica** | Home Assistant Voice Assistant |
-| **Integrazione musicale** | Music Assistant |
-| **Versione YAML** | `6.0-lvgl-music-assistant-radio-vu` |
+| **Product** | Waveshare ESP32-S3 Touch LCD 1.85C / 1.85C-BOX |
+| **Amazon link** | [Waveshare ESP32-S3 Touch LCD 1.85C / 1.85C-BOX](https://amzn.to/4dHuK3w) |
+| **Waveshare link** | [Waveshare ESP32-S3 Touch LCD 1.85C / 1.85C-BOX](https://www.waveshare.com/esp32-s3-touch-lcd-1.85c.htm?sku=30684&aff_id=HackMyHome) |
+| **Official documentation** | [Waveshare Wiki](https://docs.waveshare.com/ESP32-S3-Touch-LCD-1.85C) |
+| **Base firmware** | ESPHome |
+| **Graphical interface** | LVGL |
+| **Home automation integration** | Home Assistant Voice Assistant |
+| **Music integration** | Music Assistant |
+| **YAML version** | `6.0-lvgl-music-assistant-radio-vu` |
 
 > [!IMPORTANT]
-> Questo firmware è pensato per la variante con display **ST77916 / JC3636W518V2**, touch **CST816T**, codec audio **ES8311** e microfoni tramite **ES7210**. Prima di compilare, verifica la revisione hardware della board.
+> This firmware is designed for the variant with the **ST77916 / JC3636W518V2** display, **CST816T** touch, **ES8311** audio codec, and microphones via **ES7210**. Before compiling, check your board's hardware revision.
 
 ---
 
-## 🧭 Indice
+## 🧭 Table of Contents
 
-- [Cosa fa questo progetto](#-cosa-fa-questo-progetto)
-- [Caratteristiche principali](#-caratteristiche-principali)
-- [Hardware supportato](#-hardware-supportato)
-- [Pinout principale](#-pinout-principale)
-- [Architettura firmware](#-architettura-firmware)
-- [Aura e interfaccia LVGL](#-aura-e-interfaccia-lvgl)
-- [Interfaccia touch](#-interfaccia-touch)
+- [What This Project Does](#-what-this-project-does)
+- [Key Features](#-key-features)
+- [Supported Hardware](#-supported-hardware)
+- [Main Pinout](#-main-pinout)
+- [Firmware Architecture](#-firmware-architecture)
+- [Aura and the LVGL Interface](#-aura-and-the-lvgl-interface)
+- [Touch Interface](#-touch-interface)
 - [Voice Assistant](#-voice-assistant)
-- [Music Assistant e radio](#-music-assistant-e-radio)
-- [Modalità musica e VU meter](#-modalità-musica-e-vu-meter)
-- [Timer e sveglia](#-timer-e-sveglia)
-- [Rilevamento rumore e antifurto](#-rilevamento-rumore-e-antifurto)
-- [Entità Home Assistant](#-entità-home-assistant)
-- [Azioni API](#-azioni-api)
-- [Installazione rapida](#-installazione-rapida)
-- [Configurazione Music Assistant](#-configurazione-music-assistant)
-- [Asset grafici Aura](#-asset-grafici-aura)
+- [Music Assistant and Radio](#-music-assistant-and-radio)
+- [Music Mode and VU Meter](#-music-mode-and-vu-meter)
+- [Timer and Alarm](#-timer-and-alarm)
+- [Noise Detection and Security Alarm](#-noise-detection-and-security-alarm)
+- [Home Assistant Entities](#-home-assistant-entities)
+- [API Actions](#-api-actions)
+- [Quick Installation](#-quick-installation)
+- [Music Assistant Configuration](#-music-assistant-configuration)
+- [Aura Graphic Assets](#-aura-graphic-assets)
 - [Troubleshooting](#-troubleshooting)
-- [Struttura consigliata del repository](#-struttura-consigliata-del-repository)
+- [Recommended Repository Structure](#-recommended-repository-structure)
 - [Roadmap](#-roadmap)
-- [Crediti](#-crediti)
+- [Credits](#-credits)
 
 ---
 
-## 🏠 Cosa fa questo progetto
+## 🏠 What This Project Does
 
-Questo firmware trasforma la **Waveshare ESP32-S3 Touch LCD 1.85C** in un assistente vocale da scrivania per Home Assistant.
+This firmware turns the **Waveshare ESP32-S3 Touch LCD 1.85C** into a desktop voice assistant for Home Assistant.
 
-L’obiettivo non è soltanto far parlare la board, ma creare un piccolo oggetto interattivo in stile **HackMyHome**, con:
+The goal isn't just to make the board talk, but to create a small interactive **HackMyHome**-style object, with:
 
-- personaggio Aura animato sul display;
-- stati visivi dedicati alle fasi del Voice Assistant;
-- wake word locale tramite microWakeWord;
-- ascolto singolo o continuo;
-- animazione della bocca sincronizzata con il TTS;
-- timer e sveglia;
-- controlli touch locali;
-- media player integrato;
-- modalità musica con pose Dance, note animate e VU meter;
-- pagina radio collegata a Music Assistant;
-- rilevamento del rumore per la modalità antifurto;
-- download guidato degli asset grafici durante il boot.
+- an animated Aura character on the display;
+- visual states dedicated to each Voice Assistant phase;
+- a local wake word via microWakeWord;
+- single or continuous listening;
+- mouth animation synced to TTS;
+- timer and alarm;
+- local touch controls;
+- an integrated media player;
+- a music mode with Dance poses, animated notes, and a VU meter;
+- a radio page connected to Music Assistant;
+- noise detection for the security-alarm mode;
+- a guided download of graphic assets during boot.
 
 ---
 
-## ✨ Caratteristiche principali
+## ✨ Key Features
 
-| Area | Funzione |
+| Area | Function |
 |---|---|
-| 🎙️ **Voice Assistant** | Integrazione con Assist di Home Assistant |
-| 🧠 **Wake word locale** | microWakeWord con modelli configurabili |
-| 👩 **Aura** | Espressioni, blink, movimento occhi, sonno e bocca animata |
-| 🔊 **Audio** | Speaker I2S con codec ES8311 e mixer media/annunci |
-| 🎧 **Microfoni** | ES7210 via I2S per acquisizione audio |
-| 🖥️ **Display** | Display rotondo 360×360 QSPI con UI LVGL |
-| 👆 **Touch** | Swipe, pulsanti e slider volume locale |
-| 📻 **Music Assistant** | Pagina radio con sei stazioni configurabili |
-| 🎵 **Modalità musica** | Pose Dance, note animate e VU meter circolare RMS |
-| ⏱️ **Timer** | Visualizzazione timer attivo e gestione timer scaduto |
-| ⏰ **Sveglia** | Ora e azione configurabili da Home Assistant |
-| 🛡️ **Antifurto** | Rilevamento del rumore sopra soglia |
-| 🌙 **Sonno** | Aura si addormenta automaticamente durante la quiete |
-| 📥 **Asset online** | Download di 16 immagini Aura con barra di avanzamento |
-| 🔄 **OTA** | Aggiornamento firmware via ESPHome |
-| 🧩 **API HA** | Azioni richiamabili da Home Assistant |
+| 🎙️ **Voice Assistant** | Integration with Home Assistant's Assist |
+| 🧠 **Local wake word** | microWakeWord with configurable models |
+| 👩 **Aura** | Expressions, blinking, eye movement, sleep, and animated mouth |
+| 🔊 **Audio** | I2S speaker with ES8311 codec and media/announcement mixer |
+| 🎧 **Microphones** | ES7210 via I2S for audio capture |
+| 🖥️ **Display** | 360×360 round QSPI display with LVGL UI |
+| 👆 **Touch** | Swipe, buttons, and local volume slider |
+| 📻 **Music Assistant** | Radio page with six configurable stations |
+| 🎵 **Music mode** | Dance poses, animated notes, and a circular RMS VU meter |
+| ⏱️ **Timer** | Active timer display and expired-timer handling |
+| ⏰ **Alarm** | Time and action configurable from Home Assistant |
+| 🛡️ **Security alarm** | Noise detection above a threshold |
+| 🌙 **Sleep** | Aura falls asleep automatically during quiet periods |
+| 📥 **Online assets** | Downloads 16 Aura images with a progress bar |
+| 🔄 **OTA** | Firmware updates via ESPHome |
+| 🧩 **HA API** | Actions callable from Home Assistant |
 
 ---
 
-## 🔧 Hardware supportato
+## 🔧 Supported Hardware
 
-| Componente | Dettaglio |
+| Component | Detail |
 |---|---|
 | MCU | ESP32-S3 dual core, 240 MHz |
 | Flash | 16 MB |
 | PSRAM | 8 MB Octal PSRAM |
-| Display | 1.85” rotondo, 360×360 |
-| Driver display | ST77916 / JC3636W518V2 |
-| Bus display | QSPI / Quad SPI |
-| Touch | CST816T su I2C |
-| Codec speaker | ES8311 |
-| Codec microfoni | ES7210 |
-| Amplificatore | PA control su GPIO15 |
-| Expander I/O | PCA9554, indirizzo `0x20` |
-| Connettività | Wi-Fi 2.4 GHz |
+| Display | 1.85” round, 360×360 |
+| Display driver | ST77916 / JC3636W518V2 |
+| Display bus | QSPI / Quad SPI |
+| Touch | CST816T over I2C |
+| Speaker codec | ES8311 |
+| Microphone codec | ES7210 |
+| Amplifier | PA control on GPIO15 |
+| I/O expander | PCA9554, address `0x20` |
+| Connectivity | Wi-Fi 2.4 GHz |
 
 ---
 
-## 🧷 Pinout principale
+## 🧷 Main Pinout
 
-### Display ST77916 QSPI
+### ST77916 QSPI Display
 
-| Segnale | Pin |
+| Signal | Pin |
 |---|---|
 | CLK | `GPIO40` |
 | D0 | `GPIO46` |
@@ -144,196 +143,192 @@ L’obiettivo non è soltanto far parlare la board, ma creare un piccolo oggetto
 | D3 | `GPIO41` |
 | CS | `GPIO21` |
 | Backlight | `GPIO5` |
-| Reset LCD | `PCA9554` pin `1` |
+| LCD reset | `PCA9554` pin `1` |
 
-### Touch CST816T
+### CST816T Touch
 
-| Segnale | Pin / indirizzo |
+| Signal | Pin / address |
 |---|---|
 | SDA | `GPIO11` |
 | SCL | `GPIO10` |
 | INT | `GPIO4` |
 | Address | `0x15` |
-| Reset touch | `PCA9554` pin `0` |
+| Touch reset | `PCA9554` pin `0` |
 
-### Audio I2S
+### I2S Audio
 
-| Segnale | Pin |
+| Signal | Pin |
 |---|---|
 | MCLK | `GPIO2` |
 | BCLK | `GPIO48` |
 | LRCLK | `GPIO38` |
-| DOUT speaker | `GPIO47` |
-| DIN microfono | `GPIO39` |
+| Speaker DOUT | `GPIO47` |
+| Microphone DIN | `GPIO39` |
 | PA CTRL | `GPIO15` |
 
 ---
 
-## 🧱 Architettura firmware
+## 🧱 Firmware Architecture
 
 ```text
 ESP32-S3
-├─ Display ST77916 QSPI
-│  └─ Interfaccia LVGL 360×360
-├─ Touch CST816T
+├─ ST77916 QSPI Display
+│  └─ 360×360 LVGL interface
+├─ CST816T Touch
 ├─ Online Image
-│  └─ 16 asset Aura scaricati da GitHub
-├─ Audio Codec ES8311
-├─ Microphone ADC ES7210
+│  └─ 16 Aura assets downloaded from GitHub
+├─ ES8311 Audio Codec
+├─ ES7210 Microphone ADC
 ├─ Speaker Pipeline
 │  ├─ Media pipeline
 │  └─ Announcement / TTS pipeline
 ├─ Voice Assistant
 │  ├─ microWakeWord
-│  ├─ STT / TTS Home Assistant
+│  ├─ Home Assistant STT / TTS
 │  ├─ timer
-│  └─ stati assistente
+│  └─ assistant states
 ├─ Music Assistant
-│  └─ azioni Home Assistant per radio e stop
+│  └─ Home Assistant actions for radio and stop
 ├─ Sound Level
-│  ├─ RMS per VU meter
-│  └─ Peak per rilevamento rumore
+│  ├─ RMS for the VU meter
+│  └─ Peak for noise detection
 └─ Home Assistant API actions
 ```
 
-### Fasi del Voice Assistant
+### Voice Assistant Phases
 
-Il display e la logica interna usano la variabile globale `voice_assistant_phase`.
+The display and internal logic use the global variable `voice_assistant_phase`.
 
-| Valore | Stato | Significato |
+| Value | State | Meaning |
 |---:|---|---|
-| `1` | Idle | Assistente pronto alla wake word |
-| `2` | Waiting | Wake word rilevata, attesa comando |
-| `3` | Listening | L’utente sta parlando |
-| `4` | Thinking | Comando in elaborazione |
-| `5` | Replying | Risposta TTS in corso |
-| `10` | Not ready | Assistente non pronto |
-| `11` | Error | Errore nella pipeline |
+| `1` | Idle | Assistant ready for the wake word |
+| `2` | Waiting | Wake word detected, waiting for a command |
+| `3` | Listening | The user is speaking |
+| `4` | Thinking | Command being processed |
+| `5` | Replying | TTS response in progress |
+| `10` | Not ready | Assistant not ready |
+| `11` | Error | Error in the pipeline |
 
 ---
 
-## 👩 Aura e interfaccia LVGL
+## 👩 Aura and the LVGL Interface
 
-Aura cambia aspetto in base allo stato del dispositivo.
+Aura's appearance changes based on the device's state.
 
-| Stato | Comportamento visivo |
+| State | Visual behavior |
 |---|---|
-| Idle | Blink naturale ed espressioni casuali |
-| Wake word | Aura si risveglia e attende il comando |
-| Listening | Espressione dedicata all’ascolto |
-| Thinking | Occhi rivolti verso l’alto |
-| Replying | Bocca animata in funzione del livello TTS |
-| Timer scaduto | Colori di allarme e stato dedicato |
-| Musica | Pose Dance, note animate e VU meter |
-| Sonno | Occhi chiusi, `Zzz...`, scena attenuata |
-| Errore | Stato visivo e cromatico dedicato |
+| Idle | Natural blinking and random expressions |
+| Wake word | Aura wakes up and waits for the command |
+| Listening | Expression dedicated to listening |
+| Thinking | Eyes looking upward |
+| Replying | Mouth animated based on the TTS level |
+| Timer expired | Alarm colors and a dedicated state |
+| Music | Dance poses, animated notes, and VU meter |
+| Sleep | Closed eyes, `Zzz...`, dimmed scene |
+| Error | Dedicated visual and color state |
 
-### Boot grafico
+### Graphic Boot
 
-Durante l’avvio il display mostra:
+During startup the display shows:
 
-1. attesa della connessione Wi-Fi;
-2. attesa della connessione a Home Assistant;
-3. download delle 16 immagini Aura;
-4. barra di avanzamento dal rosso al verde;
-5. passaggio automatico alla pagina principale quando tutto è pronto.
+1. waiting for the Wi-Fi connection;
+2. waiting for the connection to Home Assistant;
+3. downloading the 16 Aura images;
+4. a progress bar from red to green;
+5. automatic switch to the main page once everything is ready.
 
 ---
 
-## 👆 Interfaccia touch
+## 👆 Touch Interface
 
-### Gesture principali
+### Main Gestures
 
-| Pagina | Gesture | Azione |
+| Page | Gesture | Action |
 |---|---|---|
-| Aura | Swipe verso l’alto | Apre la pagina controlli |
-| Aura | Swipe verso destra | Apre la pagina radio Music Assistant |
-| Radio | Swipe verso sinistra | Torna alla pagina Aura |
-| Controlli | Swipe verso il basso | Torna alla pagina Aura |
-| Qualsiasi pagina | Touch | Risveglia Aura e rinnova il timeout UI |
+| Aura | Swipe up | Opens the controls page |
+| Aura | Swipe right | Opens the Music Assistant radio page |
+| Radio | Swipe left | Returns to the Aura page |
+| Controls | Swipe down | Returns to the Aura page |
+| Any page | Touch | Wakes Aura and renews the UI timeout |
 
-### Pagina controlli
+### Controls Page
 
 ```text
-             CONTROLLI AURA
-
+             AURA CONTROLS
       VOLUME  [────────────]  50%
-
-       LUMINOSITÀ       AUDIO ON
-
-         AVVIA VA       ALLARME OFF
-
-              TORNA AD AURA
+       BRIGHTNESS       AUDIO ON
+         START VA       ALARM OFF
+              BACK TO AURA
 ```
 
-| Controllo | Azione |
+| Control | Action |
 |---|---|
-| Slider volume | Imposta il volume del media player |
-| Luminosità | Cicla tra luminosità bassa, media e massima |
-| Audio | Mute / unmute del media player |
-| Avvia VA | Avvia o ferma il Voice Assistant |
-| Allarme | Attiva o disattiva la modalità antifurto |
-| Torna ad Aura | Chiude la pagina controlli |
+| Volume slider | Sets the media player volume |
+| Brightness | Cycles between low, medium, and maximum brightness |
+| Audio | Mutes / unmutes the media player |
+| Start VA | Starts or stops the Voice Assistant |
+| Alarm | Enables or disables the security-alarm mode |
+| Back to Aura | Closes the controls page |
 
-La pagina controlli resta visibile per circa 15 secondi dall’ultima interazione. La pagina radio utilizza un timeout più lungo.
+The controls page stays visible for about 15 seconds after the last interaction. The radio page uses a longer timeout.
 
 ---
 
 ## 🎙️ Voice Assistant
 
-Il firmware usa il componente `voice_assistant` di ESPHome con microfono I2S e media player speaker.
+The firmware uses ESPHome's `voice_assistant` component with an I2S microphone and speaker media player.
 
-### Funzioni incluse
+### Included Features
 
-- avvio da wake word locale;
-- modalità singola o continua;
-- avvio e stop da touch o API;
-- ducking dell’audio mentre l’assistente ascolta;
-- eventi Home Assistant per testo STT e URI TTS;
-- animazione della bocca durante la risposta;
-- gestione timer e suono di fine timer;
-- stop word temporanea per interrompere timer e annunci;
-- ripartenza controllata di microWakeWord.
+- start from a local wake word;
+- single or continuous mode;
+- start and stop via touch or API;
+- audio ducking while the assistant is listening;
+- Home Assistant events for STT text and TTS URI;
+- mouth animation during the reply;
+- timer handling and end-of-timer sound;
+- temporary stop word to interrupt timers and announcements;
+- controlled restart of microWakeWord.
 
-### Wake word configurate
+### Configured Wake Words
 
-| Modello | Uso |
+| Model | Use |
 |---|---|
-| `okay_nabu` | Wake word principale |
-| `kenobi` | Wake word alternativa |
-| `hey_jarvis` | Wake word alternativa |
-| `stop` | Modello interno per stop timer/annunci |
+| `okay_nabu` | Main wake word |
+| `kenobi` | Alternative wake word |
+| `hey_jarvis` | Alternative wake word |
+| `stop` | Internal model to stop timers/announcements |
 
-### Sensibilità wake word
+### Wake Word Sensitivity
 
-Da Home Assistant è disponibile il selettore:
+Home Assistant exposes this selector:
 
 ```text
-WakeWord - Sensibilita
-├─ Poco sensibile
-├─ Medio
-└─ Molto sensibile
+WakeWord - Sensitivity
+├─ Low sensitivity
+├─ Medium
+└─ High sensitivity
 ```
 
-### Comandi locali
+### Local Commands
 
-Alcuni comandi vengono intercettati direttamente dal firmware.
+Some commands are intercepted directly by the firmware.
 
-| Intento | Frasi esempio |
+| Intent | Example phrases |
 |---|---|
-| Volume su | “alza volume”, “aumenta volume” |
-| Volume giù | “abbassa volume”, “riduci volume” |
-| Modalità silenziosa | “modalità silenziosa” |
-| Antifurto ON | “attiva antifurto”, “inserisci antifurto” |
-| Antifurto OFF | “disattiva antifurto”, “disinserisci antifurto” |
+| Volume up | "turn up the volume", "increase the volume" |
+| Volume down | "turn down the volume", "decrease the volume" |
+| Silent mode | "silent mode" |
+| Security alarm ON | "activate alarm", "arm the alarm" |
+| Security alarm OFF | "deactivate alarm", "disarm the alarm" |
 
 ---
 
-## 📻 Music Assistant e radio
+## 📻 Music Assistant and Radio
 
-Uno swipe verso destra dalla pagina Aura apre una pagina LVGL dedicata alle radio.
+A swipe right from the Aura page opens an LVGL page dedicated to radio stations.
 
-La versione attuale contiene sei pulsanti statici:
+The current version has six static buttons:
 
 1. Radio Number One;
 2. Radio Deejay;
@@ -342,282 +337,280 @@ La versione attuale contiene sei pulsanti statici:
 5. R101;
 6. Ambient Sleeping Pill.
 
-Il tap su una radio richiama direttamente:
+Tapping a station calls directly:
 
 ```yaml
 action: music_assistant.play_media
 ```
 
-Il firmware passa a Home Assistant:
+The firmware passes to Home Assistant:
 
-- entità del player Music Assistant;
-- URI della radio;
-- tipo media `radio`;
-- modalità coda `play`.
+- the Music Assistant player entity;
+- the radio station's URI;
+- the media type `radio`;
+- queue mode `play`.
 
-Dopo l’avvio riuscito, la UI torna automaticamente ad Aura e attiva la modalità musica.
+After a successful start, the UI automatically returns to Aura and enables music mode.
 
-### Perché la lista è statica
+### Why the List Is Static
 
-La lista è volutamente configurata nel file YAML per:
+The list is deliberately hard-coded in the YAML file to:
 
-- ridurre l’uso di RAM;
-- evitare il trasferimento dell’intera libreria Music Assistant;
-- rendere la pagina immediata;
-- evitare parsing JSON complesso sull’ESP32.
+- reduce RAM usage;
+- avoid transferring the entire Music Assistant library;
+- keep the page instant to load;
+- avoid complex JSON parsing on the ESP32.
 
-La roadmap prevede il caricamento dinamico dei preferiti tramite `music_assistant.get_library`.
+The roadmap includes dynamically loading favorites via `music_assistant.get_library`.
 
 ---
 
-## 🎵 Modalità musica e VU meter
+## 🎵 Music Mode and VU Meter
 
-Quando il media player entra nello stato `playing`, Aura attiva automaticamente la modalità musica:
+When the media player enters the `playing` state, Aura automatically enables music mode:
 
-- alterna tre pose Dance;
-- evita la ripetizione consecutiva della stessa posa;
-- esegue blink casuali;
-- mostra sei note animate;
-- muove leggermente il personaggio seguendo il livello audio;
-- visualizza un VU meter circolare;
-- nasconde temporaneamente orologio e timer.
+- cycles through three Dance poses;
+- avoids repeating the same pose consecutively;
+- performs random blinks;
+- shows six animated notes;
+- moves the character slightly in step with the audio level;
+- displays a circular VU meter;
+- temporarily hides the clock and timer.
 
-### VU meter RMS
+### RMS VU Meter
 
-Il VU meter usa il valore `playback_rms`, non soltanto il picco.
+The VU meter uses the `playback_rms` value, not just the peak.
 
 ```cpp
 float normalized = (rms_db + 58.0f) / 57.0f;
-
 if (normalized < 0.0f) normalized = 0.0f;
 if (normalized > 1.0f) normalized = 1.0f;
-
 real_level = powf(normalized, 1.55f);
 ```
 
-Scala utilizzata:
+Scale used:
 
-| Livello RMS | VU meter |
+| RMS level | VU meter |
 |---:|---:|
-| `-58 dB` o inferiore | `0%` |
-| Valori intermedi | Curva progressiva |
-| `-1 dB` o superiore | `100%` |
+| `-58 dB` or lower | `0%` |
+| Intermediate values | Progressive curve |
+| `-1 dB` or higher | `100%` |
 
-Lo smoothing applica un attacco rapido e un rilascio più lento:
+The smoothing applies a fast attack and a slower release:
 
 ```cpp
 const float alpha =
   target > id(aura_music_level) ? 0.58f : 0.14f;
 ```
 
-Le soglie colore sono:
+Color thresholds are:
 
-- verde sotto il 70%;
-- giallo dal 70%;
-- arancione/rosso dal 90%.
+- green below 70%;
+- yellow from 70%;
+- orange/red from 90%.
 
 ---
 
-## ⏱️ Timer e sveglia
+## ⏱️ Timer and Alarm
 
-### Timer Voice Assistant
+### Voice Assistant Timer
 
-Il firmware mantiene le informazioni del primo timer attivo:
+The firmware keeps track of the first active timer's information:
 
-- nome;
-- durata totale;
-- secondi rimanenti;
-- stato attivo;
-- aggiornamento periodico della UI.
+- name;
+- total duration;
+- seconds remaining;
+- active state;
+- periodic UI updates.
 
-Alla scadenza:
+When it expires:
 
-- viene riprodotto il suono configurato;
-- viene abilitata temporaneamente la stop word;
-- Aura mostra lo stato `TIMER SCADUTO`;
-- il media viene sottoposto a ducking.
+- the configured sound plays;
+- the stop word is temporarily enabled;
+- Aura shows the `TIMER EXPIRED` state;
+- the media is ducked.
 
-### Sveglia locale
+### Local Alarm
 
-Sono disponibili:
+Available options:
 
-- ora sveglia in formato `HH:MM`;
-- switch `Sveglia attiva`;
-- scelta dell’azione;
-- fuso orario POSIX configurabile tramite API.
+- alarm time in `HH:MM` format;
+- `Alarm active` switch;
+- choice of action;
+- POSIX timezone configurable via the API.
 
-Azioni disponibili:
+Available actions:
 
-| Opzione | Comportamento |
+| Option | Behavior |
 |---|---|
-| Riproduci suono | Riproduce il suono locale |
-| Invia evento | Invia un evento a Home Assistant |
-| Suono ed evento | Esegue entrambe le azioni |
+| Play sound | Plays the local sound |
+| Send event | Sends an event to Home Assistant |
+| Sound and event | Performs both actions |
 
 ---
 
-## 🛡️ Rilevamento rumore e antifurto
+## 🛡️ Noise Detection and Security Alarm
 
-Il componente `sound_level` misura:
+The `sound_level` component measures:
 
-- `RMS`, usato dalla modalità musica;
-- `Peak`, usato dal rilevamento del rumore.
+- `RMS`, used by music mode;
+- `Peak`, used by noise detection.
 
-La soglia è configurabile da Home Assistant tra `-75 dB` e `-25 dB`.
+The threshold is configurable from Home Assistant between `-75 dB` and `-25 dB`.
 
-Per evitare falsi trigger, il rilevamento viene ignorato quando:
+To avoid false triggers, detection is ignored when:
 
-- Aura sta già riproducendo musica;
-- è in corso un annuncio o TTS;
-- il timer sta suonando;
-- è già in corso un allarme.
+- Aura is already playing music;
+- an announcement or TTS is in progress;
+- the timer is ringing;
+- an alarm is already in progress.
 
-Quando `Modalità antifurto` è attiva e viene superata la soglia, il firmware esegue lo script di allarme e aggiorna la UI.
+When `Security mode` is active and the threshold is exceeded, the firmware runs the alarm script and updates the UI.
 
 > [!NOTE]
-> Questa funzione è sperimentale e non sostituisce un sistema antifurto certificato.
+> This feature is experimental and does not replace a certified security alarm system.
 
 ---
 
-## 🧩 Entità Home Assistant
+## 🧩 Home Assistant Entities
 
 <details>
 <summary><strong>Select</strong></summary>
 
-| Entità | Funzione |
+| Entity | Function |
 |---|---|
-| `Display - Emozione` | Forza l’espressione di Aura |
-| `WakeWord - Sensibilita` | Regola la sensibilità di `okay_nabu` |
-| `Livello log` | Cambia il livello log ESPHome |
-| `Sveglia - Azione` | Sceglie cosa fare quando suona la sveglia |
+| `Display - Emotion` | Forces Aura's expression |
+| `WakeWord - Sensitivity` | Adjusts the sensitivity of `okay_nabu` |
+| `Log level` | Changes the ESPHome log level |
+| `Alarm - Action` | Chooses what happens when the alarm goes off |
 
 </details>
 
 <details>
 <summary><strong>Switch</strong></summary>
 
-| Entità | Funzione |
+| Entity | Function |
 |---|---|
-| `Modalità antifurto` | Attiva/disattiva antifurto acustico |
-| `Assistente - Ascolto continuo` | Abilita la modalità conversazione continua |
-| `Amplificatore` | Controlla PA / speaker amp |
-| `Microfono disattivato` | Mute microfono e stop wake word |
-| `Suono Mute-Unmute` | Abilita feedback sonoro mute |
-| `Suono Wake Word` | Abilita il suono alla wake word |
-| `Sveglia attiva` | Abilita la sveglia locale |
-| `Controllo nuovo firmware` | Abilita il controllo versione remoto |
+| `Security mode` | Enables/disables the acoustic security alarm |
+| `Assistant - Continuous listening` | Enables continuous conversation mode |
+| `Amplifier` | Controls the PA / speaker amp |
+| `Microphone muted` | Mutes the microphone and stops the wake word |
+| `Mute-Unmute sound` | Enables mute feedback sound |
+| `Wake Word sound` | Enables the wake word sound |
+| `Alarm active` | Enables the local alarm |
+| `Firmware update check` | Enables the remote version check |
 
 </details>
 
 <details>
 <summary><strong>Number</strong></summary>
 
-| Entità | Range | Funzione |
+| Entity | Range | Function |
 |---|---:|---|
-| `Soglia Rumore` | `-75` → `-25 dB` | Soglia antifurto / rilevamento rumore |
-| `Mic-Guadagno` | `0` → `42` | Guadagno ES7210 |
-| `VA-Guadagno` | `1` → `64` | Gain factor del microfono VA |
-| `Sopp. Rumore` | `0` → `4` | Noise suppression Voice Assistant |
+| `Noise threshold` | `-75` → `-25 dB` | Security-alarm / noise-detection threshold |
+| `Mic gain` | `0` → `42` | ES7210 gain |
+| `VA gain` | `1` → `64` | Voice Assistant microphone gain factor |
+| `Noise suppression` | `0` → `4` | Voice Assistant noise suppression |
 
 </details>
 
 <details>
 <summary><strong>Sensor / Binary Sensor / Text Sensor</strong></summary>
 
-| Entità | Tipo | Funzione |
+| Entity | Type | Function |
 |---|---|---|
-| `Prossimo timer` | sensor | Secondi rimanenti del primo timer attivo |
-| `Prossimo timer - Nome` | text_sensor | Nome del timer attivo |
-| `Ora sveglia` | text_sensor | Ora sveglia impostata |
-| `Ora dispositivo` | text_sensor | Ora locale del dispositivo |
-| `Rilevamento rumore` | binary_sensor | Rumore sopra la soglia configurata |
+| `Next timer` | sensor | Seconds remaining on the first active timer |
+| `Next timer - Name` | text_sensor | Name of the active timer |
+| `Alarm time` | text_sensor | Configured alarm time |
+| `Device time` | text_sensor | Device's local time |
+| `Noise detected` | binary_sensor | Noise above the configured threshold |
 
-I sensori interni RMS e Peak non sono esposti normalmente nell’interfaccia Home Assistant.
+The internal RMS and Peak sensors aren't normally exposed in the Home Assistant interface.
 
 </details>
 
 <details>
 <summary><strong>Light / Media Player</strong></summary>
 
-| Entità | Funzione |
+| Entity | Function |
 |---|---|
-| `Display Backlight` | Controlla la retroilluminazione |
-| Media player Aura | Riproduzione media e annunci TTS |
+| `Display Backlight` | Controls the backlight |
+| Aura Media Player | Media playback and TTS announcements |
 
 </details>
 
 <details>
 <summary><strong>Button</strong></summary>
 
-| Entità | Funzione |
+| Entity | Function |
 |---|---|
-| `Test antifurto` | Simula il trigger antifurto |
-| `Ripristino di fabbrica` | Factory reset interno/diagnostico |
-| `Riavvia` | Riavvia ESP32 |
-| `Controlla nuovo firmware` | Avvia il controllo versione remoto |
+| `Test security alarm` | Simulates the security-alarm trigger |
+| `Factory reset` | Internal/diagnostic factory reset |
+| `Restart` | Restarts the ESP32 |
+| `Check new firmware` | Starts the remote version check |
 
 </details>
 
 ---
 
-## 🔌 Azioni API
+## 🔌 API Actions
 
-Il firmware espone alcune azioni richiamabili da Home Assistant.
+The firmware exposes some actions callable from Home Assistant.
 
-| Azione | Parametri | Descrizione |
+| Action | Parameters | Description |
 |---|---|---|
-| `set_led_color` | `red`, `green`, `blue` | Aggiorna il colore logico usato dal firmware |
-| `start_va` | — | Avvia il Voice Assistant |
-| `stop_va` | — | Ferma il Voice Assistant |
-| `set_alarm_time` | `alarm_time_hh_mm` | Imposta la sveglia in formato `HH:MM` |
-| `set_time_zone` | `posix_time_zone` | Imposta il timezone POSIX |
+| `set_led_color` | `red`, `green`, `blue` | Updates the logical color used by the firmware |
+| `start_va` | — | Starts the Voice Assistant |
+| `stop_va` | — | Stops the Voice Assistant |
+| `set_alarm_time` | `alarm_time_hh_mm` | Sets the alarm in `HH:MM` format |
+| `set_time_zone` | `posix_time_zone` | Sets the POSIX timezone |
 
-Esempio:
+Example:
 
 ```yaml
 action: esphome.home_assistant_voice_speaker_02_start_va
 ```
 
-> Il nome reale dell’azione dipende da `device_name` configurato nelle substitutions.
+> The actual action name depends on the `device_name` configured in the substitutions.
 
 ---
 
-## 🚀 Installazione rapida
+## 🚀 Quick Installation
 
-### Requisiti
+### Requirements
 
-- Home Assistant con ESPHome configurato;
-- ESPHome **2026.6.3 o successivo**;
-- pipeline Assist configurata in Home Assistant;
-- Music Assistant configurato, per utilizzare la pagina radio;
-- accesso a Internet durante il primo avvio, per scaricare gli asset Aura.
+- Home Assistant with ESPHome configured;
+- ESPHome **2026.6.3 or later**;
+- an Assist pipeline configured in Home Assistant;
+- Music Assistant configured, to use the radio page;
+- internet access during the first boot, to download the Aura assets.
 
-### Procedura
+### Procedure
 
-1. Crea un nuovo dispositivo in ESPHome.
-2. Copia il file YAML del firmware.
-3. Sostituisci credenziali e dati personali.
-4. Configura il player e gli URI Music Assistant.
-5. Valida il file YAML.
-6. Compila con ESPHome.
-7. Collega la board via USB-C.
-8. Esegui il primo flash via USB.
-9. Attendi il completamento del boot grafico e del download delle immagini.
-10. Verifica in Home Assistant:
-    - Wi-Fi connesso;
-    - API connessa;
-    - display acceso;
-    - touch funzionante;
-    - media player presente;
-    - microfono e wake word funzionanti;
-    - pagina radio operativa.
+1. Create a new device in ESPHome.
+2. Copy the firmware's YAML file.
+3. Replace the credentials and personal data.
+4. Configure the Music Assistant player and URIs.
+5. Validate the YAML file.
+6. Compile with ESPHome.
+7. Connect the board via USB-C.
+8. Perform the first flash via USB.
+9. Wait for the graphic boot and image download to finish.
+10. Verify in Home Assistant:
+    - Wi-Fi connected;
+    - API connected;
+    - display on;
+    - touch working;
+    - media player present;
+    - microphone and wake word working;
+    - radio page operational.
 
-### Protezione delle credenziali
+### Protecting Credentials
 
 > [!CAUTION]
-> Non pubblicare su GitHub password Wi-Fi, chiavi API, password OTA, indirizzi IP privati o altri segreti presenti nel file YAML.
+> Do not publish Wi-Fi passwords, API keys, OTA passwords, private IP addresses, or other secrets from the YAML file on GitHub.
 
-Usa `secrets.yaml`:
+Use `secrets.yaml`:
 
 ```yaml
 substitutions:
@@ -627,76 +620,75 @@ substitutions:
   ota_key: !secret aura_ota_password
 ```
 
-Esempio di `secrets.yaml`:
+Example `secrets.yaml`:
 
 ```yaml
-wifi_ssid: "NOME_RETE"
-wifi_password: "PASSWORD_WIFI"
-aura_api_key: "CHIAVE_API_BASE64"
-aura_ota_password: "PASSWORD_OTA"
+wifi_ssid: "NETWORK_NAME"
+wifi_password: "WIFI_PASSWORD"
+aura_api_key: "BASE64_API_KEY"
+aura_ota_password: "OTA_PASSWORD"
 ```
 
-### Substitutions minime da personalizzare
+### Minimum Substitutions to Customize
 
 ```yaml
 substitutions:
   device_name: home-assistant-voice-speaker-02
   friendly: "Speaker-04"
   fw_version: "0.3.1-lvgl-music-assistant-radio-vu"
-
   ip: "192.168.xxx.xxx"
   gateway: "192.168.xxx.xxx"
   subnet: "255.255.255.0"
   dns: "192.168.xxx.xxx"
 ```
 
-È possibile rimuovere `manual_ip` dal blocco `wifi:` per utilizzare DHCP.
+You can remove `manual_ip` from the `wifi:` block to use DHCP.
 
 ---
 
-## ⚙️ Configurazione Music Assistant
+## ⚙️ Music Assistant Configuration
 
-### 1. Importa il player ESPHome
+### 1. Import the ESPHome Player
 
-In Music Assistant apri:
+In Music Assistant, open:
 
 ```text
 Settings → Player providers → Home Assistant Media Players
 ```
 
-Abilita il media player ESPHome esposto da Aura. Music Assistant creerà una propria entità media player, per esempio:
+Enable the ESPHome media player exposed by Aura. Music Assistant will create its own media player entity, for example:
 
 ```text
 media_player.home_assistant_voice_speaker_02_media_player_2
 ```
 
-Inserisci l’entità nella substitution:
+Enter the entity in the substitution:
 
 ```yaml
 substitutions:
-  ma_player_entity: "media_player.NOME_DEL_PLAYER_MUSIC_ASSISTANT"
+  ma_player_entity: "media_player.YOUR_MUSIC_ASSISTANT_PLAYER_NAME"
 ```
 
-### 2. Consenti le azioni Home Assistant
+### 2. Allow Home Assistant Actions
 
-In Home Assistant apri:
+In Home Assistant, open:
 
 ```text
-Impostazioni → Dispositivi e servizi → ESPHome → Aura → Configura
+Settings → Devices & Services → ESPHome → Aura → Configure
 ```
 
-Abilita l’opzione che consente al dispositivo ESPHome di eseguire azioni di Home Assistant.
+Enable the option that allows the ESPHome device to perform Home Assistant actions.
 
-Senza questa autorizzazione i pulsanti radio non possono richiamare `music_assistant.play_media`.
+Without this permission, the radio buttons can't call `music_assistant.play_media`.
 
-### 3. Recupera gli URI delle radio
+### 3. Get the Radio URIs
 
-In **Strumenti per sviluppatori → Azioni**, esegui:
+In **Developer Tools → Actions**, run:
 
 ```yaml
 action: music_assistant.get_library
 data:
-  config_entry_id: ID_DELLA_TUA_ISTANZA_MA
+  config_entry_id: YOUR_MA_INSTANCE_ID
   media_type: radio
   limit: 20
   offset: 0
@@ -705,7 +697,7 @@ data:
   search: Number
 ```
 
-Esempio di risposta:
+Example response:
 
 ```yaml
 items:
@@ -715,7 +707,7 @@ items:
     favorite: true
 ```
 
-### 4. Configura le radio nel file YAML
+### 4. Configure the Radio Stations in the YAML File
 
 ```yaml
 substitutions:
@@ -728,9 +720,9 @@ substitutions:
 ```
 
 > [!WARNING]
-> Gli identificativi `library://radio/...` appartengono alla singola libreria Music Assistant e possono essere diversi su ogni installazione.
+> The `library://radio/...` identifiers belong to each individual Music Assistant library and may differ on every installation.
 
-### 5. Verifica la riproduzione
+### 5. Verify Playback
 
 ```yaml
 action: music_assistant.play_media
@@ -739,49 +731,48 @@ data:
   media_type: radio
   enqueue: play
 target:
-  entity_id: media_player.NOME_DEL_PLAYER_MUSIC_ASSISTANT
+  entity_id: media_player.YOUR_MUSIC_ASSISTANT_PLAYER_NAME
 ```
 
-Per fermare la riproduzione:
+To stop playback:
 
 ```yaml
 action: media_player.media_stop
 target:
-  entity_id: media_player.NOME_DEL_PLAYER_MUSIC_ASSISTANT
+  entity_id: media_player.YOUR_MUSIC_ASSISTANT_PLAYER_NAME
 ```
 
 ---
 
-## 🖼️ Asset grafici Aura
+## 🖼️ Aura Graphic Assets
 
-Gli asset vengono scaricati dal repository:
-
+The assets are downloaded from the repository:
 [MarcoFre/images-aura](https://github.com/MarcoFre/images-aura)
 
-La sequenza attuale contiene 16 immagini:
+The current sequence contains 16 images:
 
 - idle;
-- blink a metà;
-- occhi chiusi;
-- occhi a sinistra;
-- occhi a destra;
-- occhi in alto;
-- viso in alto;
-- viso in basso;
-- mezzo sorriso;
-- sorriso completo;
-- bocca poco aperta;
-- bocca aperta;
-- bocca molto aperta;
+- half blink;
+- eyes closed;
+- eyes left;
+- eyes right;
+- eyes up;
+- face up;
+- face down;
+- half smile;
+- full smile;
+- mouth slightly open;
+- mouth open;
+- mouth wide open;
 - Dance 01;
 - Dance 02;
 - Dance 03.
 
-Le immagini sono PNG 360×360 e vengono convertite in RGB565 dal componente `online_image`.
+The images are 360×360 PNGs and are converted to RGB565 by the `online_image` component.
 
-Il download è sequenziale per limitare i picchi di memoria. La barra di boot mostra lo stato di ogni passaggio.
+The download is sequential to limit memory peaks. The boot bar shows the status of each step.
 
-Per usare un repository differente, modifica gli URL nella sezione:
+To use a different repository, edit the URLs in the section:
 
 ```yaml
 online_image:
@@ -791,100 +782,100 @@ online_image:
 
 ## 🛠️ Troubleshooting
 
-### Display nero
+### Black Display
 
-Controlla:
+Check:
 
-- backlight su `GPIO5`;
-- reset display su `PCA9554` pin `1`;
-- bus QSPI corretto;
-- modello `JC3636W518V2`;
-- PSRAM Octal attiva;
-- `data_rate: 80MHz`, eventualmente prova temporaneamente `40MHz`;
-- configurazione di rotazione e inversione colori.
+- backlight on `GPIO5`;
+- display reset on `PCA9554` pin `1`;
+- correct QSPI bus;
+- `JC3636W518V2` model;
+- Octal PSRAM active;
+- `data_rate: 80MHz`, try `40MHz` temporarily if needed;
+- rotation and color-inversion configuration.
 
-### Touch non risponde
+### Touch Not Responding
 
-Controlla:
+Check:
 
-- indirizzo `0x15`;
-- interrupt su `GPIO4`;
-- reset touch su `PCA9554` pin `0`;
-- I2C su `GPIO10/GPIO11`;
+- address `0x15`;
+- interrupt on `GPIO4`;
+- touch reset on `PCA9554` pin `0`;
+- I2C on `GPIO10/GPIO11`;
 - `skip_probe: true`;
-- orientamento e trasformazioni del touch.
+- touch orientation and transforms.
 
-### Audio assente
+### No Audio
 
-Controlla:
+Check:
 
-- ES8311 su `0x18`;
-- ES7210 su `0x40`;
-- `PA_CTRL` su `GPIO15`;
-- modalità I2S primary/secondary;
-- volume del media player;
-- amplificatore abilitato;
-- sample rate e clock condivisi.
+- ES8311 on `0x18`;
+- ES7210 on `0x40`;
+- `PA_CTRL` on `GPIO15`;
+- I2S primary/secondary mode;
+- media player volume;
+- amplifier enabled;
+- shared sample rate and clock.
 
-### Wake word non riparte
+### Wake Word Doesn't Restart
 
-Lo script di ripristino microWakeWord verifica che:
+The microWakeWord recovery script checks that:
 
-- API e Voice Assistant siano connessi;
-- il microfono non sia disattivato;
-- il timer non stia suonando;
-- il Voice Assistant non sia già in esecuzione;
-- non sia in corso una condizione che richiede lo stop temporaneo.
+- the API and Voice Assistant are connected;
+- the microphone isn't muted;
+- the timer isn't ringing;
+- the Voice Assistant isn't already running;
+- there isn't an ongoing condition requiring a temporary stop.
 
-### I pulsanti radio restituiscono errore
+### Radio Buttons Return an Error
 
-Verifica che:
+Check that:
 
-- Music Assistant sia online;
-- Aura sia abilitata nel provider Home Assistant Media Players;
-- `ma_player_entity` contenga l’entità Music Assistant, non quella ESPHome originale;
-- il dispositivo ESPHome sia autorizzato a eseguire azioni Home Assistant;
-- l’URI della radio esista nella tua libreria.
+- Music Assistant is online;
+- Aura is enabled in the Home Assistant Media Players provider;
+- `ma_player_entity` contains the Music Assistant entity, not the original ESPHome one;
+- the ESPHome device is authorized to perform Home Assistant actions;
+- the radio URI exists in your library.
 
-### La radio parte da Home Assistant ma non dal display
+### Radio Starts from Home Assistant but Not from the Display
 
-Controlla i log ESPHome. La pagina mostra anche uno stato sintetico:
+Check the ESPHome logs. The page also shows a short status:
 
-- `Avvio ...`;
-- `In riproduzione ...`;
-- `Errore avvio ...`.
+- `Starting ...`;
+- `Playing ...`;
+- `Start error ...`.
 
-### Il boot resta sul download degli asset
+### Boot Stays on the Asset Download
 
-Verifica:
+Check:
 
-- accesso a Internet;
-- risoluzione DNS;
-- raggiungibilità di `raw.githubusercontent.com`;
-- data e ora corrette per TLS;
-- disponibilità degli asset nel repository GitHub.
+- internet access;
+- DNS resolution;
+- reachability of `raw.githubusercontent.com`;
+- correct date and time for TLS;
+- availability of the assets in the GitHub repository.
 
-### Errori `no mem`
+### `no mem` Errors
 
-- mantieni la PSRAM in modalità Octal a 80 MHz;
-- non aumentare contemporaneamente numero e dimensione degli asset;
-- evita il download permanente di copertine radio dinamiche;
-- non trasferire l’intera libreria Music Assistant all’ESP32;
-- limita i buffer audio e grafici alle dimensioni realmente necessarie;
-- usa una lista radio statica o risultati paginati.
+- keep PSRAM in Octal mode at 80 MHz;
+- don't increase the number and size of assets at the same time;
+- avoid permanently downloading dynamic radio cover art;
+- don't transfer the entire Music Assistant library to the ESP32;
+- keep audio and graphics buffers limited to what's actually needed;
+- use a static radio list or paginated results.
 
-### VU meter sempre a fondo scala
+### VU Meter Always Pegged at Full Scale
 
-Verifica che il codice utilizzi:
+Check that the code uses:
 
 - `playback_rms`;
-- scala `-58 dB` → `-1 dB`;
-- curva `powf(normalized, 1.55f)`;
-- smoothing `0.58 / 0.14`.
+- the `-58 dB` → `-1 dB` scale;
+- the `powf(normalized, 1.55f)` curve;
+- `0.58 / 0.14` smoothing.
 
 ---
 
-## 📁 Struttura consigliata del repository
+## 📁 Recommended Repository Structure
 
 ```text
 .
@@ -898,7 +889,7 @@ Verifica che il codice utilizzi:
     └── hardware.jpg
 ```
 
-Aggiungi al `.gitignore`:
+Add to `.gitignore`:
 
 ```gitignore
 secrets.yaml
@@ -909,43 +900,39 @@ secrets.yaml
 
 ## 🗺️ Roadmap
 
-- [ ] Caricamento dinamico delle radio preferite tramite `music_assistant.get_library`.
-- [ ] Paginazione e ricerca sul display.
-- [ ] Playlist e artisti preferiti.
-- [ ] Schermata Now Playing con titolo e artista.
-- [ ] Copertina del solo elemento in riproduzione.
-- [ ] Gestione della coda Music Assistant.
-- [ ] Selezione del player o del gruppo di stanze.
-- [ ] Configurazione delle radio tramite entità Home Assistant.
-- [ ] Modalità notte con luminosità adattiva.
-- [ ] Pagina diagnostica hardware.
-- [ ] Ottimizzazione ulteriore dei download degli asset.
+- [ ] Dynamic loading of favorite radio stations via `music_assistant.get_library`.
+- [ ] Pagination and search on the display.
+- [ ] Favorite playlists and artists.
+- [ ] Now Playing screen with title and artist.
+- [ ] Cover art for the currently playing item only.
+- [ ] Music Assistant queue management.
+- [ ] Player or room-group selection.
+- [ ] Radio configuration via Home Assistant entities.
+- [ ] Night mode with adaptive brightness.
+- [ ] Hardware diagnostics page.
+- [ ] Further optimization of asset downloads.
 
 ---
 
-## 🙌 Crediti
+## 🙌 Credits
 
-| Ruolo | Nome / progetto |
+| Role | Name / project |
 |---|---|
-| Progetto e integrazione | HackMyHome / MarcoFre |
-| Personaggio e asset grafici | Aura · [images-aura](https://github.com/MarcoFre/images-aura) |
-| Verifica codice | Sanji78 |
-| Codice voice speaker di riferimento | CaptainMustard |
-| Componente ES8311 | [sw3Dan/waveshare-s2-audio_esphome_voice](https://github.com/sw3Dan/waveshare-s2-audio_esphome_voice) |
+| Project and integration | HackMyHome / MarcoFre |
+| Character and graphic assets | Aura · [images-aura](https://github.com/MarcoFre/images-aura) |
+| Code review | Sanji78 |
+| Reference voice speaker code | CaptainMustard |
+| ES8311 component | [sw3Dan/waveshare-s2-audio_esphome_voice](https://github.com/sw3Dan/waveshare-s2-audio_esphome_voice) |
 | Hardware | Waveshare ESP32-S3 Touch LCD 1.85C |
 | Firmware | ESPHome |
-| Domotica e Voice Assistant | Home Assistant |
-| Gestione musicale | Music Assistant |
-| Interfaccia grafica | LVGL |
+| Home automation and Voice Assistant | Home Assistant |
+| Music management | Music Assistant |
+| Graphical interface | LVGL |
 
 ---
 
 ## ⚠️ Disclaimer
 
-Questo progetto è sperimentale e pensato per uso maker e domotico. Verifica sempre alimentazione, pinout, revisione hardware e configurazioni audio prima dell’uso continuativo.
+This project is experimental and intended for maker and home-automation use. Always check power, pinout, hardware revision, and audio configuration before continuous use.
 
-La funzione di rilevamento rumore non sostituisce un impianto antifurto certificato.
-
-Non pubblicare mai su GitHub password Wi-Fi, chiavi API, chiavi OTA o indirizzi IP privati reali.
-
-
+The noise-detection feature does not replace a certified security alarm system.
