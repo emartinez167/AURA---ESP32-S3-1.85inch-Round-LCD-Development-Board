@@ -1405,6 +1405,10 @@ script:
             - lvgl.widget.show: aura_swipe_hint
             - script.execute: aura_apply_phase
             - script.execute: aura_refresh_runtime_ui
+      # Restore the physical backlight too, in case the auto-off timer
+      # (below) had switched it off. Harmless no-op if already on.
+      - light.turn_on:
+          id: ${display_backlight_id}
   # ======================================================
   # AURA - APPLY VOICE ASSISTANT PHASE / EMOTION
   # ======================================================
@@ -2288,6 +2292,25 @@ interval:
             - lvgl.widget.refresh: aura_sleep_z_2
             - lvgl.widget.refresh: aura_sleep_z_3
             - lvgl.widget.refresh: aura_sleep_z_4
+  # ----------------------------------------------------
+  # AURA - BACKLIGHT AUTO-OFF (battery saving)
+  # display_awake_until is reset to "now + 5 minutes" by touch,
+  # voice assistant activity, and media events (13 call sites
+  # throughout this file). This was already being tracked but
+  # never actually enforced; this interval is what turns the
+  # physical backlight off once that deadline passes. Restored
+  # on the next touch or wake word, via aura_wake_up above.
+  # ----------------------------------------------------
+  - interval: 5s
+    then:
+      - if:
+          condition:
+            lambda: |-
+              return id(${display_awake_until_id}) > 0 &&
+                     (int32_t)(millis() - id(${display_awake_until_id})) >= 0;
+          then:
+            - light.turn_off:
+                id: ${display_backlight_id}
   # ----------------------------------------------------
   # AURA - PHASE CHANGE / TIMER STATE
   # ----------------------------------------------------
