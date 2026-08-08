@@ -3064,7 +3064,13 @@ voice_assistant:
   media_player: ${media_player_id}
   micro_wake_word: ${micro_wake_word_id}
   use_wake_word: false
-  noise_suppression_level: 0
+  # Raised from 0 (August 2026): High wake-word sensitivity combined with
+  # zero noise suppression let ambient noise (fridge hum, TV, traffic)
+  # both false-trigger the wake word and, once listening started, get
+  # transcribed by Whisper into plausible-sounding hallucinated text -
+  # producing unprompted spoken responses. Level 2 filters ambient noise
+  # out of the audio sent to STT before it gets a chance to do that.
+  noise_suppression_level: 2
   auto_gain: 0 dbfs
   volume_multiplier: 1
   on_client_connected:
