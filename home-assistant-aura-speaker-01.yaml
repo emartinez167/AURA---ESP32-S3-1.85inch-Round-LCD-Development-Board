@@ -5511,6 +5511,11 @@ select:
     options:
       - "Low sensitivity"
       - "Medium"
+      # Added August 2026: Medium (176) and High (50) left a big gap with
+      # no real middle ground - Medium missed genuine wake words, High
+      # picked up ambient noise as false triggers. This sits roughly
+      # halfway between them as an actual intermediate option.
+      - "Medium-High sensitivity"
       - "High sensitivity"
     on_value:
       lambda: |-
@@ -5518,6 +5523,8 @@ select:
           id(${wake_word_hey_holly_model_id}).set_probability_cutoff(217);
         } else if (x == "Medium") {
           id(${wake_word_hey_holly_model_id}).set_probability_cutoff(176);
+        } else if (x == "Medium-High sensitivity") {
+          id(${wake_word_hey_holly_model_id}).set_probability_cutoff(110);
         } else if (x == "High sensitivity") {
           id(${wake_word_hey_holly_model_id}).set_probability_cutoff(50);
         }
